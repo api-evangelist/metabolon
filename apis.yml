@@ -1,18 +1,115 @@
 aid: metabolon
 name: Metabolon
-description: 'Metabolon is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Metabolon, Inc. is the metabolomics contract research and software company headquartered in Morrisville,
+  North Carolina. It runs the Global Discovery Panel and a family of targeted and untargeted metabolomics,
+  lipidomics and microbiome panels for pharma, biotech, academic and clinical-research customers, and
+  delivers the resulting biochemical data through MyMetabolon — a customer portal fronting an Integrated
+  Bioinformatics Platform of pathway, heatmap, discovery-panel and multiomics analysis tools. Metabolon
+  publishes no public developer program or API reference, but the portal is a React single-page app backed
+  by four publicly reachable ASP.NET services on *.prod.metabolon.com whose NSwag-generated OpenAPI 3.0
+  documents are served unauthenticated at /swagger/v1/swagger.json, and customer sign-in runs on a
+  Metabolon-branded Auth0 tenant at auth0.metabolon.com with full OIDC discovery.
+image: https://www.metabolon.com/wp-content/uploads/2022/11/Metabolon-logo-peak@2x.webp
 url: https://raw.githubusercontent.com/api-evangelist/metabolon/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: contract-discovery
 specificationVersion: '0.20'
 created: '2026-08-25'
 modified: '2026-08-25'
 tags:
 - Company
-apis: []
+- Metabolomics
+- Life Sciences
+- Bioinformatics
+- Multiomics
+- Biotechnology
+- Drug Discovery
+- Precision Medicine
+- Microbiome
+- Biomarkers
+- Contract Research
+- Laboratory
+apis:
+- name: Metabolon Portal API
+  description: >-
+    The backend REST API for the MyMetabolon customer portal (portal.metabolon.com). 248 operations across
+    18 tags — Users, Auth, Projects, Files, SampleSetsInfo, SpectralData, StudyBuilder, Reports, Search,
+    Eula, SharedFile, Decentralization, LabVantageFiles, PipelineStatus, Status and Health — covering project
+    and sample-set retrieval, result-file listing/search/download bundles, spectral-data download links,
+    study-builder quoting, Auth0 registration/post-login hooks, EULA management and administrative
+    user/role/permission management. Every path is published in parallel under /api/v1 and /api/v2. The
+    OpenAPI is served publicly and unauthenticated; the operations themselves require an Auth0 bearer token
+    and a portal account. Metabolon publishes no developer documentation for this surface.
+  humanURL: https://www.metabolon.com/support/portal/
+  baseURL: https://portal-api.prod.metabolon.com
+  tags:
+  - Metabolomics
+  - Bioinformatics
+  - Life Sciences
+  - Project Management
+  - File Delivery
+  - Spectral Data
+  properties:
+  - type: OpenAPI
+    url: openapi/metabolon-portal-api-openapi.yml
+  - type: Overlay
+    url: overlays/metabolon-portal-api-overlay.yaml
+  - type: Documentation
+    url: https://www.metabolon.com/support/portal/
+  - type: Login
+    url: https://portal.metabolon.com/login
+- name: Metabolon Discovery Panels API
+  description: >-
+    ASP.NET service backing the Discovery Panel views of the Metabolon Integrated Bioinformatics Platform.
+    Its public NSwag OpenAPI document (DiscoveryPanelsApi v1) exposes only the ten health, ping, deep-ping
+    and Datadog monitoring operations under /api/v1 and /api/v2; the analytical operations the portal calls
+    are not present in the published document.
+  humanURL: https://www.metabolon.com/bioinformatics-software/
+  baseURL: https://discovery.prod.metabolon.com
+  tags:
+  - Bioinformatics
+  - Metabolomics
+  - Health Check
+  properties:
+  - type: OpenAPI
+    url: openapi/metabolon-discovery-panels-api-openapi.yml
+  - type: Overlay
+    url: overlays/metabolon-discovery-panels-api-overlay.yaml
+- name: Metabolon Pathway Explorer API
+  description: >-
+    ASP.NET service backing the Pathway Explorer visualization in the Metabolon Integrated Bioinformatics
+    Platform. Its public NSwag OpenAPI document (PathwayExplorerApi v1) exposes only the ten health, ping,
+    deep-ping and Datadog monitoring operations under /api/v1 and /api/v2.
+  humanURL: https://www.metabolon.com/bioinformatics-software/
+  baseURL: https://pathway.prod.metabolon.com
+  tags:
+  - Bioinformatics
+  - Pathway Analysis
+  - Health Check
+  properties:
+  - type: OpenAPI
+    url: openapi/metabolon-pathway-explorer-api-openapi.yml
+  - type: Overlay
+    url: overlays/metabolon-pathway-explorer-api-overlay.yaml
+- name: Metabolon Heatmap API
+  description: >-
+    ASP.NET service backing the heatmap visualization in the Metabolon Integrated Bioinformatics Platform.
+    Its public NSwag OpenAPI document carries the NSwag default title "ServiceName" and exposes only the ten
+    health, ping, deep-ping and Datadog monitoring operations under /api/v1 and /api/v2.
+  humanURL: https://www.metabolon.com/bioinformatics-software/
+  baseURL: https://heatmap.prod.metabolon.com
+  tags:
+  - Bioinformatics
+  - Data Visualization
+  - Health Check
+  properties:
+  - type: OpenAPI
+    url: openapi/metabolon-heatmap-api-openapi.yml
+  - type: Overlay
+    url: overlays/metabolon-heatmap-api-overlay.yaml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +117,51 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://www.nasdaqprivatemarket.com/
+  url: https://www.metabolon.com/
+- type: Documentation
+  url: https://www.metabolon.com/support/portal/
+- type: GettingStarted
+  url: https://www.metabolon.com/support/portal/how-to/
+- type: Support
+  url: https://www.metabolon.com/contact-us/
+- type: Blog
+  url: https://www.metabolon.com/blog/
+- type: Login
+  url: https://portal.metabolon.com/login
+- type: TermsOfService
+  url: https://www.metabolon.com/legal/
+- type: PrivacyPolicy
+  url: https://www.metabolon.com/legal/
+- type: Compliance
+  url: https://www.metabolon.com/quality-assurance/
+- type: LLMsTxt
+  url: llms/metabolon-llms.txt
+- type: WellKnown
+  url: well-known/metabolon-well-known.yml
+- type: Authentication
+  url: authentication/metabolon-authentication.yml
+- type: OAuthScopes
+  url: scopes/metabolon-scopes.yml
+- type: Conformance
+  url: conformance/metabolon-conformance.yml
+- type: ErrorCatalog
+  url: errors/metabolon-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/metabolon-lifecycle.yml
+- type: Conventions
+  url: conventions/metabolon-conventions.yml
+- type: DataModel
+  url: data-model/metabolon-data-model.yml
+- type: DomainSecurity
+  url: security/metabolon-domain-security.yml
+- type: RateLimits
+  url: rate-limits/metabolon-rate-limits.yml
+- type: Plans
+  url: plans/metabolon-plans-pricing.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-08-25'
+  status: enriched
+  artifacts_added: 33
+  pass: local-v1

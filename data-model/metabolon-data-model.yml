@@ -1,0 +1,303 @@
+generated: '2026-08-25'
+method: derived
+source: openapi/metabolon-portal-api-openapi.yml
+note: Entity graph derived mechanically from the 106 components.schemas in the publicly served PortalApi OpenAPI 3.0 document. Metabolon publishes no object reference,
+  so id-prefix and domain semantics below are read from field names in the contract itself, not from documentation.
+entity_count: 106
+relationship_count: 30
+core_entities:
+- name: User
+  domain: identity
+- name: Role
+  domain: identity
+- name: UserProject
+  domain: identity
+- name: Group
+  domain: identity
+- name: Person
+  domain: identity
+- name: ProjectDTO
+  domain: project
+- name: ProjectDescription
+  domain: project
+- name: RecognizeRevenue
+  domain: project
+- name: ProjectFile
+  domain: delivery
+- name: FileRecord
+  domain: delivery
+- name: ProjectFileRecord
+  domain: delivery
+- name: SpectralDataDownloadRecord
+  domain: delivery
+- name: PlatformQcReport
+  domain: delivery
+- name: SampleSetInfo
+  domain: sample
+- name: LabVantageFileSummaryResponse
+  domain: lims
+- name: Pipeline
+  domain: pipeline
+- name: PipelineStatusFactDto
+  domain: pipeline
+- name: PipelineStatusProjectSnapshotDto
+  domain: pipeline
+- name: StudyBuilderEstimateRequestDto
+  domain: quoting
+- name: StudyBuilderEstimateResponseDto
+  domain: quoting
+- name: SearchResult
+  domain: search
+- name: SalesforcePendingUserResponse
+  domain: crm
+- name: ProblemDetails
+  domain: error
+relationships:
+- from: User
+  type: has_many
+  to: UserProject
+  via: projects
+- from: User
+  type: has_many
+  to: Role
+  via: roles
+- from: LearningCenterLinksResponse
+  type: has_many
+  to: LearningCenterLinkDto
+  via: learningCenterLinks
+- from: ShallowPingResponse
+  type: has_one
+  to: HealthEnum
+  via: health
+- from: DeepPingStatus
+  type: has_one
+  to: HealthEnum
+  via: health
+- from: ProjectDescription
+  type: has_many
+  to: Group
+  via: stakeHolders
+- from: ProjectDescription
+  type: has_one
+  to: Pipeline
+  via: pipeline
+- from: Group
+  type: has_many
+  to: Group
+  via: groups
+- from: Group
+  type: has_many
+  to: Person
+  via: members
+- from: RecognizeRevenue
+  type: has_one
+  to: RecognizeRevenueStatus
+  via: status
+- from: PlatformQcReport
+  type: has_one
+  to: ReportType
+  via: reportType
+- from: PublishParametersOfIEnumerableOfProjectFile
+  type: has_many
+  to: ProjectFile
+  via: instance
+- from: LabVantageFileSummaryResponse
+  type: has_many
+  to: LabVantageFileSummaryAttachmentItem
+  via: attachments
+- from: LabVantageImportResponse
+  type: has_many
+  to: LabVantageImportResultItem
+  via: results
+- from: PipelineStatusFactRecordsPageDto
+  type: has_many
+  to: PipelineStatusFactDto
+  via: items
+- from: PipelineStatusFactDto
+  type: has_one
+  to: PipelineStatusScope
+  via: scope
+- from: PipelineStatusFactDto
+  type: has_one
+  to: Pipeline
+  via: pipeline
+- from: PipelineStatusFactDto
+  type: has_one
+  to: PipelineStageStatus
+  via: status
+- from: PipelineStatusSummaryDto
+  type: has_one
+  to: Pipeline
+  via: pipeline
+- from: PipelineStatusSummaryDto
+  type: has_one
+  to: PipelineStageStatus
+  via: status
+- from: PipelineStatusProjectSnapshotDto
+  type: has_many
+  to: PipelineStatusFactDto
+  via: facts
+- from: PipelineStatusProjectSnapshotDto
+  type: has_many
+  to: PipelineStatusIterationManifestDto
+  via: iterationManifests
+- from: PipelineStatusIterationManifestDto
+  type: has_one
+  to: PipelineStatusScope
+  via: scope
+- from: PipelineStatusIterationManifestDto
+  type: has_one
+  to: Pipeline
+  via: pipeline
+- from: PublishParametersOfIEnumerableOfUserDTO
+  type: has_many
+  to: UserDTO
+  via: instance
+- from: TalentLmsSyncStatusResponse
+  type: has_many
+  to: TalentLmsBranchSummary
+  via: branches
+- from: TalentLmsSyncFailuresResponse
+  type: has_many
+  to: TalentLmsSyncFailureSummaryResponse
+  via: failures
+- from: TalentLmsManualSyncResponse
+  type: has_many
+  to: TalentLmsSyncFailureSummaryResponse
+  via: failures
+- from: SalesforcePendingUsersPageResponse
+  type: has_many
+  to: SalesforcePendingUserResponse
+  via: items
+- from: PublishParametersOfIEnumerableOfEmailDTO
+  type: has_many
+  to: EmailDTO
+  via: instance
+identifier_fields:
+- entity: User
+  fields:
+  - userId
+- entity: UserProject
+  fields:
+  - projectCode
+  - projectId
+- entity: LearningCenterLinkDto
+  fields:
+  - branchId
+- entity: DatadogResponse
+  fields:
+  - httpStatusCode
+- entity: ProjectFile
+  fields:
+  - fileId
+  - projectId
+- entity: ProjectDescription
+  fields:
+  - projectCode
+  - projectId
+- entity: RecognizeRevenue
+  fields:
+  - projectId
+  - recognizeRevenueId
+  - userId
+- entity: RecognizeRevenueComment
+  fields:
+  - userId
+- entity: PlatformQcReport
+  fields:
+  - limsProjectId
+  - plateId
+  - projectMdpId
+  - qcReportId
+  - reportId
+  - subsetId
+- entity: SampleSetInfo
+  fields:
+  - projectId
+  - sampleSetId
+- entity: SearchResult
+  fields:
+  - parentId
+- entity: LabVantageFileSummaryResponse
+  fields:
+  - limsProjectId
+- entity: LabVantageFileSummaryAttachmentItem
+  fields:
+  - correlatedPortalFileId
+  - lvFileId
+- entity: LabVantageImportResultItem
+  fields:
+  - lvFileId
+  - portalFileId
+- entity: LabVantageImportRequest
+  fields:
+  - projectId
+- entity: LabVantageNoticeAcknowledgeRequest
+  fields:
+  - projectId
+- entity: PipelineStatusFactDto
+  fields:
+  - correlationId
+  - parentSubjectId
+  - subjectId
+- entity: PipelineStatusIterationManifestDto
+  fields:
+  - correlationId
+  - parentSubjectId
+  - subjectId
+- entity: MergeProjectsResponse
+  fields:
+  - limsProjectId
+  - projectCode
+  - projectId
+- entity: MergeProjectsRequest
+  fields:
+  - mergeRequestId
+  - projectCode
+- entity: ProjectDTO
+  fields:
+  - projectCode
+  - projectId
+- entity: TalentLmsSyncStatusResponse
+  fields:
+  - talentLmsUserId
+- entity: TalentLmsBranchSummary
+  fields:
+  - branchId
+- entity: SalesforcePendingUserResponse
+  fields:
+  - salesforceLeadId
+  - salesforcePendingUserId
+identifier_conventions:
+- field: projectId
+  shape: uuid
+  note: primary key for a customer study; path parameter on most Files/SampleSets/SpectralData/Reports operations
+- field: projectCode
+  shape: string
+  note: human-facing project code; addressable via GET /api/v1/projects/projectCode/{projectCode}
+- field: limsProjectId
+  shape: string
+  note: foreign key into the LabVantage LIMS
+- field: correlationId
+  shape: string
+  note: pipeline-status trace identifier, also accepted as a query filter
+- field: subjectId / parentSubjectId
+  shape: string
+  note: pipeline fact subject hierarchy
+- field: salesforceLeadId
+  shape: string
+  note: foreign key into Salesforce for pending-user approval
+- field: talentLmsUserId / branchId
+  shape: string
+  note: foreign keys into the TalentLMS learning centre
+external_systems:
+- name: Auth0
+  role: identity provider (auth0.metabolon.com); pre-user-registration and post-login webhooks are first-class operations
+- name: Salesforce
+  role: user approval / pending-user sync; 503 is returned when Salesforce is unavailable
+- name: TalentLMS
+  role: learning-centre account sync
+- name: LabVantage
+  role: laboratory information management system feeding result files
+- name: Datadog
+  role: health-check and service-check monitoring endpoints exposed on every service

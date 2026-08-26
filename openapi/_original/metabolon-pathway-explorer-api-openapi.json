@@ -1,0 +1,398 @@
+{
+  "x-generator": "NSwag v14.3.0.0 (NJsonSchema v11.2.0.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "PathwayExplorerApi",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "https://pathway.prod.metabolon.com"
+    }
+  ],
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "operationId": "Health_HealthCheck",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/health/ping": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "operationId": "Health_ShallowPing",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShallowPingResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/health/deepping": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "operationId": "Health_DeepPing",
+        "parameters": [
+          {
+            "name": "chainId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeepPingResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/health/datadog/httpcheck": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "operationId": "Health_DatadogHttpCheck",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/health/datadog/servicecheck": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "operationId": "Health_DatadogServiceCheck",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatadogResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v2/health": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "operationId": "Health_HealthCheck2",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/health/ping": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "operationId": "Health_ShallowPing2",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShallowPingResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v2/health/deepping": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "operationId": "Health_DeepPing2",
+        "parameters": [
+          {
+            "name": "chainId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeepPingResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v2/health/datadog/httpcheck": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "operationId": "Health_DatadogHttpCheck2",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v2/health/datadog/servicecheck": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "operationId": "Health_DatadogServiceCheck2",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatadogResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ShallowPingResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "dateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "buildVersion": {
+            "type": "string",
+            "nullable": true
+          },
+          "uptime": {
+            "type": "string",
+            "format": "duration"
+          },
+          "health": {
+            "$ref": "#/components/schemas/HealthEnum"
+          }
+        }
+      },
+      "HealthEnum": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Unknown",
+          "Healthy",
+          "Unhealthy",
+          "CircularDependency"
+        ],
+        "enum": [
+          "Unknown",
+          "Healthy",
+          "Unhealthy",
+          "CircularDependency"
+        ]
+      },
+      "DeepPingResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "shallowPing": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ShallowPingResponse"
+              }
+            ]
+          },
+          "serviceStatus": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DeepPingStatus"
+              }
+            ]
+          },
+          "dependencies": {
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": {
+              "$ref": "#/components/schemas/DeepPingResponse"
+            }
+          }
+        }
+      },
+      "DeepPingStatus": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "health": {
+            "$ref": "#/components/schemas/HealthEnum"
+          },
+          "details": {
+            "type": "string",
+            "nullable": true
+          },
+          "postgresStatus": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PostgresDeepPingStatus"
+              }
+            ]
+          }
+        }
+      },
+      "PostgresDeepPingStatus": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "primary": {
+            "type": "boolean"
+          },
+          "environment": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "DatadogResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tags": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "hostname": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "httpStatusCode": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    }
+  }
+}

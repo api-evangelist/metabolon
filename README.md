@@ -64,5 +64,56 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Metabolon is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.nasdaqprivatemarket.com/
+Metabolon, Inc. is the metabolomics contract research and software company headquartered in Morrisville,
+North Carolina. It runs the Global Discovery Panel and a family of targeted and untargeted metabolomics,
+lipidomics and microbiome panels, and delivers the resulting biochemical data through **MyMetabolon** — a
+customer portal fronting an Integrated Bioinformatics Platform of pathway, heatmap, discovery-panel and
+multiomics analysis tools.
+
+## What this profile found
+
+Metabolon publishes **no developer program**: no API reference, no developer portal, no SDKs, no public
+GitHub organisation, no pricing page and no status page. It does, however, serve **four real OpenAPI 3.0
+documents**, unauthenticated, from its own hosts — discovered by probing `/swagger/v1/swagger.json` on the
+API hosts named in the `portal.metabolon.com` React bundle:
+
+| Service | Host | Operations |
+|---|---|---|
+| Portal API (`PortalApi`) | `portal-api.prod.metabolon.com` | **248** across 18 tags |
+| Discovery Panels API | `discovery.prod.metabolon.com` | 10 (health/monitoring only) |
+| Pathway Explorer API | `pathway.prod.metabolon.com` | 10 (health/monitoring only) |
+| Heatmap API | `heatmap.prod.metabolon.com` | 10 (health/monitoring only) |
+
+Ownership was confirmed against each document's own `servers[]` and `info.title` before anything was saved.
+
+Also found: a real, Yoast-generated `llms.txt` at `www.metabolon.com/llms.txt`, and full OIDC/OAuth
+discovery on Metabolon's branded Auth0 tenant at `auth0.metabolon.com`.
+
+## Notable findings
+
+- **Everything ships twice.** All 121 logical Portal API operations are published under both `/api/v1` and
+  `/api/v2`, schema-identical, with no policy saying which is current or when v1 retires.
+- **No security is declared in the contract.** None of the four specs declares a `securitySchemes` block,
+  though the runtime enforces Auth0 bearer authentication on every non-health operation.
+- **Rate limiting exists but is invisible.** `429` is declared on eight operations, with no
+  `Retry-After` and no `RateLimit-*` header anywhere — an agent that trips the limit gets no signal.
+- **Errors are RFC 7807** `ProblemDetails`, but served as `application/json` rather than
+  `application/problem+json`.
+- **An AI Support Assistant exists but is unreachable.** The portal mounts a RAG chat widget against
+  `${SUPPORT_AGENT_API}/api/v1/rag|info|memory`, loaded from `cdn.metabolon.com` — a host that does not
+  resolve. It is not MCP and not A2A.
+- **`portal.metabolon.com` is a CloudFront SPA catch-all** that answers 200 with the same 1752-byte shell
+  for every path, including every `/.well-known/*`. None of those 200s is a document; see
+  `well-known/metabolon-well-known.yml`.
+
+Published compliance is laboratory-side, not security-side: ISO 9001:2015, CLIA, CAP, GCP (ICH E6), GCLP,
+ICH M10, plus GDPR and CCPA. There is no SOC 2 report, no ISO 27001 certificate and no trust centre;
+`trust.metabolon.com` does not resolve.
+
+## Links
+
+- Website: https://www.metabolon.com/
+- Portal: https://portal.metabolon.com/login
+- Portal support / knowledge base: https://www.metabolon.com/support/portal/
+- Quality & compliance: https://www.metabolon.com/quality-assurance/
+- Privacy & terms: https://www.metabolon.com/legal/

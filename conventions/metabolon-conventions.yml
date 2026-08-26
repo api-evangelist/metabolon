@@ -1,0 +1,170 @@
+generated: '2026-08-25'
+method: derived
+source: openapi/metabolon-portal-api-openapi.yml
+docs: null
+note: >-
+  Metabolon publishes no API conventions documentation. Every statement below is read from the published
+  PortalApi contract — 248 operations, 243 of which carry an operation summary, and several of which
+  describe their own transactional semantics in unusual detail for an undocumented internal surface.
+authentication:
+  style: bearer
+  provider: Auth0 OIDC (auth0.metabolon.com)
+  declared_in_spec: false
+  detail: authentication/metabolon-authentication.yml
+versioning:
+  style: uri-path
+  current: v2
+  detail: lifecycle/metabolon-lifecycle.yml
+idempotency:
+  supported: false
+  header: null
+  scope: null
+  retention: null
+  evidence: 'No Idempotency-Key (or equivalent) header parameter is declared on any operation in any of the four published specs.'
+  notes:
+  - 'PUT is used for the publish and update operations (Files_PublishFile, Files_PublishFiles, Files_PublishProjectFiles, Files_UpdateSingleFile, Files_RemoveFile), which are naturally idempotent by verb.'
+  - 'Projects_DeleteProject and SampleSets_DeleteProject describe force=true as "always run delete (may no-op) ... and return 200 even when no project row exists" — an explicit idempotent-delete affordance, though not a request-replay key.'
+  - 'StudyBuilder_PostEstimate states the opposite explicitly: "Each call creates a new stored request; this route does not load a previously saved estimate." A retried estimate creates a duplicate record.'
+pagination:
+  style: offset
+  consistent: false
+  variants:
+  - operations:
+    - openapi/metabolon-portal-api-openapi.yml#PipelineStatus_GetRecords
+    params:
+    - skip
+    - page_size
+    response_field: items
+    envelope: PipelineStatusFactRecordsPageDto
+  - operations:
+    - openapi/metabolon-portal-api-openapi.yml#Users_GetSalesforcePendingUsers
+    - openapi/metabolon-portal-api-openapi.yml#Users_SearchSalesforcePendingUsers
+    params:
+    - skip
+    - take
+    response_field: items
+    envelope: SalesforcePendingUsersPageResponse
+  - operations:
+    - openapi/metabolon-portal-api-openapi.yml#Search_SearchSimple
+    params:
+    - limit
+    envelope: null
+    note: 'Truncation only — no offset, no cursor, no total.'
+  unpaginated:
+    note: 'The high-cardinality collection reads — Projects_Retrieve_AllDetails, Users_GetUsers, Files_GetFilesByProjectId — take no pagination parameters at all and return the full collection.'
+filtering:
+  note: 'Filtering is concentrated in the pipeline-status explorer, which accepts 12 query filters including a time window.'
+  time_window_params:
+  - occurredAfter
+  - occurredBefore
+  search:
+    style: path-segment
+    note: 'Search text is a PATH parameter, not a query parameter — GET /api/v1/search/simple/{text} and GET /api/v1/files/project/{projectId}/search/{searchText}. Callers must URL-encode the term into the path.'
+    type_filter_param: types
+expansion:
+  supported: false
+  note: 'No expand, include, fields or sparse-fieldset parameter exists. includeStagedFiles on the search operation is the only content-inclusion toggle.'
+metadata:
+  supported: false
+  note: 'No free-form metadata field on any entity. ProblemDetails is the only schema with additionalProperties enabled.'
+tracing:
+  request_id_header: null
+  correlation_id:
+    supported: true
+    style: query parameter on the pipeline-status explorer, and a field on PipelineStatusFactDto / PipelineStatusIterationManifestDto
+    note: 'Correlation identifiers exist inside the pipeline domain but are never returned as a response header, so a caller cannot correlate an arbitrary failed request with a server-side trace.'
+error_envelope:
+  shape: RFC 7807 ProblemDetails
+  media_type: application/json
+  problem_json_media_type: false
+  fields:
+  - type
+  - title
+  - status
+  - detail
+  - instance
+  extensible: true
+  detail: errors/metabolon-problem-types.yml
+rate_limit_signaling:
+  status_code: 429
+  headers: []
+  detail: rate-limits/metabolon-rate-limits.yml
+dry_run_mode:
+  supported: false
+  grade: absent
+  note: >-
+    No preview, validate-only or dry-run parameter exists on any write operation. The one modifier on the
+    destructive operations, force=true, points the other way: it suppresses the existence check so the
+    delete and its downstream PortalProjectEvent always fire.
+reversibility:
+  grade: documented
+  applicable: true
+  note: >-
+    The API has a real write surface (uploads, publishes, deletes, merges, role grants), and the contract
+    names explicit inverse operations for the entitlement and service-state domains. It states NO window
+    anywhere — no retention period, no undo horizon, no restore-within-N-days for any deleted object — so
+    this grades as documented rather than verified. No window has been asserted here that Metabolon does
+    not publish.
+  reversible:
+  - action: Grant a role to a user
+    operation: openapi/metabolon-portal-api-openapi.yml#Users_AddUserRole
+    reversal: openapi/metabolon-portal-api-openapi.yml#Users_RemoveUserRole
+    window: null
+  - action: Grant roles to a user in bulk
+    operation: openapi/metabolon-portal-api-openapi.yml#Users_AddUserRoles
+    reversal: openapi/metabolon-portal-api-openapi.yml#Users_RemoveUserRoles
+    window: null
+  - action: Grant a user access to a project
+    operation: openapi/metabolon-portal-api-openapi.yml#Users_AddUserProject
+    reversal: openapi/metabolon-portal-api-openapi.yml#Users_RemoveUserProject
+    window: null
+  - action: Add a permission to a role
+    operation: openapi/metabolon-portal-api-openapi.yml#Users_AddRolePermission
+    reversal: openapi/metabolon-portal-api-openapi.yml#Users_RemoveRolePermission
+    window: null
+    also: 'openapi/metabolon-portal-api-openapi.yml#Users_ResetRolePermissions restores a single role to the default definitions.'
+  - action: Any accumulated role drift across the whole database
+    operation: null
+    reversal: openapi/metabolon-portal-api-openapi.yml#Users_ResetAllRoles
+    window: null
+    note: 'Summary: "Restores all database roles to the default role definitions, removing roles not in the defaults and their user assignments." A restore to defaults, not an undo of a specific change.'
+  - action: Disable API access
+    operation: openapi/metabolon-portal-api-openapi.yml#Status_Disable
+    reversal: openapi/metabolon-portal-api-openapi.yml#Status_Enable
+    window: null
+  - action: Disable publishing
+    operation: openapi/metabolon-portal-api-openapi.yml#Status_DisablePublishing
+    reversal: openapi/metabolon-portal-api-openapi.yml#Status_EnablePublishing
+    window: null
+  irreversible:
+  - action: Delete a project
+    operation: openapi/metabolon-portal-api-openapi.yml#Projects_DeleteProject
+    reversal: null
+    note: 'Summary states it "Deletes a project and all portal-scoped data for it, then notifies downstream services via PortalProjectEvent." No restore operation exists, and the emitted event propagates the deletion beyond the portal.'
+  - action: Delete a sample set
+    operation: openapi/metabolon-portal-api-openapi.yml#SampleSets_DeleteProject
+    reversal: null
+  - action: Remove a file from a project
+    operation: openapi/metabolon-portal-api-openapi.yml#Files_RemoveFile
+    reversal: null
+    note: 'No restore operation. Files_UploadFile followed by Files_PublishFile re-creates a file but does not recover the removed record.'
+  - action: Delete a shared-file version
+    operation: openapi/metabolon-portal-api-openapi.yml#SharedFile_DeleteFile
+    reversal: null
+  - action: Merge projects into a new deliverable shell
+    operation: openapi/metabolon-portal-api-openapi.yml#Projects_MergeProjects
+    reversal: null
+    note: 'Creates a new Pipeline.Merged project shell; no unmerge or split operation exists.'
+  guarded:
+  - action: Remove a EULA version
+    operation: openapi/metabolon-portal-api-openapi.yml#Eula_RemoveVersion
+    guard: 'Summary: "Cannot remove the active EULA - it must be deactivated first." A precondition, not a reversal.'
+  - action: Accept the EULA
+    operation: openapi/metabolon-portal-api-openapi.yml#Users_AcceptEula
+    guard: 'No revoke-acceptance operation exists.'
+cross_references:
+  errors: errors/metabolon-problem-types.yml
+  lifecycle: lifecycle/metabolon-lifecycle.yml
+  authentication: authentication/metabolon-authentication.yml
+  rate_limits: rate-limits/metabolon-rate-limits.yml
+  data_model: data-model/metabolon-data-model.yml

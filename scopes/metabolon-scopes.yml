@@ -1,0 +1,71 @@
+generated: '2026-08-25'
+method: probed
+source: https://auth0.metabolon.com/.well-known/openid-configuration
+note: >-
+  derive-oauth-scopes.py found zero oauth2 securitySchemes because none of the four published Metabolon
+  OpenAPI documents declares any security at all. The scopes below are the scopes_supported list advertised
+  by Metabolon's own Auth0 tenant discovery document — they are the stock OIDC identity scopes and none of
+  them is an API authorization scope. Metabolon publishes no scopes or permissions reference page. API
+  authorization is done with server-side roles and per-project entitlements instead (see
+  authentication/metabolon-authentication.yml#authorization), so there is no scope-to-operation mapping to
+  record and none has been invented.
+docs: null
+authorization_model: role-and-project entitlement, not scope-based
+schemes:
+- name: Auth0 OIDC
+  type: openIdConnect
+  issuer: https://auth0.metabolon.com/
+  authorization_url: https://auth0.metabolon.com/authorize
+  token_url: https://auth0.metabolon.com/oauth/token
+  source: well-known/metabolon-openid-configuration.json
+scope_count: 14
+api_scope_count: 0
+scopes:
+- name: openid
+  kind: oidc
+  description: Request an ID token (OIDC core).
+- name: profile
+  kind: oidc
+  description: Basic profile claims.
+- name: offline_access
+  kind: oidc
+  description: Issue a refresh token.
+- name: name
+  kind: oidc-claim
+- name: given_name
+  kind: oidc-claim
+- name: family_name
+  kind: oidc-claim
+- name: nickname
+  kind: oidc-claim
+- name: email
+  kind: oidc-claim
+- name: email_verified
+  kind: oidc-claim
+- name: picture
+  kind: oidc-claim
+- name: created_at
+  kind: oidc-claim
+- name: identities
+  kind: oidc-claim
+- name: phone
+  kind: oidc-claim
+- name: address
+  kind: oidc-claim
+claims_supported:
+- aud
+- auth_time
+- created_at
+- email
+- email_verified
+- exp
+- family_name
+- given_name
+- iat
+- identities
+- iss
+- name
+- nickname
+- phone_number
+- picture
+- sub

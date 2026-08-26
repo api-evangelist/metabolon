@@ -1,0 +1,111 @@
+generated: '2026-08-25'
+method: derived
+status: candidate
+source: openapi/metabolon-portal-api-openapi.yml
+note: >-
+  Metabolon publishes NO MCP server. Searched the docs, npm, PyPI, the MCP registries and every Metabolon
+  host; there is no hosted endpoint and no installable package. The tools below are a CANDIDATE set derived
+  from operations that genuinely exist in the publicly served PortalApi OpenAPI, offered as a design
+  starting point — none of them is callable today, and no endpoint URL has been invented. Note that
+  Metabolon does operate an in-portal "AI Support Assistant" (see agent_surface below), but it is a RAG
+  chat widget, not an MCP server, and its backing host is not publicly resolvable.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: searched
+search_evidence:
+- target: npm registry search "metabolon"
+  result: no packages
+- target: pypi.org/pypi/metabolon/json
+  status: 404
+- target: api.github.com/orgs/metabolon
+  status: 404
+- target: Metabolon docs and support pages
+  result: no MCP mention
+agent_surface:
+  name: Metabolon AI Support Assistant
+  kind: RAG chat widget
+  status: not-publicly-reachable
+  evidence: >-
+    The portal bundle mounts an AssistantWidget against ${SUPPORT_AGENT_API}/api/v1/rag, /api/v1/info and
+    /api/v1/memory, loaded from https://cdn.metabolon.com/agent-widget/latest/agent-widget.js, with a
+    per-tenant token minted by POST /api/v1/assistant/token/{tenant}
+    (openapi/metabolon-portal-api-openapi.yml#Assistant_GetToken, summary: "Returns the minted token for
+    the agent widget to pass into the agent api").
+  reachability:
+    cdn_host: cdn.metabolon.com
+    cdn_dns: NXDOMAIN
+    support_agent_api_host: not discoverable — supplied by portal runtime config, which is not served publicly (every /config.json-style path returns the SPA shell); the compiled fallback is https://localhost:3010
+  note: 'Recorded because it is a real agent surface Metabolon has built, not because it is callable. It is neither MCP nor A2A.'
+server:
+  name: metabolon
+  transport: null
+  url: null
+tools:
+- name: list_projects
+  description: List all metabolomics projects the caller has access to, with full details.
+  source_operation: openapi/metabolon-portal-api-openapi.yml#Projects_Retrieve_AllDetails2
+- name: get_project
+  description: Retrieve a single project by its project id.
+  source_operation: openapi/metabolon-portal-api-openapi.yml#Projects_Retrieve_DetailsById2
+- name: get_project_by_code
+  description: Retrieve a project by its human-facing project code.
+  source_operation: openapi/metabolon-portal-api-openapi.yml#Projects_Retrieve_DetailsByCode2
+- name: project_is_empty
+  description: Check whether a project has any deliverable content yet.
+  source_operation: openapi/metabolon-portal-api-openapi.yml#Projects_Retrieve_IsEmpty2
+- name: list_project_files
+  description: List the result files delivered for a project.
+  source_operation: openapi/metabolon-portal-api-openapi.yml#Files_GetFilesByProjectId2
+- name: search_project_files
+  description: Search a project's files by text.
+  source_operation: openapi/metabolon-portal-api-openapi.yml#Files_SearchFilesByProjectId2
+- name: download_file
+  description: Download a single result file from a project.
+  source_operation: openapi/metabolon-portal-api-openapi.yml#Files_DownloadFile2
+- name: download_file_bundle
+  description: Download a zip bundle of selected files from a project.
+  source_operation: openapi/metabolon-portal-api-openapi.yml#Files_DownloadFileBundle2
+- name: list_sample_sets
+  description: List the sample sets belonging to a project.
+  source_operation: openapi/metabolon-portal-api-openapi.yml#SampleSetsInfo_GetSampleSetsInfos2
+- name: get_sample_set
+  description: Retrieve one sample set's information.
+  source_operation: openapi/metabolon-portal-api-openapi.yml#SampleSetsInfo_GetSampleSetsInfo2
+- name: count_sample_sets
+  description: Count the sample sets in a project.
+  source_operation: openapi/metabolon-portal-api-openapi.yml#SampleSetsInfo_GetSampleSetsCount2
+- name: get_spectral_data
+  description: Retrieve the raw spectral-data record set for a project.
+  source_operation: openapi/metabolon-portal-api-openapi.yml#SpectralData_Get2
+- name: get_spectral_data_download_link
+  description: Get a download link for a project's raw spectral data.
+  source_operation: openapi/metabolon-portal-api-openapi.yml#SpectralData_GetDownloadLink2
+- name: get_report
+  description: Retrieve a platform QC or discovery report for a project.
+  source_operation: openapi/metabolon-portal-api-openapi.yml#Reports_GetReport
+- name: search
+  description: Simple text search across projects, files and sample sets, with optional entity-type filtering.
+  source_operation: openapi/metabolon-portal-api-openapi.yml#Search_SearchSimple
+- name: get_current_user
+  description: Return the caller's portal user record, roles and project entitlements.
+  source_operation: openapi/metabolon-portal-api-openapi.yml#Users_GetCurrentUser2
+- name: get_authorized_context
+  description: Return the caller's resolved authorization context.
+  source_operation: openapi/metabolon-portal-api-openapi.yml#Auth_GetAuthorizedContext2
+- name: build_study_estimate
+  description: Submit Study Builder wizard inputs and return an indicative pricing estimate. Not idempotent — each call persists a new estimate request.
+  source_operation: openapi/metabolon-portal-api-openapi.yml#StudyBuilder_PostEstimate2
+- name: get_study_draft
+  description: Retrieve a saved pre-registration Study Builder draft.
+  source_operation: openapi/metabolon-portal-api-openapi.yml#StudyBuilder_GetDraft2
+tool_count: 19
+excluded:
+  note: >-
+    Deliberately excluded from the candidate set: the 10 health/Datadog operations (monitoring, not agent
+    work), the Auth0 webhook hooks (called INTO the API by Auth0, not by an agent), and the entire
+    /api/v1/admin surface — 130 operations including irreversible project and sample-set deletion with a
+    force flag, plus role and permission mutation. See conventions/metabolon-conventions.yml#reversibility.

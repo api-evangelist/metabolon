@@ -1,0 +1,29 @@
+generated: '2026-08-25'
+method: searched
+source: npm registry search, pypi.org, api.github.com, Metabolon docs and support pages
+note: >-
+  Metabolon publishes no client libraries. Searched npm (registry search for "metabolon" returned zero
+  packages), PyPI (pypi.org/pypi/metabolon/json -> 404), and GitHub (api.github.com/orgs/metabolon,
+  /Metabolon and /metabolon-inc all -> 404; Metabolon operates no public GitHub organisation). The support
+  and portal pages link no SDK, no code samples and no download. This is consistent with the rest of the
+  profile: the four APIs are internal portal services, not a developer product, so nothing is packaged for
+  third-party consumers. An honest zero — no SDKs pointer is emitted in apis.yml.
+package_count: 0
+official_package_count: 0
+packages: []
+registries_probed:
+- registry: npm
+  query: https://registry.npmjs.org/-/v1/search?text=metabolon
+  status: 200
+  result: 0 packages
+- registry: pypi
+  query: https://pypi.org/pypi/metabolon/json
+  status: 404
+  result: absent
+- registry: github
+  query: https://api.github.com/orgs/metabolon
+  status: 404
+  result: no public organisation
+third_party_note: >-
+  Unrelated PyPI packages exist for the public MetaboLights repository (metabolights-utils). MetaboLights
+  is an EMBL-EBI metabolomics archive, not a Metabolon product, and is not recorded here.

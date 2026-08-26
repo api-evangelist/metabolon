@@ -1,0 +1,25 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Metabolon ServiceName (heatmap service)
+  version: 1.0.0
+extends: openapi/metabolon-heatmap-api-openapi.yml
+x-generated: '2026-08-25'
+x-method: generated
+x-source: openapi/_original/metabolon-heatmap-api-openapi.json (fetched 2026-08-25 from the service /swagger/v1/swagger.json)
+actions:
+- target: $.info
+  update:
+    x-apievangelist-slug: metabolon
+    x-apievangelist-discovery: Discovered by probing /swagger/v1/swagger.json on the API host after extracting the host from the portal.metabolon.com React bundle;
+      not linked from any Metabolon documentation.
+    x-apievangelist-published-docs: false
+    x-apievangelist-auth: Auth0 OIDC bearer token (auth0.metabolon.com) — not declared in the spec securitySchemes
+    x-apievangelist-artifacts:
+    - authentication/metabolon-authentication.yml
+    - errors/metabolon-problem-types.yml
+    - conventions/metabolon-conventions.yml
+    - conformance/metabolon-conformance.yml
+- target: $
+  update:
+    x-apievangelist-note: The upstream document declares no components.securitySchemes and no top-level security requirement, although the runtime enforces Auth0
+      bearer authentication on every non-health operation.

@@ -1,0 +1,118 @@
+generated: '2026-08-25'
+method: searched
+source: live /.well-known/ probes of every Metabolon host found in apis.yml and the OpenAPI servers[]
+note: >-
+  Only the Metabolon-branded Auth0 tenant at auth0.metabolon.com serves any /.well-known/ document. The
+  four *.prod.metabolon.com API services return a hard 404 with a zero-byte body on every path. The
+  marketing site (www.metabolon.com, WP Engine) returns a real 404 for every path. portal.metabolon.com is
+  a React single-page app whose CloudFront catch-all answers HTTP 200 with an identical 1752-byte HTML
+  shell for EVERY path — a soft-404 control request to a random path returned the same 200/1752 bytes, so
+  none of its 200s are documents and none were saved.
+hit_count: 2
+hosts:
+- host: https://auth0.metabolon.com
+  note: Metabolon-branded Auth0 custom domain (CNAME metabolon-cd-jl41febl68h19uzv.edge.tenants.auth0.com); the identity provider behind portal.metabolon.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: metabolon-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: metabolon-oauth-authorization-server.json
+  - path: /.well-known/jwks.json
+    status: 200
+    file: null
+    note: served (3088 bytes, RSA signing keys) but not saved — key material rotates and is not a stable artifact
+- host: https://portal-api.prod.metabolon.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://discovery.prod.metabolon.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://heatmap.prod.metabolon.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://www.metabolon.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://portal.metabolon.com
+  note: CloudFront SPA catch-all — every path returns 200 with the same 1752-byte HTML shell; treated as a miss on every probe
+  soft_404_control:
+    path: /zzz-definitely-not-here-<random>
+    status: 200
+    bytes: 1752
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: null
+    note: HTML SPA shell, not a document
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: null
+    note: HTML SPA shell, not a document
+  - path: /.well-known/agent.json
+    status: 200
+    file: null
+    note: HTML SPA shell, not a document
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: null
+    note: HTML SPA shell, not a document
+  - path: /.well-known/api-catalog
+    status: 200
+    file: null
+    note: HTML SPA shell, not a document
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    file: null
+    note: HTML SPA shell, not a document

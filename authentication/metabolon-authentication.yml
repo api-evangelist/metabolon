@@ -1,0 +1,121 @@
+generated: '2026-08-25'
+method: probed
+source: https://auth0.metabolon.com/.well-known/openid-configuration
+docs: https://www.metabolon.com/support/portal/data/
+note: >-
+  The publicly served PortalApi OpenAPI declares NO components.securitySchemes and no top-level security
+  requirement, so nothing could be derived from the contract — derive-authentication.py returned zero
+  schemes. The auth model below is read from the live OIDC discovery document on Metabolon's own Auth0
+  custom domain (auth0.metabolon.com) plus the Auth0 SPA client wired into the portal.metabolon.com React
+  bundle. Metabolon publishes no developer authentication documentation; there is no API key programme, no
+  self-service credential issuance, and no machine/service-account path documented anywhere public.
+summary:
+  model: oauth2-oidc
+  provider: Auth0 (Metabolon-branded custom domain)
+  issuer: https://auth0.metabolon.com/
+  legacy_issuer: https://metabolon.auth0.com/
+  runtime_credential: Bearer JWT (RS256) presented to the *.prod.metabolon.com services
+  self_service: false
+  api_keys: false
+  mtls: false
+  declared_in_spec: false
+schemes:
+- name: Auth0 OIDC
+  type: openIdConnect
+  openIdConnectUrl: https://auth0.metabolon.com/.well-known/openid-configuration
+  discovery_file: well-known/metabolon-openid-configuration.json
+  endpoints:
+    authorization: https://auth0.metabolon.com/authorize
+    token: https://auth0.metabolon.com/oauth/token
+    userinfo: https://auth0.metabolon.com/userinfo
+    jwks: https://auth0.metabolon.com/.well-known/jwks.json
+    revocation: https://auth0.metabolon.com/oauth/revoke
+    registration: https://auth0.metabolon.com/oidc/register
+    device_authorization: https://auth0.metabolon.com/oauth/device/code
+    mfa_challenge: https://auth0.metabolon.com/mfa/challenge
+  grant_types:
+  - authorization_code
+  - refresh_token
+  - client_credentials
+  - implicit
+  - password
+  - urn:ietf:params:oauth:grant-type:device_code
+  - urn:ietf:params:oauth:grant-type:token-exchange
+  - urn:ietf:params:oauth:grant-type:jwt-bearer
+  - http://auth0.com/oauth/grant-type/password-realm
+  - http://auth0.com/oauth/grant-type/passwordless/otp
+  - http://auth0.com/oauth/grant-type/mfa-oob
+  - http://auth0.com/oauth/grant-type/mfa-otp
+  - http://auth0.com/oauth/grant-type/mfa-recovery-code
+  response_types:
+  - code
+  - token
+  - id_token
+  - code token
+  - code id_token
+  - token id_token
+  - code token id_token
+  token_endpoint_auth_methods:
+  - client_secret_basic
+  - client_secret_post
+  - private_key_jwt
+  - none
+  id_token_signing_algs:
+  - RS256
+  - HS256
+  - PS256
+  pkce:
+    supported: true
+    code_challenge_methods:
+    - S256
+    - plain
+  mfa:
+    supported: true
+    evidence: mfa_challenge_endpoint present plus mfa-oob / mfa-otp / mfa-recovery-code grant types
+  backchannel_logout_supported: true
+  request_uri_parameter_supported: false
+  scopes: scopes/metabolon-scopes.yml
+identity_flows:
+- name: Portal sign-in
+  description: Auth0 SPA authorization-code + PKCE flow initiated from https://portal.metabolon.com/login; the resulting access token is sent as a bearer credential to portal-api.prod.metabolon.com.
+  evidence: auth0-spa-js bundled in portal.metabolon.com/static/js/main.63f8c925.js
+- name: Pre-user-registration hook
+  description: Auth0 Action calls POST /api/v1/auth0/pre-user-registration on the Portal API to gate who may create an account.
+  operation: openapi/metabolon-portal-api-openapi.yml#Auth_OnPreUserRegistration
+- name: Post-login hook
+  description: Auth0 Action calls POST /api/v1/auth0/post-login on the Portal API after successful authentication.
+  operation: openapi/metabolon-portal-api-openapi.yml#Auth_OnPostLogin
+- name: Salesforce connection verification
+  description: GET /api/v1/auth0/verify-salesforce confirms the authenticating user maps to a Salesforce record; unapproved users go through an admin approval queue.
+  operation: openapi/metabolon-portal-api-openapi.yml#Auth_VerifySalesforceConnection
+- name: Authorized context
+  description: GET /api/v1/auth/context returns the caller's resolved roles, permissions and project entitlements (IAuthorizedContext).
+  operation: openapi/metabolon-portal-api-openapi.yml#Auth_GetAuthorizedContext
+- name: Learning centre authorization
+  description: POST /api/v1/auth0/learning-center/authorize brokers access to the TalentLMS learning centre.
+  operation: openapi/metabolon-portal-api-openapi.yml#Auth_AuthorizeLearningCenterAccess
+- name: Assistant token exchange
+  description: POST /api/v1/assistant/token/{tenant} mints a scoped token for the in-portal assistant per tenant.
+  operation: openapi/metabolon-portal-api-openapi.yml#Assistant_GetToken
+authorization:
+  model: role-and-project entitlement
+  note: >-
+    Authorization is enforced per project, not per scope. A user is granted membership of specific projects
+    (UserProject) and named roles carrying permissions from a server-side catalog
+    (GET /api/v1/admin/users/roles/permissions/catalog). OAuth scopes on the token are the stock Auth0 OIDC
+    profile scopes and carry no API authorization meaning.
+  permission_catalog_operation: openapi/metabolon-portal-api-openapi.yml#Users_GetPermissionsCatalog
+  role_operations:
+  - openapi/metabolon-portal-api-openapi.yml#Users_GetRoles
+  - openapi/metabolon-portal-api-openapi.yml#Users_GetRolePermissions
+  - openapi/metabolon-portal-api-openapi.yml#Users_AddRolePermission
+  - openapi/metabolon-portal-api-openapi.yml#Users_RemoveRolePermission
+transport_security:
+  tls: TLSv1.3 on every probed host
+  hsts: enabled on www.metabolon.com (max-age 31536000); absent on the *.prod.metabolon.com API hosts
+  encryption_at_rest: stated on https://www.metabolon.com/support/portal/data/
+  source: security/metabolon-domain-security.yml
+gaps:
+- No securitySchemes are declared in any of the four published OpenAPI documents.
+- No public developer authentication documentation, no API key issuance, no documented service-account or client-credentials path for customers.
+- The published OpenAPI is served unauthenticated, but every non-health operation it describes requires a portal account.

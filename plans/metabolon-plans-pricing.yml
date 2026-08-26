@@ -1,0 +1,31 @@
+generated: '2026-08-25'
+method: searched
+source: https://www.metabolon.com/
+docs: null
+note: >-
+  Metabolon publishes no pricing page and no plan tiers. https://www.metabolon.com/pricing/ returns HTTP
+  404. Metabolon is a metabolomics contract research organisation: studies are quoted per project by the
+  sales team, and its own Study Builder is the quoting mechanism — POST /api/v1/study-builder/estimate
+  produces an estimate and POST /api/v1/study-builder emails a quote summary, both behind a portal login.
+  There is no self-service purchase, no free tier, no published list price and no metered API pricing. An
+  honest plan_count of 0, not an omission.
+pricing_model: quote-per-study (contract research)
+self_service: false
+free_tier: false
+plan_count: 0
+plans: []
+quoting_surface:
+  note: 'The only machine-readable pricing surface Metabolon operates is authenticated and internal to the portal.'
+  operations:
+  - openapi/metabolon-portal-api-openapi.yml#StudyBuilder_PostEstimate
+  - openapi/metabolon-portal-api-openapi.yml#StudyBuilder_PostDraft
+  - openapi/metabolon-portal-api-openapi.yml#StudyBuilder_GetDraft
+  - openapi/metabolon-portal-api-openapi.yml#StudyBuilder_PostQuoteSummaryEmail
+evidence:
+- url: https://www.metabolon.com/pricing/
+  status: 404
+- url: https://www.metabolon.com/
+  status: 200
+contact_routes:
+- https://www.metabolon.com/contact-us/
+- https://www.metabolon.com/get-started/

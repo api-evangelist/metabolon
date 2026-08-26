@@ -1,0 +1,29 @@
+generated: '2026-08-25'
+method: derived
+source: openapi/metabolon-portal-api-openapi.yml
+docs: null
+note: >-
+  Metabolon publishes no rate-limit documentation. The contract proves rate limiting EXISTS — eight
+  operations declare a 429 response returning ProblemDetails — but states no quota, no window, no burst
+  and no response headers. No X-RateLimit-*, RateLimit-* or Retry-After header is declared on any response
+  in any of the four specs, so an agent that hits the limit gets a 429 with no machine-readable signal
+  telling it how long to wait. limit_count is an honest zero: nothing numeric is published.
+limit_count: 0
+rate_limiting_present: true
+rate_limiting_evidence: '429 Too Many Requests declared on 8 operations (StudyBuilder and Users_ApproveUser families), body components.schemas.ProblemDetails'
+status_code_on_exhaustion: 429
+headers:
+  request: []
+  response: []
+  retry_after: false
+  note: 'No rate-limit response headers are declared anywhere in the published contracts.'
+limits: []
+rate_limited_operations:
+- openapi/metabolon-portal-api-openapi.yml#StudyBuilder_PostEstimate
+- openapi/metabolon-portal-api-openapi.yml#StudyBuilder_PostEstimate2
+- openapi/metabolon-portal-api-openapi.yml#StudyBuilder_PostDraft
+- openapi/metabolon-portal-api-openapi.yml#StudyBuilder_PostDraft2
+- openapi/metabolon-portal-api-openapi.yml#StudyBuilder_PostQuoteSummaryEmail
+- openapi/metabolon-portal-api-openapi.yml#StudyBuilder_PostQuoteSummaryEmail2
+- openapi/metabolon-portal-api-openapi.yml#Users_ApproveUser
+- openapi/metabolon-portal-api-openapi.yml#Users_ApproveUser2

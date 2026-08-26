@@ -1,0 +1,27 @@
+generated: '2026-08-25'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.metabolon.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 28 02:32:01 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+- host: portal-api.prod.metabolon.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Mar 17 23:59:59 2027 GMT
+  hsts: null
+- host: discovery.prod.metabolon.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Mar 17 23:59:59 2027 GMT
+  hsts: null
+domains:
+- domain: metabolon.com
+  dnssec: false
+  caa: []
+  spf: false
+  dmarc: true
+  dmarc_policy: quarantine

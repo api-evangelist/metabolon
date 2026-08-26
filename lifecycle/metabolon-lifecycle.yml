@@ -1,0 +1,65 @@
+generated: '2026-08-25'
+method: derived
+source: openapi/metabolon-portal-api-openapi.yml
+note: >-
+  Metabolon publishes no versioning policy, no deprecation policy, no SLA and no status page. Everything
+  below is read from the contracts themselves. status.metabolon.com does not resolve (NXDOMAIN), so no
+  StatusPage pointer is emitted; www.metabolon.com/pricing/ and /security/ return 404.
+versioning:
+  scheme: uri-path
+  current: v2
+  also_served: v1
+  docs: null
+  note: >-
+    Every one of the 121 logical operations in the Portal API is published twice — once under /api/v1 and
+    once under /api/v2 — with the v2 operationId suffixed "2" (Users_GetCurrentUser / Users_GetCurrentUser2).
+    The v1 and v2 pairs are schema-identical in the published document; nothing in the contract states what
+    distinguishes them, whether v1 is frozen, or when it will be withdrawn. The three bioinformatics
+    services do the same for their ten health operations.
+  duplicate_version_pairs: 121
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  note: 'No RFC 8594 Sunset or Deprecation response headers are declared in any published spec, and no deprecation policy page exists.'
+deprecated_operations:
+- openapi/metabolon-portal-api-openapi.yml#Decentralization_GetInjectionMetadata
+- openapi/metabolon-portal-api-openapi.yml#Decentralization_GetInjectionMetadata3
+deprecated_operation_note: >-
+  The two-argument /decentralization/injection/{projectId}/{filePath} forms supersede the single-argument
+  /decentralization/injection/{filePath} forms, which carry deprecated: true in the contract. The v1 and v2
+  single-argument variants are both marked; no sunset date is given.
+sla:
+  url: null
+  uptime_target: null
+status_page: null
+status_page_evidence:
+  probed: 'https://status.metabolon.com/'
+  result: NXDOMAIN
+health_surface:
+  note: >-
+    In place of a public status page, all four services expose an unauthenticated health tier that anyone
+    can poll — shallow ping, deep ping (which reports Postgres dependency status) and two Datadog
+    check endpoints, under both /api/v1 and /api/v2.
+  operations:
+  - openapi/metabolon-portal-api-openapi.yml#Health_HealthCheck
+  - openapi/metabolon-portal-api-openapi.yml#Health_ShallowPing
+  - openapi/metabolon-portal-api-openapi.yml#Health_DeepPing
+  - openapi/metabolon-portal-api-openapi.yml#Health_DatadogHttpCheck
+  - openapi/metabolon-portal-api-openapi.yml#Health_DatadogServiceCheck
+  hosts:
+  - https://portal-api.prod.metabolon.com/api/v2/health/ping
+  - https://discovery.prod.metabolon.com/api/v2/health/ping
+  - https://pathway.prod.metabolon.com/api/v2/health/ping
+  - https://heatmap.prod.metabolon.com/api/v2/health/ping
+changelog:
+  url: null
+  note: 'No dated API or portal changelog is published. Product announcements appear as press releases at https://www.metabolon.com/news/ and are not versioned against the API.'
+spec_provenance:
+  generator: NSwag
+  versions:
+    portal-api: v14.6.2.0
+    discovery-panels-api: v14.2.0.0
+    heatmap-api: v14.3.0.0
+    pathway-explorer-api: v14.3.0.0
+  note: 'The differing NSwag versions indicate the four services are built and deployed independently.'

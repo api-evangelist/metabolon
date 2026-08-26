@@ -1,0 +1,96 @@
+generated: '2026-08-25'
+method: derived
+source: openapi/metabolon-portal-api-openapi.yml
+format: rfc7807
+note: Derived from the 4xx/5xx responses declared in the publicly served PortalApi OpenAPI. The error body is the ASP.NET Core ProblemDetails schema (type/title/status/detail/instance
+  plus additionalProperties) — RFC 7807, the predecessor of RFC 9457. Two operations state RFC7807 explicitly in their response description. Responses are returned
+  as application/json, NOT application/problem+json, so a client cannot content-negotiate the problem shape. Metabolon publishes no error reference, so no remediation
+  text is available to enrich these entries.
+envelope:
+  schema: ProblemDetails
+  fields:
+  - detail
+  - instance
+  - status
+  - title
+  - type
+  extensible: true
+  source: openapi/metabolon-portal-api-openapi.yml#/components/schemas/ProblemDetails
+problem_count: 10
+problems:
+- status: 400
+  title: Bad Request
+  description: null
+  media_types:
+  - application/json
+  schema: ProblemDetails
+  operation_count: 16
+  example_operation: openapi/metabolon-portal-api-openapi.yml#StudyBuilder_PostEstimate
+- status: 400
+  title: Bad Request
+  description: Email is required, or the email is not allowed (permanent). Returns RFC7807 ProblemDetails.
+  media_types:
+  - application/json
+  schema: ProblemDetails
+  operation_count: 2
+  example_operation: openapi/metabolon-portal-api-openapi.yml#Users_ApproveUser
+- status: 404
+  title: Not Found
+  description: null
+  media_types:
+  - application/json
+  schema: ProblemDetails
+  operation_count: 17
+  example_operation: openapi/metabolon-portal-api-openapi.yml#Reports_GetReport
+- status: 422
+  title: Unprocessable Entity
+  description: null
+  media_types:
+  - application/json
+  schema: LabVantageImportResponse
+  operation_count: 2
+  example_operation: openapi/metabolon-portal-api-openapi.yml#LabVantageFiles_ImportLabVantageFiles
+- status: 429
+  title: Too Many Requests
+  description: null
+  media_types:
+  - application/json
+  schema: ProblemDetails
+  operation_count: 8
+  example_operation: openapi/metabolon-portal-api-openapi.yml#StudyBuilder_PostEstimate
+- status: 500
+  title: Internal Server Error
+  description: null
+  media_types: null
+  schema: null
+  operation_count: 7
+  example_operation: openapi/metabolon-portal-api-openapi.yml#Health_DatadogHttpCheck
+- status: 500
+  title: Internal Server Error
+  description: The request generated an error on the server
+  media_types: null
+  schema: null
+  operation_count: 4
+  example_operation: openapi/metabolon-portal-api-openapi.yml#Health_ShallowPing
+- status: 502
+  title: Bad Gateway
+  description: null
+  media_types: null
+  schema: null
+  operation_count: 4
+  example_operation: openapi/metabolon-portal-api-openapi.yml#LabVantageFiles_GetLabVantageFileSummary
+- status: 503
+  title: Service Unavailable
+  description: null
+  media_types: null
+  schema: null
+  operation_count: 2
+  example_operation: openapi/metabolon-portal-api-openapi.yml#StudyBuilder_PostQuoteSummaryEmail
+- status: 503
+  title: Service Unavailable
+  description: Salesforce was unavailable; approval can be retried. Returns RFC7807 ProblemDetails.
+  media_types:
+  - application/json
+  schema: ProblemDetails
+  operation_count: 2
+  example_operation: openapi/metabolon-portal-api-openapi.yml#Users_ApproveUser
