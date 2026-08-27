@@ -33,89 +33,272 @@ tags:
 - Contract Research
 - Laboratory
 apis:
-- name: Metabolon Portal API
-  description: >-
-    The backend REST API for the MyMetabolon customer portal (portal.metabolon.com). 248 operations across
-    18 tags — Users, Auth, Projects, Files, SampleSetsInfo, SpectralData, StudyBuilder, Reports, Search,
-    Eula, SharedFile, Decentralization, LabVantageFiles, PipelineStatus, Status and Health — covering project
-    and sample-set retrieval, result-file listing/search/download bundles, spectral-data download links,
-    study-builder quoting, Auth0 registration/post-login hooks, EULA management and administrative
-    user/role/permission management. Every path is published in parallel under /api/v1 and /api/v2. The
-    OpenAPI is served publicly and unauthenticated; the operations themselves require an Auth0 bearer token
-    and a portal account. Metabolon publishes no developer documentation for this surface.
+- aid: metabolon:metabolon-assistant-api
+  name: Metabolon Assistant API
+  description: The Assistant API from Metabolon — 2 operation(s) for assistant.
   humanURL: https://www.metabolon.com/support/portal/
   baseURL: https://portal-api.prod.metabolon.com
   tags:
-  - Metabolomics
-  - Bioinformatics
-  - Life Sciences
-  - Project Management
-  - File Delivery
-  - Spectral Data
+  - Assistant
   properties:
   - type: OpenAPI
-    url: openapi/metabolon-portal-api-openapi.yml
-  - type: Overlay
-    url: overlays/metabolon-portal-api-overlay.yaml
+    url: openapi/metabolon-assistant-api-openapi.yml
   - type: Documentation
     url: https://www.metabolon.com/support/portal/
   - type: Login
     url: https://portal.metabolon.com/login
-- name: Metabolon Discovery Panels API
-  description: >-
-    ASP.NET service backing the Discovery Panel views of the Metabolon Integrated Bioinformatics Platform.
-    Its public NSwag OpenAPI document (DiscoveryPanelsApi v1) exposes only the ten health, ping, deep-ping
-    and Datadog monitoring operations under /api/v1 and /api/v2; the analytical operations the portal calls
-    are not present in the published document.
-  humanURL: https://www.metabolon.com/bioinformatics-software/
-  baseURL: https://discovery.prod.metabolon.com
+- aid: metabolon:metabolon-auth-api
+  name: Metabolon Auth API
+  description: The Auth API from Metabolon — 10 operation(s) for auth.
+  humanURL: https://www.metabolon.com/support/portal/
+  baseURL: https://portal-api.prod.metabolon.com
   tags:
-  - Bioinformatics
-  - Metabolomics
-  - Health Check
+  - Auth
   properties:
   - type: OpenAPI
-    url: openapi/metabolon-discovery-panels-api-openapi.yml
-  - type: Overlay
-    url: overlays/metabolon-discovery-panels-api-overlay.yaml
-- name: Metabolon Pathway Explorer API
-  description: >-
-    ASP.NET service backing the Pathway Explorer visualization in the Metabolon Integrated Bioinformatics
-    Platform. Its public NSwag OpenAPI document (PathwayExplorerApi v1) exposes only the ten health, ping,
-    deep-ping and Datadog monitoring operations under /api/v1 and /api/v2.
-  humanURL: https://www.metabolon.com/bioinformatics-software/
-  baseURL: https://pathway.prod.metabolon.com
+    url: openapi/metabolon-auth-api-openapi.yml
+  - type: Documentation
+    url: https://www.metabolon.com/support/portal/
+  - type: Login
+    url: https://portal.metabolon.com/login
+- aid: metabolon:metabolon-decentralization-api
+  name: Metabolon Decentralization API
+  description: The Decentralization API from Metabolon — 4 operation(s) for decentralization.
+  humanURL: https://www.metabolon.com/support/portal/
+  baseURL: https://portal-api.prod.metabolon.com
   tags:
-  - Bioinformatics
-  - Pathway Analysis
-  - Health Check
+  - Decentralization
   properties:
   - type: OpenAPI
-    url: openapi/metabolon-pathway-explorer-api-openapi.yml
-  - type: Overlay
-    url: overlays/metabolon-pathway-explorer-api-overlay.yaml
-- name: Metabolon Heatmap API
-  description: >-
-    ASP.NET service backing the heatmap visualization in the Metabolon Integrated Bioinformatics Platform.
-    Its public NSwag OpenAPI document carries the NSwag default title "ServiceName" and exposes only the ten
-    health, ping, deep-ping and Datadog monitoring operations under /api/v1 and /api/v2.
-  humanURL: https://www.metabolon.com/bioinformatics-software/
-  baseURL: https://heatmap.prod.metabolon.com
+    url: openapi/metabolon-decentralization-api-openapi.yml
+  - type: Documentation
+    url: https://www.metabolon.com/support/portal/
+  - type: Login
+    url: https://portal.metabolon.com/login
+- aid: metabolon:metabolon-eula-api
+  name: Metabolon Eula API
+  description: The Eula API from Metabolon — 12 operation(s) for eula.
+  humanURL: https://www.metabolon.com/support/portal/
+  baseURL: https://portal-api.prod.metabolon.com
   tags:
-  - Bioinformatics
-  - Data Visualization
-  - Health Check
+  - Eula
   properties:
   - type: OpenAPI
-    url: openapi/metabolon-heatmap-api-openapi.yml
-  - type: Overlay
-    url: overlays/metabolon-heatmap-api-overlay.yaml
+    url: openapi/metabolon-eula-api-openapi.yml
+  - type: Documentation
+    url: https://www.metabolon.com/support/portal/
+  - type: Login
+    url: https://portal.metabolon.com/login
+- aid: metabolon:metabolon-files-api
+  name: Metabolon Files API
+  description: The Files API from Metabolon — 34 operation(s) for files.
+  humanURL: https://www.metabolon.com/support/portal/
+  baseURL: https://portal-api.prod.metabolon.com
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/metabolon-files-api-openapi.yml
+  - type: Documentation
+    url: https://www.metabolon.com/support/portal/
+  - type: Login
+    url: https://portal.metabolon.com/login
+- aid: metabolon:metabolon-health-api
+  name: Metabolon Health API
+  description: The Health API from Metabolon — 10 operation(s) for health.
+  humanURL: https://www.metabolon.com/support/portal/
+  baseURL: https://portal-api.prod.metabolon.com
+  tags:
+  - Health
+  properties:
+  - type: OpenAPI
+    url: openapi/metabolon-health-api-openapi.yml
+  - type: Documentation
+    url: https://www.metabolon.com/support/portal/
+  - type: Login
+    url: https://portal.metabolon.com/login
+- aid: metabolon:metabolon-labvantagefiles-api
+  name: Metabolon Lab Vantage Files API
+  description: The LabVantageFiles API from Metabolon — 6 operation(s) for labvantagefiles.
+  humanURL: https://www.metabolon.com/support/portal/
+  baseURL: https://portal-api.prod.metabolon.com
+  tags:
+  - LabVantageFiles
+  properties:
+  - type: OpenAPI
+    url: openapi/metabolon-labvantagefiles-api-openapi.yml
+  - type: Documentation
+    url: https://www.metabolon.com/support/portal/
+  - type: Login
+    url: https://portal.metabolon.com/login
+- aid: metabolon:metabolon-pipelinestatus-api
+  name: Metabolon Pipeline Status API
+  description: The PipelineStatus API from Metabolon — 8 operation(s) for pipelinestatus.
+  humanURL: https://www.metabolon.com/support/portal/
+  baseURL: https://portal-api.prod.metabolon.com
+  tags:
+  - PipelineStatus
+  properties:
+  - type: OpenAPI
+    url: openapi/metabolon-pipelinestatus-api-openapi.yml
+  - type: Documentation
+    url: https://www.metabolon.com/support/portal/
+  - type: Login
+    url: https://portal.metabolon.com/login
+- aid: metabolon:metabolon-projects-api
+  name: Metabolon Projects API
+  description: The Projects API from Metabolon — 18 operation(s) for projects.
+  humanURL: https://www.metabolon.com/support/portal/
+  baseURL: https://portal-api.prod.metabolon.com
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/metabolon-projects-api-openapi.yml
+  - type: Documentation
+    url: https://www.metabolon.com/support/portal/
+  - type: Login
+    url: https://portal.metabolon.com/login
+- aid: metabolon:metabolon-reports-api
+  name: Metabolon Reports API
+  description: The Reports API from Metabolon — 1 operation(s) for reports.
+  humanURL: https://www.metabolon.com/support/portal/
+  baseURL: https://portal-api.prod.metabolon.com
+  tags:
+  - Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/metabolon-reports-api-openapi.yml
+  - type: Documentation
+    url: https://www.metabolon.com/support/portal/
+  - type: Login
+    url: https://portal.metabolon.com/login
+- aid: metabolon:metabolon-samplesets-api
+  name: Metabolon Sample Sets API
+  description: The SampleSets API from Metabolon — 2 operation(s) for samplesets.
+  humanURL: https://www.metabolon.com/support/portal/
+  baseURL: https://portal-api.prod.metabolon.com
+  tags:
+  - SampleSets
+  properties:
+  - type: OpenAPI
+    url: openapi/metabolon-samplesets-api-openapi.yml
+  - type: Documentation
+    url: https://www.metabolon.com/support/portal/
+  - type: Login
+    url: https://portal.metabolon.com/login
+- aid: metabolon:metabolon-samplesetsinfo-api
+  name: Metabolon Sample Sets Info API
+  description: The SampleSetsInfo API from Metabolon — 6 operation(s) for samplesetsinfo.
+  humanURL: https://www.metabolon.com/support/portal/
+  baseURL: https://portal-api.prod.metabolon.com
+  tags:
+  - SampleSetsInfo
+  properties:
+  - type: OpenAPI
+    url: openapi/metabolon-samplesetsinfo-api-openapi.yml
+  - type: Documentation
+    url: https://www.metabolon.com/support/portal/
+  - type: Login
+    url: https://portal.metabolon.com/login
+- aid: metabolon:metabolon-search-api
+  name: Metabolon Search API
+  description: The Search API from Metabolon — 1 operation(s) for search.
+  humanURL: https://www.metabolon.com/support/portal/
+  baseURL: https://portal-api.prod.metabolon.com
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/metabolon-search-api-openapi.yml
+  - type: Documentation
+    url: https://www.metabolon.com/support/portal/
+  - type: Login
+    url: https://portal.metabolon.com/login
+- aid: metabolon:metabolon-sharedfile-api
+  name: Metabolon Shared File API
+  description: The SharedFile API from Metabolon — 12 operation(s) for sharedfile.
+  humanURL: https://www.metabolon.com/support/portal/
+  baseURL: https://portal-api.prod.metabolon.com
+  tags:
+  - SharedFile
+  properties:
+  - type: OpenAPI
+    url: openapi/metabolon-sharedfile-api-openapi.yml
+  - type: Documentation
+    url: https://www.metabolon.com/support/portal/
+  - type: Login
+    url: https://portal.metabolon.com/login
+- aid: metabolon:metabolon-spectraldata-api
+  name: Metabolon Spectral Data API
+  description: The SpectralData API from Metabolon — 4 operation(s) for spectraldata.
+  humanURL: https://www.metabolon.com/support/portal/
+  baseURL: https://portal-api.prod.metabolon.com
+  tags:
+  - SpectralData
+  properties:
+  - type: OpenAPI
+    url: openapi/metabolon-spectraldata-api-openapi.yml
+  - type: Documentation
+    url: https://www.metabolon.com/support/portal/
+  - type: Login
+    url: https://portal.metabolon.com/login
+- aid: metabolon:metabolon-status-api
+  name: Metabolon Status API
+  description: The Status API from Metabolon — 16 operation(s) for status.
+  humanURL: https://www.metabolon.com/support/portal/
+  baseURL: https://portal-api.prod.metabolon.com
+  tags:
+  - Status
+  properties:
+  - type: OpenAPI
+    url: openapi/metabolon-status-api-openapi.yml
+  - type: Documentation
+    url: https://www.metabolon.com/support/portal/
+  - type: Login
+    url: https://portal.metabolon.com/login
+- aid: metabolon:metabolon-studybuilder-api
+  name: Metabolon Study Builder API
+  description: The StudyBuilder API from Metabolon — 6 operation(s) for studybuilder.
+  humanURL: https://www.metabolon.com/support/portal/
+  baseURL: https://portal-api.prod.metabolon.com
+  tags:
+  - StudyBuilder
+  properties:
+  - type: OpenAPI
+    url: openapi/metabolon-studybuilder-api-openapi.yml
+  - type: Documentation
+    url: https://www.metabolon.com/support/portal/
+  - type: Login
+    url: https://portal.metabolon.com/login
+- aid: metabolon:metabolon-users-api
+  name: Metabolon Users API
+  description: The Users API from Metabolon — 90 operation(s) for users.
+  humanURL: https://www.metabolon.com/support/portal/
+  baseURL: https://portal-api.prod.metabolon.com
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/metabolon-users-api-openapi.yml
+  - type: Documentation
+    url: https://www.metabolon.com/support/portal/
+  - type: Login
+    url: https://portal.metabolon.com/login
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/metabolon-portal-api-overlay.yaml
+- type: Overlay
+  url: overlays/metabolon-discovery-panels-api-overlay.yaml
+- type: Overlay
+  url: overlays/metabolon-pathway-explorer-api-overlay.yaml
+- type: Overlay
+  url: overlays/metabolon-heatmap-api-overlay.yaml
 - type: Website
   url: https://www.metabolon.com/
 - type: Documentation
