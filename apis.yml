@@ -10,6 +10,18 @@ description: >-
   by four publicly reachable ASP.NET services on *.prod.metabolon.com whose NSwag-generated OpenAPI 3.0
   documents are served unauthenticated at /swagger/v1/swagger.json, and customer sign-in runs on a
   Metabolon-branded Auth0 tenant at auth0.metabolon.com with full OIDC discovery.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://www.metabolon.com/wp-content/uploads/2022/11/Metabolon-logo-peak@2x.webp
 url: https://raw.githubusercontent.com/api-evangelist/metabolon/refs/heads/main/apis.yml
 x-type: company
