@@ -303,6 +303,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/metabolon-capability-edges.yml
+  name: Metabolon Business Capability Map
 - type: Overlay
   url: overlays/metabolon-portal-api-overlay.yaml
 - type: Overlay

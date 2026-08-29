@@ -1,0 +1,35 @@
+slug: metabolon
+provider: Metabolon
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Pharmaceuticals & Life Sciences
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: StudyBuilder
+  spec_file: metabolon-studybuilder-api-openapi.yml
+  capability_id: BC-410.40
+  capability_id_l1: BC-410
+  capability_name: Quote & Configuration Management
+  confidence: 0.8
+  evidence: '"calculate a fresh indicative estimate from the pricing matrix"; "Submit a study builder
+    quote summary: emails the submitter and Metabolon sales"'
+  reason: A quote builder that prices a study from a pricing matrix and routes the quote to sales — configure/price/quote
+    functionality.
+- tag: Users
+  spec_file: metabolon-users-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: '"Adds roles to a user"; "Adds projects to a user"; "Adds or updates a user without assigning
+    a project"'
+  reason: Portal user account, role and permission administration — identity and access management rather
+    than HR or CRM.
