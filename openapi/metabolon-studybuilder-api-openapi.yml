@@ -1,0 +1,439 @@
+openapi: 3.2.0
+info:
+  title: PortalApi Study Builder API
+  version: '1.0'
+servers:
+- url: https://portal-api.prod.metabolon.com
+tags:
+- name: StudyBuilder
+paths:
+  /api/v1/study-builder/estimate:
+    post:
+      tags:
+      - StudyBuilder
+      summary: 'Submit a Quote Builder estimate request: calculate a fresh indicative estimate from the pricing matrix,
+
+        persist the wizard inputs and result to StudyBuilderEstimateRequestRecords, then return the estimate.
+
+        Each call creates a new stored request; this route does not load a previously saved estimate.
+
+        On persistence failure the request fails with 500 and no estimate is returned.
+
+        Intended for authenticated Portal users; guests refer to sales unless Business Line is supplied.
+
+        Authenticated users resolve Business Line from Salesforce when omitted.'
+      operationId: StudyBuilder_PostEstimate
+      requestBody:
+        x-name: body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudyBuilderEstimateRequestDto'
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudyBuilderEstimateResponseDto'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '429':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: ''
+  /api/v1/study-builder/draft:
+    post:
+      tags:
+      - StudyBuilder
+      summary: 'Save a pre-registration Quote Builder draft (selections and quote draft only; no pricing).
+
+        Returns an opaque draftToken for Auth0 signup linking.'
+      operationId: StudyBuilder_PostDraft
+      requestBody:
+        x-name: body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudyBuilderEstimateDraftRequestDto'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudyBuilderEstimateDraftResponseDto'
+        '429':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    get:
+      tags:
+      - StudyBuilder
+      summary: Returns the authenticated user's unconsumed pre-registration Quote Builder draft, if any.
+      operationId: StudyBuilder_GetDraft
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudyBuilderEstimateDraftGetResponseDto'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '429':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/v1/study-builder:
+    post:
+      tags:
+      - StudyBuilder
+      summary: 'Submit a study builder quote summary: emails the submitter and Metabolon sales (internal inbox from configuration).'
+      operationId: StudyBuilder_PostQuoteSummaryEmail
+      requestBody:
+        x-name: body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuoteSummaryEmailRequest'
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteSummaryEmailResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '429':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '503':
+          description: ''
+  /api/v2/study-builder/estimate:
+    post:
+      tags:
+      - StudyBuilder
+      summary: 'Submit a Quote Builder estimate request: calculate a fresh indicative estimate from the pricing matrix,
+
+        persist the wizard inputs and result to StudyBuilderEstimateRequestRecords, then return the estimate.
+
+        Each call creates a new stored request; this route does not load a previously saved estimate.
+
+        On persistence failure the request fails with 500 and no estimate is returned.
+
+        Intended for authenticated Portal users; guests refer to sales unless Business Line is supplied.
+
+        Authenticated users resolve Business Line from Salesforce when omitted.'
+      operationId: StudyBuilder_PostEstimate2
+      requestBody:
+        x-name: body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudyBuilderEstimateRequestDto'
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudyBuilderEstimateResponseDto'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '429':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: ''
+  /api/v2/study-builder/draft:
+    post:
+      tags:
+      - StudyBuilder
+      summary: 'Save a pre-registration Quote Builder draft (selections and quote draft only; no pricing).
+
+        Returns an opaque draftToken for Auth0 signup linking.'
+      operationId: StudyBuilder_PostDraft2
+      requestBody:
+        x-name: body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudyBuilderEstimateDraftRequestDto'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudyBuilderEstimateDraftResponseDto'
+        '429':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    get:
+      tags:
+      - StudyBuilder
+      summary: Returns the authenticated user's unconsumed pre-registration Quote Builder draft, if any.
+      operationId: StudyBuilder_GetDraft2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudyBuilderEstimateDraftGetResponseDto'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '429':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/v2/study-builder:
+    post:
+      tags:
+      - StudyBuilder
+      summary: 'Submit a study builder quote summary: emails the submitter and Metabolon sales (internal inbox from configuration).'
+      operationId: StudyBuilder_PostQuoteSummaryEmail2
+      requestBody:
+        x-name: body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuoteSummaryEmailRequest'
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteSummaryEmailResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '429':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '503':
+          description: ''
+components:
+  schemas:
+    QuoteSummaryEmailRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        toEmail:
+          type:
+          - string
+          - 'null'
+        contact:
+          oneOf:
+          - $ref: '#/components/schemas/QuoteSummaryContactDto'
+        plainTextBody:
+          type:
+          - string
+          - 'null'
+        submittedAt:
+          type:
+          - string
+          - 'null'
+          description: ISO-8601 timestamp from the client (optional).
+          format: date-time
+    StudyBuilderEstimateRequestDto:
+      type: object
+      additionalProperties: false
+      properties:
+        businessType:
+          type:
+          - string
+          - 'null'
+          description: Optional override. When omitted, authenticated users resolve Business Line from Salesforce; guests refer to sales.
+        statsServices:
+          type:
+          - string
+          - 'null'
+        interpretationLevel:
+          type:
+          - string
+          - 'null'
+        sampleCount:
+          type: integer
+          format: int32
+        selections:
+          description: Quote Builder fit-phase selections (full wizard state).
+        quoteDraft:
+          description: Quote Builder quote-phase draft (line items, sample logistics, etc.).
+    StudyBuilderEstimateDraftResponseDto:
+      type: object
+      additionalProperties: false
+      properties:
+        draftToken:
+          type:
+          - string
+          - 'null'
+    StudyBuilderEstimateDraftGetResponseDto:
+      type: object
+      additionalProperties: false
+      properties:
+        sampleCount:
+          type: integer
+          format: int32
+        selections: {}
+        quoteDraft: {}
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    StudyBuilderEstimateDraftRequestDto:
+      type: object
+      additionalProperties: false
+      properties:
+        sampleCount:
+          type: integer
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        selections: {}
+        quoteDraft: {}
+    QuoteSummaryContactDto:
+      type: object
+      additionalProperties: false
+      properties:
+        fullName:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+        phone:
+          type:
+          - string
+          - 'null'
+    StudyBuilderEstimateResponseDto:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type:
+          - string
+          - 'null'
+        businessType:
+          type:
+          - string
+          - 'null'
+        serviceTier:
+          type:
+          - string
+          - 'null'
+        sampleCountTier:
+          type:
+          - string
+          - 'null'
+        minEstimateAmount:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        maxEstimateAmount:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        maxEstimateIsOpenEnded:
+          type: boolean
+        referToSales:
+          type: boolean
+        estimatedCostDisplay:
+          type:
+          - string
+          - 'null'
+        effectiveStartUtc:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    QuoteSummaryEmailResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        accepted:
+          type: boolean
+        duplicate:
+          type: boolean
+x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

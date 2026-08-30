@@ -1,0 +1,111 @@
+openapi: 3.2.0
+info:
+  title: PortalApi Search API
+  version: '1.0'
+servers:
+- url: https://portal-api.prod.metabolon.com
+tags:
+- name: Search
+paths:
+  /api/v1/search/simple/{text}:
+    get:
+      tags:
+      - Search
+      summary: Performs a simple text search across multiple entity types with optional type filtering
+      description: 'This endpoint searches across multiple entity types using registered search processors. Results are automatically filtered based on the user''s permissions:
+
+        Projects require canEditProjects permission
+
+        Files require canViewAperture permission on the parent project
+
+        By default, DTS users see all projects. Set limitToUserProjects to true to restrict results to only the user''s authorized projects.
+
+        Only processors matching the requested types are executed, improving performance when filtering by type.
+
+        Results are deduplicated and limited to the specified limit before being returned.'
+      operationId: Search_SearchSimple
+      parameters:
+      - name: text
+        in: path
+        required: true
+        description: The search text to match against entity names, descriptions, and other searchable fields
+        schema:
+          type: string
+        x-position: 1
+      - name: types
+        in: query
+        description: "Optional comma-separated list of result types to include. Valid values: \"Project\", \"File\". \n            Examples: \"Project\" (projects only), \"File\" (files only), \"Project,File\" (both types). \n            If not specified, returns all available types."
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: limitToUserProjects
+        in: query
+        description: If true, limits results to only the user's authorized projects, even for DTS users. Default is false.
+        schema:
+          type: boolean
+          default: false
+        x-position: 3
+      - name: includeStagedFiles
+        in: query
+        description: If true, includes staged objects in search results. If false or not specified, only returns unstaged objects. Default is false.
+        schema:
+          type: boolean
+          default: false
+        x-position: 4
+      - name: limit
+        in: query
+        description: The maximum number of search results to return. Default is 10.
+        schema:
+          type: integer
+          format: int32
+          default: 10
+        x-position: 5
+      responses:
+        '200':
+          description: Successfully returned search results (may be empty if no matches found or user lacks permissions)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SearchResult'
+components:
+  schemas:
+    SearchResult:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        parentType:
+          type:
+          - string
+          - 'null'
+        parentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        title:
+          type:
+          - string
+          - 'null'
+        detail:
+          type:
+          - string
+          - 'null'
+        modifiedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

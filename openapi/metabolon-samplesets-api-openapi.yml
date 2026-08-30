@@ -1,0 +1,113 @@
+openapi: 3.2.0
+info:
+  title: PortalApi Sample Sets API
+  version: '1.0'
+servers:
+- url: https://portal-api.prod.metabolon.com
+tags:
+- name: SampleSets
+paths:
+  /api/v1/admin/samplesets/delete/{projectId}/{sampleSetId}:
+    post:
+      tags:
+      - SampleSets
+      summary: 'Deletes a project and all portal-scoped data for it, then notifies downstream services via PortalProjectEvent.
+
+        Use query parameter force=true for maintenance: always run delete (may no-op), always publish the delete event, and return 200 even when no project row exists.'
+      operationId: SampleSets_DeleteProject
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: sampleSetId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: force
+        in: query
+        schema:
+          type: boolean
+          default: false
+        x-position: 3
+      responses:
+        '200':
+          description: ''
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/v2/admin/samplesets/delete/{projectId}/{sampleSetId}:
+    post:
+      tags:
+      - SampleSets
+      summary: 'Deletes a project and all portal-scoped data for it, then notifies downstream services via PortalProjectEvent.
+
+        Use query parameter force=true for maintenance: always run delete (may no-op), always publish the delete event, and return 200 even when no project row exists.'
+      operationId: SampleSets_DeleteProject2
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: sampleSetId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: force
+        in: query
+        schema:
+          type: boolean
+          default: false
+        x-position: 3
+      responses:
+        '200':
+          description: ''
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

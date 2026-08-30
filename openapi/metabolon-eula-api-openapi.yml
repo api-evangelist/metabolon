@@ -1,0 +1,270 @@
+openapi: 3.2.0
+info:
+  title: PortalApi Eula API
+  version: '1.0'
+servers:
+- url: https://portal-api.prod.metabolon.com
+tags:
+- name: Eula
+paths:
+  /api/v1/eula/download:
+    get:
+      tags:
+      - Eula
+      summary: Downloads the current EULA file with proper mime-type and filename.
+      operationId: Eula_DownloadCurrentEula
+      responses:
+        '200':
+          description: Current EULA file downloaded successfully
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/v2/eula/download:
+    get:
+      tags:
+      - Eula
+      summary: Downloads the current EULA file with proper mime-type and filename.
+      operationId: Eula_DownloadCurrentEula2
+      responses:
+        '200':
+          description: Current EULA file downloaded successfully
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/v1/admin/users/eula/upload:
+    post:
+      tags:
+      - Eula
+      summary: Uploads a new EULA file for a specific version
+      operationId: Eula_UploadEula
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                eulaVersion:
+                  type:
+                  - string
+                  - 'null'
+                ContentType:
+                  type:
+                  - string
+                  - 'null'
+                ContentDisposition:
+                  type:
+                  - string
+                  - 'null'
+                Headers:
+                  type:
+                  - array
+                  - 'null'
+                  items: {}
+                Length:
+                  type: integer
+                  format: int64
+                Name:
+                  type:
+                  - string
+                  - 'null'
+                FileName:
+                  type:
+                  - string
+                  - 'null'
+      responses:
+        '200':
+          description: EULA file uploaded successfully
+  /api/v1/admin/users/eula/download/{eulaVersion}:
+    get:
+      tags:
+      - Eula
+      summary: Downloads an EULA file for a specific version
+      operationId: Eula_DownloadEula
+      parameters:
+      - name: eulaVersion
+        in: path
+        required: true
+        description: The EULA version to download
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: EULA file downloaded successfully
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/v1/admin/users/eula/get-current-version:
+    get:
+      tags:
+      - Eula
+      summary: Gets the current EULA version
+      operationId: Eula_GetCurrentVersion
+      responses:
+        '200':
+          description: Current EULA version returned
+          content:
+            application/json:
+              schema: {}
+  /api/v1/admin/users/eula/set-current-version/{eulaVersion}:
+    post:
+      tags:
+      - Eula
+      summary: Sets the current EULA version
+      operationId: Eula_SetCurrentVersion
+      parameters:
+      - name: eulaVersion
+        in: path
+        required: true
+        description: The EULA version to set as active
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: EULA version set as active successfully
+          content:
+            application/json:
+              schema: {}
+  /api/v1/admin/users/eula/remove-version/{eulaVersion}:
+    delete:
+      tags:
+      - Eula
+      summary: Removes a EULA version. Cannot remove the active EULA - it must be deactivated first.
+      operationId: Eula_RemoveVersion
+      parameters:
+      - name: eulaVersion
+        in: path
+        required: true
+        description: The EULA version to remove
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: EULA version removed successfully
+          content:
+            application/json:
+              schema: {}
+  /api/v2/admin/users/eula/upload:
+    post:
+      tags:
+      - Eula
+      summary: Uploads a new EULA file for a specific version
+      operationId: Eula_UploadEula2
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                eulaVersion:
+                  type:
+                  - string
+                  - 'null'
+                ContentType:
+                  type:
+                  - string
+                  - 'null'
+                ContentDisposition:
+                  type:
+                  - string
+                  - 'null'
+                Headers:
+                  type:
+                  - array
+                  - 'null'
+                  items: {}
+                Length:
+                  type: integer
+                  format: int64
+                Name:
+                  type:
+                  - string
+                  - 'null'
+                FileName:
+                  type:
+                  - string
+                  - 'null'
+      responses:
+        '200':
+          description: EULA file uploaded successfully
+  /api/v2/admin/users/eula/download/{eulaVersion}:
+    get:
+      tags:
+      - Eula
+      summary: Downloads an EULA file for a specific version
+      operationId: Eula_DownloadEula2
+      parameters:
+      - name: eulaVersion
+        in: path
+        required: true
+        description: The EULA version to download
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: EULA file downloaded successfully
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/v2/admin/users/eula/get-current-version:
+    get:
+      tags:
+      - Eula
+      summary: Gets the current EULA version
+      operationId: Eula_GetCurrentVersion2
+      responses:
+        '200':
+          description: Current EULA version returned
+          content:
+            application/json:
+              schema: {}
+  /api/v2/admin/users/eula/set-current-version/{eulaVersion}:
+    post:
+      tags:
+      - Eula
+      summary: Sets the current EULA version
+      operationId: Eula_SetCurrentVersion2
+      parameters:
+      - name: eulaVersion
+        in: path
+        required: true
+        description: The EULA version to set as active
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: EULA version set as active successfully
+          content:
+            application/json:
+              schema: {}
+  /api/v2/admin/users/eula/remove-version/{eulaVersion}:
+    delete:
+      tags:
+      - Eula
+      summary: Removes a EULA version. Cannot remove the active EULA - it must be deactivated first.
+      operationId: Eula_RemoveVersion2
+      parameters:
+      - name: eulaVersion
+        in: path
+        required: true
+        description: The EULA version to remove
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: EULA version removed successfully
+          content:
+            application/json:
+              schema: {}
+x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

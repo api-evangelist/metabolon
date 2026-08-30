@@ -1,0 +1,363 @@
+openapi: 3.2.0
+info:
+  title: PortalApi Shared File API
+  version: '1.0'
+servers:
+- url: https://portal-api.prod.metabolon.com
+tags:
+- name: SharedFile
+paths:
+  /api/v1/shared-files/{type}/download:
+    get:
+      tags:
+      - SharedFile
+      summary: Downloads the current shared file for a specific type with proper mime-type and filename from database
+      operationId: SharedFile_DownloadCurrentFile
+      parameters:
+      - name: type
+        in: path
+        required: true
+        description: The file type
+        schema:
+          $ref: '#/components/schemas/SharedFileType'
+        x-position: 1
+      responses:
+        '200':
+          description: File downloaded successfully
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/v2/shared-files/{type}/download:
+    get:
+      tags:
+      - SharedFile
+      summary: Downloads the current shared file for a specific type with proper mime-type and filename from database
+      operationId: SharedFile_DownloadCurrentFile2
+      parameters:
+      - name: type
+        in: path
+        required: true
+        description: The file type
+        schema:
+          $ref: '#/components/schemas/SharedFileType'
+        x-position: 1
+      responses:
+        '200':
+          description: File downloaded successfully
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/v1/admin/users/shared-files/{type}/upload:
+    post:
+      tags:
+      - SharedFile
+      summary: Uploads a new file for a specific type and version
+      operationId: SharedFile_UploadFile
+      parameters:
+      - name: type
+        in: path
+        required: true
+        description: The file type
+        schema:
+          $ref: '#/components/schemas/SharedFileType'
+        x-position: 1
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                version:
+                  type:
+                  - string
+                  - 'null'
+                ContentType:
+                  type:
+                  - string
+                  - 'null'
+                ContentDisposition:
+                  type:
+                  - string
+                  - 'null'
+                Headers:
+                  type:
+                  - array
+                  - 'null'
+                  items: {}
+                Length:
+                  type: integer
+                  format: int64
+                Name:
+                  type:
+                  - string
+                  - 'null'
+                FileName:
+                  type:
+                  - string
+                  - 'null'
+      responses:
+        '200':
+          description: File uploaded successfully
+  /api/v1/admin/users/shared-files/{type}/{fileVersion}:
+    delete:
+      tags:
+      - SharedFile
+      summary: Deletes a file for a specific type and version
+      operationId: SharedFile_DeleteFile
+      parameters:
+      - name: type
+        in: path
+        required: true
+        description: The file type
+        schema:
+          $ref: '#/components/schemas/SharedFileType'
+        x-position: 1
+      - name: fileVersion
+        in: path
+        required: true
+        description: The version to delete
+        schema:
+          type: string
+        x-position: 2
+      responses:
+        '200':
+          description: File deleted successfully
+  /api/v1/admin/users/shared-files/{type}/download/{fileVersion}:
+    get:
+      tags:
+      - SharedFile
+      summary: Downloads a file for a specific type and version
+      operationId: SharedFile_DownloadFile
+      parameters:
+      - name: type
+        in: path
+        required: true
+        description: The file type
+        schema:
+          $ref: '#/components/schemas/SharedFileType'
+        x-position: 1
+      - name: fileVersion
+        in: path
+        required: true
+        description: The version to download
+        schema:
+          type: string
+        x-position: 2
+      responses:
+        '200':
+          description: File downloaded successfully
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/v1/admin/users/shared-files/{type}/get-current-version:
+    get:
+      tags:
+      - SharedFile
+      summary: Gets the current version for a shared file type
+      operationId: SharedFile_GetCurrentVersion
+      parameters:
+      - name: type
+        in: path
+        required: true
+        description: The file type
+        schema:
+          $ref: '#/components/schemas/SharedFileType'
+        x-position: 1
+      responses:
+        '200':
+          description: Current version returned
+          content:
+            application/json:
+              schema: {}
+  /api/v1/admin/users/shared-files/{type}/set-current-version/{fileVersion}:
+    post:
+      tags:
+      - SharedFile
+      summary: Sets the current active version for a shared file type
+      operationId: SharedFile_SetCurrentVersion
+      parameters:
+      - name: type
+        in: path
+        required: true
+        description: The file type
+        schema:
+          $ref: '#/components/schemas/SharedFileType'
+        x-position: 1
+      - name: fileVersion
+        in: path
+        required: true
+        description: The version to set as active
+        schema:
+          type: string
+        x-position: 2
+      responses:
+        '200':
+          description: Shared file version set as active successfully
+          content:
+            application/json:
+              schema: {}
+  /api/v2/admin/users/shared-files/{type}/upload:
+    post:
+      tags:
+      - SharedFile
+      summary: Uploads a new file for a specific type and version
+      operationId: SharedFile_UploadFile2
+      parameters:
+      - name: type
+        in: path
+        required: true
+        description: The file type
+        schema:
+          $ref: '#/components/schemas/SharedFileType'
+        x-position: 1
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                version:
+                  type:
+                  - string
+                  - 'null'
+                ContentType:
+                  type:
+                  - string
+                  - 'null'
+                ContentDisposition:
+                  type:
+                  - string
+                  - 'null'
+                Headers:
+                  type:
+                  - array
+                  - 'null'
+                  items: {}
+                Length:
+                  type: integer
+                  format: int64
+                Name:
+                  type:
+                  - string
+                  - 'null'
+                FileName:
+                  type:
+                  - string
+                  - 'null'
+      responses:
+        '200':
+          description: File uploaded successfully
+  /api/v2/admin/users/shared-files/{type}/{fileVersion}:
+    delete:
+      tags:
+      - SharedFile
+      summary: Deletes a file for a specific type and version
+      operationId: SharedFile_DeleteFile2
+      parameters:
+      - name: type
+        in: path
+        required: true
+        description: The file type
+        schema:
+          $ref: '#/components/schemas/SharedFileType'
+        x-position: 1
+      - name: fileVersion
+        in: path
+        required: true
+        description: The version to delete
+        schema:
+          type: string
+        x-position: 2
+      responses:
+        '200':
+          description: File deleted successfully
+  /api/v2/admin/users/shared-files/{type}/download/{fileVersion}:
+    get:
+      tags:
+      - SharedFile
+      summary: Downloads a file for a specific type and version
+      operationId: SharedFile_DownloadFile2
+      parameters:
+      - name: type
+        in: path
+        required: true
+        description: The file type
+        schema:
+          $ref: '#/components/schemas/SharedFileType'
+        x-position: 1
+      - name: fileVersion
+        in: path
+        required: true
+        description: The version to download
+        schema:
+          type: string
+        x-position: 2
+      responses:
+        '200':
+          description: File downloaded successfully
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/v2/admin/users/shared-files/{type}/get-current-version:
+    get:
+      tags:
+      - SharedFile
+      summary: Gets the current version for a shared file type
+      operationId: SharedFile_GetCurrentVersion2
+      parameters:
+      - name: type
+        in: path
+        required: true
+        description: The file type
+        schema:
+          $ref: '#/components/schemas/SharedFileType'
+        x-position: 1
+      responses:
+        '200':
+          description: Current version returned
+          content:
+            application/json:
+              schema: {}
+  /api/v2/admin/users/shared-files/{type}/set-current-version/{fileVersion}:
+    post:
+      tags:
+      - SharedFile
+      summary: Sets the current active version for a shared file type
+      operationId: SharedFile_SetCurrentVersion2
+      parameters:
+      - name: type
+        in: path
+        required: true
+        description: The file type
+        schema:
+          $ref: '#/components/schemas/SharedFileType'
+        x-position: 1
+      - name: fileVersion
+        in: path
+        required: true
+        description: The version to set as active
+        schema:
+          type: string
+        x-position: 2
+      responses:
+        '200':
+          description: Shared file version set as active successfully
+          content:
+            application/json:
+              schema: {}
+components:
+  schemas:
+    SharedFileType:
+      type: string
+      description: ''
+      x-enumNames:
+      - FairUsePolicy
+      enum:
+      - FairUsePolicy
+x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

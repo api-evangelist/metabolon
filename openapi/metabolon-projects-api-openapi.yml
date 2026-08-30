@@ -1,0 +1,680 @@
+openapi: 3.2.0
+info:
+  title: PortalApi Projects API
+  version: '1.0'
+servers:
+- url: https://portal-api.prod.metabolon.com
+tags:
+- name: Projects
+paths:
+  /api/v1/projects:
+    get:
+      tags:
+      - Projects
+      summary: Retrieves all of the projects for the active user
+      operationId: Projects_Retrieve_AllDetails
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of projects was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectDescription'
+  /api/v1/projects/{projectId}:
+    get:
+      tags:
+      - Projects
+      summary: Retrieves the project for a specified project assuing the active user has this project
+      operationId: Projects_Retrieve_DetailsById
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The identifier (GUID) for the project
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: A matching project was found and returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDescription'
+  /api/v1/projects/projectCode/{projectCode}:
+    get:
+      tags:
+      - Projects
+      summary: Retrieves the project with a specified project code assuing the active user has this project
+      operationId: Projects_Retrieve_DetailsByCode
+      parameters:
+      - name: projectCode
+        in: path
+        required: true
+        description: The project code for the project to search on
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: A matching project was found and returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDescription'
+  /api/v1/projects/empty/{projectId}:
+    get:
+      tags:
+      - Projects
+      summary: Retrieves whether the project with a specified project id is empty
+      operationId: Projects_Retrieve_IsEmpty
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The identifier (GUID) for the project
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: Project state was returned
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /api/v1/projects/recognize-revenue:
+    post:
+      tags:
+      - Projects
+      summary: Recognize revenue for a project.
+      operationId: Projects_RecognizeRevenue
+      requestBody:
+        x-name: recognizeRevenue
+        description: The RecognizeRevenue object containing the projectId and other details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecognizeRevenue'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: Project was successfully recognized for revenue
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecognizeRevenue'
+  /api/v1/projects/recognize-revenue/{projectId}:
+    get:
+      tags:
+      - Projects
+      operationId: Projects_Retrieve_LatestRecognizeRevenueByProjectId
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RecognizeRevenue'
+  /api/v2/projects:
+    get:
+      tags:
+      - Projects
+      summary: Retrieves all of the projects for the active user
+      operationId: Projects_Retrieve_AllDetails2
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of projects was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectDescription'
+  /api/v2/projects/{projectId}:
+    get:
+      tags:
+      - Projects
+      summary: Retrieves the project for a specified project assuing the active user has this project
+      operationId: Projects_Retrieve_DetailsById2
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The identifier (GUID) for the project
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: A matching project was found and returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDescription'
+  /api/v2/projects/projectCode/{projectCode}:
+    get:
+      tags:
+      - Projects
+      summary: Retrieves the project with a specified project code assuing the active user has this project
+      operationId: Projects_Retrieve_DetailsByCode2
+      parameters:
+      - name: projectCode
+        in: path
+        required: true
+        description: The project code for the project to search on
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: A matching project was found and returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDescription'
+  /api/v2/projects/empty/{projectId}:
+    get:
+      tags:
+      - Projects
+      summary: Retrieves whether the project with a specified project id is empty
+      operationId: Projects_Retrieve_IsEmpty2
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The identifier (GUID) for the project
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: Project state was returned
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /api/v2/projects/recognize-revenue:
+    post:
+      tags:
+      - Projects
+      summary: Recognize revenue for a project.
+      operationId: Projects_RecognizeRevenue2
+      requestBody:
+        x-name: recognizeRevenue
+        description: The RecognizeRevenue object containing the projectId and other details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecognizeRevenue'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: Project was successfully recognized for revenue
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecognizeRevenue'
+  /api/v2/projects/recognize-revenue/{projectId}:
+    get:
+      tags:
+      - Projects
+      operationId: Projects_Retrieve_LatestRecognizeRevenueByProjectId2
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RecognizeRevenue'
+  /api/v1/admin/projects:
+    get:
+      tags:
+      - Projects
+      summary: Retrieves all of the projects for the active user
+      operationId: Projects_Retrieve_AllDetails22
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of projects was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectDescription'
+  /api/v1/admin/projects/merge:
+    post:
+      tags:
+      - Projects
+      summary: 'Creates a merged deliverable project shell (Pipeline.Merged) for statistical merge jobs.
+
+        Caller must supply projectCode. Optional body fields: productType, synopsis,
+
+        conclusion, and principal investigator name/email/phone. Publishes
+
+        PortalProjectEvent without sending ProjectAvailable.'
+      operationId: Projects_MergeProjects
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MergeProjectsRequest'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MergeProjectsResponse'
+  /api/v1/admin/projects/delete/{projectId}:
+    post:
+      tags:
+      - Projects
+      summary: 'Deletes a project and all portal-scoped data for it, then notifies downstream services via PortalProjectEvent.
+
+        Use query parameter force=true for maintenance: always run delete (may no-op), always publish the delete event, and return 200 even when no project row exists.'
+      operationId: Projects_DeleteProject
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: force
+        in: query
+        schema:
+          type: boolean
+          default: false
+        x-position: 2
+      responses:
+        '200':
+          description: ''
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/v2/admin/projects:
+    get:
+      tags:
+      - Projects
+      summary: Retrieves all of the projects for the active user
+      operationId: Projects_Retrieve_AllDetails23
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of projects was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectDescription'
+  /api/v2/admin/projects/merge:
+    post:
+      tags:
+      - Projects
+      summary: 'Creates a merged deliverable project shell (Pipeline.Merged) for statistical merge jobs.
+
+        Caller must supply projectCode. Optional body fields: productType, synopsis,
+
+        conclusion, and principal investigator name/email/phone. Publishes
+
+        PortalProjectEvent without sending ProjectAvailable.'
+      operationId: Projects_MergeProjects2
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MergeProjectsRequest'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MergeProjectsResponse'
+  /api/v2/admin/projects/delete/{projectId}:
+    post:
+      tags:
+      - Projects
+      summary: 'Deletes a project and all portal-scoped data for it, then notifies downstream services via PortalProjectEvent.
+
+        Use query parameter force=true for maintenance: always run delete (may no-op), always publish the delete event, and return 200 even when no project row exists.'
+      operationId: Projects_DeleteProject2
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: force
+        in: query
+        schema:
+          type: boolean
+          default: false
+        x-position: 2
+      responses:
+        '200':
+          description: ''
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    Person:
+      type: object
+      additionalProperties: false
+      properties:
+        lastName:
+          type:
+          - string
+          - 'null'
+        firstName:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        suffix:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+        phone:
+          type:
+          - string
+          - 'null'
+    RecognizeRevenueComment:
+      type: object
+      additionalProperties: false
+      properties:
+        comment:
+          type:
+          - string
+          - 'null'
+        userId:
+          type: string
+          format: guid
+        date:
+          type: string
+          format: date-time
+    ProjectDescription:
+      type: object
+      additionalProperties: false
+      properties:
+        projectId:
+          type: string
+          format: guid
+        projectTitle:
+          type:
+          - string
+          - 'null'
+        customerProjectTitle:
+          type:
+          - string
+          - 'null'
+        synopsis:
+          type:
+          - string
+          - 'null'
+        customerSynopsis:
+          type:
+          - string
+          - 'null'
+        conclusion:
+          type:
+          - string
+          - 'null'
+        customerConclusion:
+          type:
+          - string
+          - 'null'
+        projectCode:
+          type:
+          - string
+          - 'null'
+        productType:
+          type:
+          - string
+          - 'null'
+        principalInvestigatorName:
+          type:
+          - string
+          - 'null'
+        principalInvestigatorEmail:
+          type:
+          - string
+          - 'null'
+        principalInvestigatorPhone:
+          type:
+          - string
+          - 'null'
+        studySupportFullName:
+          type:
+          - string
+          - 'null'
+        stakeHolders:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Group'
+        pipeline:
+          $ref: '#/components/schemas/Pipeline'
+        publishDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastPublishDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    Pipeline:
+      type: string
+      description: ''
+      x-enumNames:
+      - V7
+      - Core
+      - Kits
+      - Merged
+      enum:
+      - V7
+      - Core
+      - Kits
+      - Merged
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    MergeProjectsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        projectTitle:
+          type:
+          - string
+          - 'null'
+        projectCode:
+          type:
+          - string
+          - 'null'
+        projectSource:
+          type:
+          - string
+          - 'null'
+        productType:
+          type:
+          - string
+          - 'null'
+        synopsis:
+          type:
+          - string
+          - 'null'
+        conclusion:
+          type:
+          - string
+          - 'null'
+        principalInvestigatorName:
+          type:
+          - string
+          - 'null'
+        principalInvestigatorEmail:
+          type:
+          - string
+          - 'null'
+        principalInvestigatorPhone:
+          type:
+          - string
+          - 'null'
+        sourceProjectIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        mergeRequestId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    Group:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        groups:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Group'
+        members:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Person'
+    RecognizeRevenue:
+      type: object
+      additionalProperties: false
+      properties:
+        recognizeRevenueId:
+          type: string
+          format: guid
+        recognizeRevenueDate:
+          type: string
+          format: date-time
+        userId:
+          type: string
+          format: guid
+        projectId:
+          type: string
+          format: guid
+        comment:
+          oneOf:
+          - $ref: '#/components/schemas/RecognizeRevenueComment'
+        status:
+          $ref: '#/components/schemas/RecognizeRevenueStatus'
+    RecognizeRevenueStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - Approved
+      - Rejected
+      - Review
+      enum:
+      - Pending
+      - Approved
+      - Rejected
+      - Review
+    MergeProjectsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        projectId:
+          type: string
+          format: guid
+        projectCode:
+          type:
+          - string
+          - 'null'
+        limsProjectId:
+          type:
+          - string
+          - 'null'
+x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

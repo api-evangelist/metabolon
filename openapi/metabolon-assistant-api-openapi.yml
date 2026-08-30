@@ -1,0 +1,68 @@
+openapi: 3.2.0
+info:
+  title: PortalApi Assistant API
+  version: '1.0'
+servers:
+- url: https://portal-api.prod.metabolon.com
+tags:
+- name: Assistant
+paths:
+  /api/v1/assistant/token/{tenant}:
+    post:
+      tags:
+      - Assistant
+      summary: Returns the minted token for the agent widget to pass into the agent api
+      operationId: Assistant_GetToken
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssistantTokenResponse'
+  /api/v2/assistant/token/{tenant}:
+    post:
+      tags:
+      - Assistant
+      summary: Returns the minted token for the agent widget to pass into the agent api
+      operationId: Assistant_GetToken2
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssistantTokenResponse'
+components:
+  schemas:
+    AssistantTokenResponse:
+      type: object
+      description: Response model for assistant token endpoint
+      additionalProperties: false
+      properties:
+        token:
+          type:
+          - string
+          - 'null'
+        expiresIn:
+          type: integer
+          format: int32
+        tier:
+          type:
+          - string
+          - 'null'
+x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

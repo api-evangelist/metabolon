@@ -1,0 +1,596 @@
+openapi: 3.2.0
+info:
+  title: PortalApi Pipeline Status API
+  version: '1.0'
+servers:
+- url: https://portal-api.prod.metabolon.com
+tags:
+- name: PipelineStatus
+paths:
+  /api/v1/admin/pipeline-status/records:
+    get:
+      tags:
+      - PipelineStatus
+      summary: Filterable, pageable list of pipeline status records (explorer / debugging).
+      operationId: PipelineStatus_GetRecords
+      parameters:
+      - name: scope
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: subjectId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: parentWorkflow
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: parentSubjectId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: workflow
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: pipeline
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: stage
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      - name: status
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 8
+      - name: source
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 9
+      - name: correlationId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 10
+      - name: occurredAfter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 11
+      - name: occurredBefore
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 12
+      - name: skip
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 13
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 14
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineStatusFactRecordsPageDto'
+  /api/v1/admin/pipeline-status/activity:
+    get:
+      tags:
+      - PipelineStatus
+      summary: Recent pipeline status rows for lightweight feeds (e.g. admin top bar).
+      operationId: PipelineStatus_GetActivity
+      parameters:
+      - name: status
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: workflow
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: minutes
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: take
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PipelineStatusFactDto'
+  /api/v1/admin/pipeline-status/projects/{projectId}:
+    get:
+      tags:
+      - PipelineStatus
+      summary: Latest pipeline stage status per (pipeline, stage) for the project (from PipelineStatusRecords).
+      operationId: PipelineStatus_GetProjectPipelineStatus
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PipelineStatusSummaryDto'
+  /api/v1/admin/pipeline-status/projects/{projectId}/facts:
+    get:
+      tags:
+      - PipelineStatus
+      summary: Append-only pipeline status facts and iteration manifests for the project.
+      operationId: PipelineStatus_GetProjectPipelineStatusFacts
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineStatusProjectSnapshotDto'
+  /api/v2/admin/pipeline-status/records:
+    get:
+      tags:
+      - PipelineStatus
+      summary: Filterable, pageable list of pipeline status records (explorer / debugging).
+      operationId: PipelineStatus_GetRecords2
+      parameters:
+      - name: scope
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: subjectId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: parentWorkflow
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: parentSubjectId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: workflow
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: pipeline
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: stage
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      - name: status
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 8
+      - name: source
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 9
+      - name: correlationId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 10
+      - name: occurredAfter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 11
+      - name: occurredBefore
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 12
+      - name: skip
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 13
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 14
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineStatusFactRecordsPageDto'
+  /api/v2/admin/pipeline-status/activity:
+    get:
+      tags:
+      - PipelineStatus
+      summary: Recent pipeline status rows for lightweight feeds (e.g. admin top bar).
+      operationId: PipelineStatus_GetActivity2
+      parameters:
+      - name: status
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: workflow
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: minutes
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: take
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PipelineStatusFactDto'
+  /api/v2/admin/pipeline-status/projects/{projectId}:
+    get:
+      tags:
+      - PipelineStatus
+      summary: Latest pipeline stage status per (pipeline, stage) for the project (from PipelineStatusRecords).
+      operationId: PipelineStatus_GetProjectPipelineStatus2
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PipelineStatusSummaryDto'
+  /api/v2/admin/pipeline-status/projects/{projectId}/facts:
+    get:
+      tags:
+      - PipelineStatus
+      summary: Append-only pipeline status facts and iteration manifests for the project.
+      operationId: PipelineStatus_GetProjectPipelineStatusFacts2
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineStatusProjectSnapshotDto'
+components:
+  schemas:
+    PipelineStatusFactDto:
+      type: object
+      additionalProperties: false
+      required:
+      - status
+      - correlationId
+      - service
+      - serviceVersion
+      properties:
+        id:
+          type: string
+        scope:
+          $ref: '#/components/schemas/PipelineStatusScope'
+        workflow:
+          type: string
+        subjectId:
+          type: string
+        parentWorkflow:
+          type:
+          - string
+          - 'null'
+        parentSubjectId:
+          type:
+          - string
+          - 'null'
+        pipeline:
+          $ref: '#/components/schemas/Pipeline'
+        stage:
+          type: string
+        status:
+          $ref: '#/components/schemas/PipelineStageStatus'
+        occurredAt:
+          type: string
+        source:
+          type: string
+        correlationId:
+          type: string
+          minLength: 1
+        service:
+          type: string
+          minLength: 1
+        serviceVersion:
+          type: string
+          minLength: 1
+        iterationDimension:
+          type:
+          - string
+          - 'null'
+        iterationValue:
+          type:
+          - string
+          - 'null'
+        detailsJson:
+          type:
+          - string
+          - 'null'
+    PipelineStatusProjectSnapshotDto:
+      type: object
+      additionalProperties: false
+      properties:
+        facts:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineStatusFactDto'
+        iterationManifests:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineStatusIterationManifestDto'
+    PipelineStatusFactRecordsPageDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PipelineStatusFactDto'
+        totalCount:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+    PipelineStatusSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        pipeline:
+          $ref: '#/components/schemas/Pipeline'
+        stage:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/PipelineStageStatus'
+    PipelineStatusIterationManifestDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        correlationId:
+          type: string
+        scope:
+          $ref: '#/components/schemas/PipelineStatusScope'
+        workflow:
+          type: string
+        pipeline:
+          $ref: '#/components/schemas/Pipeline'
+        parentStage:
+          type: string
+        parentService:
+          type:
+          - string
+          - 'null'
+        subjectId:
+          type: string
+        parentWorkflow:
+          type:
+          - string
+          - 'null'
+        parentSubjectId:
+          type:
+          - string
+          - 'null'
+        iterationDimension:
+          type: string
+        iterationValues:
+          type: array
+          items:
+            type: string
+        createdAtUtc:
+          type: string
+        sourceService:
+          type: string
+    Pipeline:
+      type: string
+      description: ''
+      x-enumNames:
+      - V7
+      - Core
+      - Kits
+      - Merged
+      enum:
+      - V7
+      - Core
+      - Kits
+      - Merged
+    PipelineStatusScope:
+      type: string
+      description: ''
+      x-enumNames:
+      - Project
+      - SampleSet
+      enum:
+      - Project
+      - SampleSet
+    PipelineStageStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Started
+      - Completed
+      - Failed
+      enum:
+      - Started
+      - Completed
+      - Failed
+x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

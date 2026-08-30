@@ -1,0 +1,185 @@
+openapi: 3.2.0
+info:
+  title: PortalApi Sample Sets Info API
+  version: '1.0'
+servers:
+- url: https://portal-api.prod.metabolon.com
+tags:
+- name: SampleSetsInfo
+paths:
+  /api/v1/samplesetsinfo/{projectId}/{sampleSetId}:
+    get:
+      tags:
+      - SampleSetsInfo
+      summary: Retrieves a sample sets info
+      operationId: SampleSetsInfo_GetSampleSetsInfo
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The projectId to search on
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: sampleSetId
+        in: path
+        required: true
+        description: The sampleSetId to search on
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      responses:
+        '200':
+          description: A matching sample sets info was found and returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SampleSetInfo'
+  /api/v1/samplesetsinfo/project/{projectId}:
+    get:
+      tags:
+      - SampleSetsInfo
+      summary: Retrieves all sample sets infos for a specific project
+      operationId: SampleSetsInfo_GetSampleSetsInfos
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The projectId to search on
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of project sample sets info items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SampleSetInfo'
+  /api/v1/samplesetsinfo/project/{projectId}/count:
+    get:
+      tags:
+      - SampleSetsInfo
+      summary: Retrieves the number of sample sets infos for a specific project
+      operationId: SampleSetsInfo_GetSampleSetsCount
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The projectId to search on
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: A quantity of matching sample sets info was found and returned
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+  /api/v2/samplesetsinfo/{projectId}/{sampleSetId}:
+    get:
+      tags:
+      - SampleSetsInfo
+      summary: Retrieves a sample sets info
+      operationId: SampleSetsInfo_GetSampleSetsInfo2
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The projectId to search on
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: sampleSetId
+        in: path
+        required: true
+        description: The sampleSetId to search on
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      responses:
+        '200':
+          description: A matching sample sets info was found and returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SampleSetInfo'
+  /api/v2/samplesetsinfo/project/{projectId}:
+    get:
+      tags:
+      - SampleSetsInfo
+      summary: Retrieves all sample sets infos for a specific project
+      operationId: SampleSetsInfo_GetSampleSetsInfos2
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The projectId to search on
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of project sample sets info items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SampleSetInfo'
+  /api/v2/samplesetsinfo/project/{projectId}/count:
+    get:
+      tags:
+      - SampleSetsInfo
+      summary: Retrieves the number of sample sets infos for a specific project
+      operationId: SampleSetsInfo_GetSampleSetsCount2
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The projectId to search on
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: A quantity of matching sample sets info was found and returned
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+components:
+  schemas:
+    SampleSetInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        projectId:
+          type: string
+          format: guid
+        sampleSetId:
+          type: string
+          format: guid
+        numSamples:
+          type: integer
+          format: int32
+        numMetabolites:
+          type: integer
+          format: int32
+        numComparison:
+          type: integer
+          format: int32
+x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,186 @@
+openapi: 3.2.0
+info:
+  title: PortalApi Status API
+  version: '1.0'
+servers:
+- url: https://portal-api.prod.metabolon.com
+tags:
+- name: Status
+paths:
+  /api/v1/admin/status/enabled:
+    get:
+      tags:
+      - Status
+      summary: Retrieves whether access to the api has been enabled
+      operationId: Status_IsEnabled
+      responses:
+        '200':
+          description: A bool
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /api/v1/admin/status/enable:
+    post:
+      tags:
+      - Status
+      summary: Turns whether access to the api has been enabled on
+      operationId: Status_Enable
+      responses:
+        '200':
+          description: An action result
+  /api/v1/admin/status/disable:
+    post:
+      tags:
+      - Status
+      summary: Turns whether access to the api has been enabledoff
+      operationId: Status_Disable
+      responses:
+        '200':
+          description: An action result
+  /api/v1/admin/status/publish/enabled:
+    get:
+      tags:
+      - Status
+      summary: Retrieves whether a publishing is enabled
+      operationId: Status_IsPublishingEnabled
+      responses:
+        '200':
+          description: A bool
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /api/v1/admin/status/publish/running:
+    get:
+      tags:
+      - Status
+      summary: Retrieves whether a publishing is running
+      operationId: Status_IsPublishingRunning
+      responses:
+        '200':
+          description: A bool
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /api/v1/admin/status/publish/reporting:
+    get:
+      tags:
+      - Status
+      summary: Retrieves whether a publishing is reporting
+      operationId: Status_IsPublishingReporting
+      responses:
+        '200':
+          description: A bool
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /api/v1/admin/status/publish/enable:
+    post:
+      tags:
+      - Status
+      summary: Turns publishing on
+      operationId: Status_EnablePublishing
+      responses:
+        '200':
+          description: An action result
+  /api/v1/admin/status/publish/disable:
+    post:
+      tags:
+      - Status
+      summary: Turns publishing off
+      operationId: Status_DisablePublishing
+      responses:
+        '200':
+          description: An action result
+  /api/v2/admin/status/enabled:
+    get:
+      tags:
+      - Status
+      summary: Retrieves whether access to the api has been enabled
+      operationId: Status_IsEnabled2
+      responses:
+        '200':
+          description: A bool
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /api/v2/admin/status/enable:
+    post:
+      tags:
+      - Status
+      summary: Turns whether access to the api has been enabled on
+      operationId: Status_Enable2
+      responses:
+        '200':
+          description: An action result
+  /api/v2/admin/status/disable:
+    post:
+      tags:
+      - Status
+      summary: Turns whether access to the api has been enabledoff
+      operationId: Status_Disable2
+      responses:
+        '200':
+          description: An action result
+  /api/v2/admin/status/publish/enabled:
+    get:
+      tags:
+      - Status
+      summary: Retrieves whether a publishing is enabled
+      operationId: Status_IsPublishingEnabled2
+      responses:
+        '200':
+          description: A bool
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /api/v2/admin/status/publish/running:
+    get:
+      tags:
+      - Status
+      summary: Retrieves whether a publishing is running
+      operationId: Status_IsPublishingRunning2
+      responses:
+        '200':
+          description: A bool
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /api/v2/admin/status/publish/reporting:
+    get:
+      tags:
+      - Status
+      summary: Retrieves whether a publishing is reporting
+      operationId: Status_IsPublishingReporting2
+      responses:
+        '200':
+          description: A bool
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /api/v2/admin/status/publish/enable:
+    post:
+      tags:
+      - Status
+      summary: Turns publishing on
+      operationId: Status_EnablePublishing2
+      responses:
+        '200':
+          description: An action result
+  /api/v2/admin/status/publish/disable:
+    post:
+      tags:
+      - Status
+      summary: Turns publishing off
+      operationId: Status_DisablePublishing2
+      responses:
+        '200':
+          description: An action result
+x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

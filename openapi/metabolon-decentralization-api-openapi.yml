@@ -1,0 +1,112 @@
+openapi: 3.2.0
+info:
+  title: PortalApi Decentralization API
+  version: '1.0'
+servers:
+- url: https://portal-api.prod.metabolon.com
+tags:
+- name: Decentralization
+paths:
+  /api/v1/decentralization/injection/{filePath}:
+    get:
+      tags:
+      - Decentralization
+      summary: Get injection metadata for this file
+      operationId: Decentralization_GetInjectionMetadata
+      parameters:
+      - name: filePath
+        in: path
+        required: true
+        description: S3 path to the uploaded RAW file
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: Successfully returned state
+          content:
+            application/json:
+              schema:
+                type: string
+      deprecated: true
+  /api/v1/decentralization/injection/{projectId}/{filePath}:
+    get:
+      tags:
+      - Decentralization
+      summary: Get injection metadata for this file
+      operationId: Decentralization_GetInjectionMetadata2
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: Decentralization UI project id
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: filePath
+        in: path
+        required: true
+        description: S3 path to the uploaded RAW file
+        schema:
+          type: string
+        x-position: 2
+      responses:
+        '200':
+          description: Successfully returned state
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v2/decentralization/injection/{filePath}:
+    get:
+      tags:
+      - Decentralization
+      summary: Get injection metadata for this file
+      operationId: Decentralization_GetInjectionMetadata3
+      parameters:
+      - name: filePath
+        in: path
+        required: true
+        description: S3 path to the uploaded RAW file
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: Successfully returned state
+          content:
+            application/json:
+              schema:
+                type: string
+      deprecated: true
+  /api/v2/decentralization/injection/{projectId}/{filePath}:
+    get:
+      tags:
+      - Decentralization
+      summary: Get injection metadata for this file
+      operationId: Decentralization_GetInjectionMetadata4
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: Decentralization UI project id
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: filePath
+        in: path
+        required: true
+        description: S3 path to the uploaded RAW file
+        schema:
+          type: string
+        x-position: 2
+      responses:
+        '200':
+          description: Successfully returned state
+          content:
+            application/json:
+              schema:
+                type: string
+x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

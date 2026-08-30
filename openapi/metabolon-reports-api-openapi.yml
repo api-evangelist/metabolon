@@ -1,0 +1,105 @@
+openapi: 3.2.0
+info:
+  title: PortalApi Reports API
+  version: '1.0'
+servers:
+- url: https://portal-api.prod.metabolon.com
+tags:
+- name: Reports
+paths:
+  /api/v1/reports/{reportId}/{projectId}:
+    get:
+      tags:
+      - Reports
+      operationId: Reports_GetReport
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: reportId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformQcReport'
+        '500':
+          description: ''
+        '404':
+          description: ''
+components:
+  schemas:
+    ReportType:
+      type: string
+      description: ''
+      x-enumNames:
+      - UNKNOWN
+      - PQC
+      - PRJQC
+      - SSTQC
+      enum:
+      - UNKNOWN
+      - PQC
+      - PRJQC
+      - SSTQC
+    PlatformQcReport:
+      type: object
+      additionalProperties: false
+      properties:
+        projectMdpId:
+          type:
+          - string
+          - 'null'
+        limsProjectId:
+          type:
+          - string
+          - 'null'
+        service:
+          type:
+          - string
+          - 'null'
+        serviceVersion:
+          type:
+          - string
+          - 'null'
+        event:
+          type:
+          - string
+          - 'null'
+        createdTimestamp:
+          type: string
+          format: date-time
+        reportId:
+          type:
+          - string
+          - 'null'
+        downloadUrl:
+          type:
+          - string
+          - 'null'
+        subsetId:
+          type:
+          - string
+          - 'null'
+        plateId:
+          type:
+          - string
+          - 'null'
+        isDraft:
+          type: boolean
+        qcReportId:
+          type:
+          - string
+          - 'null'
+        reportType:
+          $ref: '#/components/schemas/ReportType'
+x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,345 @@
+openapi: 3.2.0
+info:
+  title: PortalApi Lab Vantage Files API
+  version: '1.0'
+servers:
+- url: https://portal-api.prod.metabolon.com
+tags:
+- name: LabVantageFiles
+paths:
+  /api/v1/admin/lab-vantage/files/summary:
+    get:
+      tags:
+      - LabVantageFiles
+      summary: Returns LV vs Portal comparison keyed by Portal project (ProjectCode resolves lims).
+      operationId: LabVantageFiles_GetLabVantageFileSummary
+      parameters:
+      - name: projectId
+        in: query
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabVantageFileSummaryResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '502':
+          description: ''
+  /api/v1/admin/lab-vantage/files/import:
+    post:
+      tags:
+      - LabVantageFiles
+      summary: Imports Lab Vantage attachments from LVIS into staged portal files and updates lineage tables.
+      operationId: LabVantageFiles_ImportLabVantageFiles
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabVantageImportRequest'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabVantageImportResponse'
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabVantageImportResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '502':
+          description: ''
+  /api/v1/admin/lab-vantage/files/notice/acknowledge:
+    post:
+      tags:
+      - LabVantageFiles
+      summary: Marks notification notices acknowledged at the current UTC timestamp.
+      operationId: LabVantageFiles_AcknowledgeLabVantageNotices
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabVantageNoticeAcknowledgeRequest'
+        required: true
+        x-position: 1
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/v2/admin/lab-vantage/files/summary:
+    get:
+      tags:
+      - LabVantageFiles
+      summary: Returns LV vs Portal comparison keyed by Portal project (ProjectCode resolves lims).
+      operationId: LabVantageFiles_GetLabVantageFileSummary2
+      parameters:
+      - name: projectId
+        in: query
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabVantageFileSummaryResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '502':
+          description: ''
+  /api/v2/admin/lab-vantage/files/import:
+    post:
+      tags:
+      - LabVantageFiles
+      summary: Imports Lab Vantage attachments from LVIS into staged portal files and updates lineage tables.
+      operationId: LabVantageFiles_ImportLabVantageFiles2
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabVantageImportRequest'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabVantageImportResponse'
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabVantageImportResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '502':
+          description: ''
+  /api/v2/admin/lab-vantage/files/notice/acknowledge:
+    post:
+      tags:
+      - LabVantageFiles
+      summary: Marks notification notices acknowledged at the current UTC timestamp.
+      operationId: LabVantageFiles_AcknowledgeLabVantageNotices2
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabVantageNoticeAcknowledgeRequest'
+        required: true
+        x-position: 1
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    LabVantageFileSummaryAttachmentItem:
+      type: object
+      additionalProperties: false
+      properties:
+        lvFileId:
+          type:
+          - string
+          - 'null'
+        fileName:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        lastModifiedAt:
+          type: string
+          format: date-time
+        contentHash:
+          type:
+          - string
+          - 'null'
+        classification:
+          type:
+          - string
+          - 'null'
+        correlatedPortalFileId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    LabVantageImportResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabVantageImportResultItem'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    LabVantageNoticeAcknowledgeRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        projectId:
+          type: string
+          format: guid
+    LabVantageImportRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        projectId:
+          type: string
+          format: guid
+        lvFileIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        acknowledgeNotice:
+          type: boolean
+    LabVantageImportResultItem:
+      type: object
+      additionalProperties: false
+      properties:
+        lvFileId:
+          type: string
+        success:
+          type: boolean
+        portalFileId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        error:
+          type:
+          - string
+          - 'null'
+    LabVantageFileSummaryResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        limsProjectId:
+          type:
+          - string
+          - 'null'
+        lastAcknowledgedUtc:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        noticeCount:
+          type: integer
+          format: int32
+        attachments:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/LabVantageFileSummaryAttachmentItem'
+x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

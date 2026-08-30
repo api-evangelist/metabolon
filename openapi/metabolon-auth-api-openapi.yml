@@ -1,0 +1,364 @@
+openapi: 3.2.0
+info:
+  title: PortalApi Auth API
+  version: '1.0'
+servers:
+- url: https://portal-api.prod.metabolon.com
+tags:
+- name: Auth
+paths:
+  /api/v1/auth0/verify-salesforce:
+    get:
+      tags:
+      - Auth
+      summary: Verifies that PortalApi can create a Salesforce client and run a trivial query.
+      operationId: Auth_VerifySalesforceConnection
+      responses:
+        '200':
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/v1/auth0/pre-user-registration:
+    post:
+      tags:
+      - Auth
+      summary: Ensures a Salesforce Lead or Contact exists before Auth0 creates the user.
+      operationId: Auth_OnPreUserRegistration
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Auth0PreRegistrationRequest'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/v1/auth0/post-login:
+    post:
+      tags:
+      - Auth
+      summary: Portal login gate for non-SAML Auth0 connections. Returns allow/deny for the Post Login Action.
+      operationId: Auth_OnPostLogin
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Auth0PostLoginRequest'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/v1/auth0/learning-center/authorize:
+    post:
+      tags:
+      - Auth
+      summary: TalentLMS SAML login gate. Requires approval, Portal user, branch access, and successful TalentLMS reconcile.
+      operationId: Auth_AuthorizeLearningCenterAccess
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Auth0PostLoginRequest'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/v2/auth0/verify-salesforce:
+    get:
+      tags:
+      - Auth
+      summary: Verifies that PortalApi can create a Salesforce client and run a trivial query.
+      operationId: Auth_VerifySalesforceConnection2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/v2/auth0/pre-user-registration:
+    post:
+      tags:
+      - Auth
+      summary: Ensures a Salesforce Lead or Contact exists before Auth0 creates the user.
+      operationId: Auth_OnPreUserRegistration2
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Auth0PreRegistrationRequest'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/v2/auth0/post-login:
+    post:
+      tags:
+      - Auth
+      summary: Portal login gate for non-SAML Auth0 connections. Returns allow/deny for the Post Login Action.
+      operationId: Auth_OnPostLogin2
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Auth0PostLoginRequest'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/v2/auth0/learning-center/authorize:
+    post:
+      tags:
+      - Auth
+      summary: TalentLMS SAML login gate. Requires approval, Portal user, branch access, and successful TalentLMS reconcile.
+      operationId: Auth_AuthorizeLearningCenterAccess2
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Auth0PostLoginRequest'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/v1/auth/context:
+    get:
+      tags:
+      - Auth
+      operationId: Auth_GetAuthorizedContext
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IAuthorizedContext'
+  /api/v2/auth/context:
+    get:
+      tags:
+      - Auth
+      operationId: Auth_GetAuthorizedContext2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IAuthorizedContext'
+components:
+  schemas:
+    IAuthorizedContext:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        locked:
+          type: boolean
+        identifier:
+          type:
+          - string
+          - 'null'
+        scopes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        permissions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    Auth0WebhookUser:
+      type: object
+      additionalProperties: {}
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+        given_name:
+          type:
+          - string
+          - 'null'
+        family_name:
+          type:
+          - string
+          - 'null'
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+        firstname:
+          type:
+          - string
+          - 'null'
+        lastname:
+          type:
+          - string
+          - 'null'
+        firstformname:
+          type:
+          - string
+          - 'null'
+        lastformname:
+          type:
+          - string
+          - 'null'
+        created_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        user_id:
+          type:
+          - string
+          - 'null'
+        email_verified:
+          type:
+          - boolean
+          - 'null'
+        locale:
+          type:
+          - string
+          - 'null'
+        app_metadata: {}
+        user_metadata: {}
+    Auth0PreRegistrationRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        user:
+          oneOf:
+          - $ref: '#/components/schemas/Auth0WebhookUser'
+        connection:
+          oneOf:
+          - $ref: '#/components/schemas/Auth0ConnectionInfo'
+        request:
+          oneOf:
+          - $ref: '#/components/schemas/Auth0RequestInfo'
+        draftToken:
+          type:
+          - string
+          - 'null'
+          description: Study builder draft token forwarded by the Pre User Registration Action.
+    Auth0RequestInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        ip:
+          type:
+          - string
+          - 'null'
+        user_agent:
+          type:
+          - string
+          - 'null'
+        geoip: {}
+        body:
+          type:
+          - object
+          - 'null'
+          description: Universal Login signup form fields (e.g. ulp-draft-token).
+          additionalProperties: {}
+        query:
+          type:
+          - object
+          - 'null'
+          description: Authorize URL query params (available in Post Login, not Pre User Registration).
+          additionalProperties: {}
+    Auth0ConnectionInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        strategy:
+          type:
+          - string
+          - 'null'
+    Auth0PostLoginRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        user:
+          oneOf:
+          - $ref: '#/components/schemas/Auth0WebhookUser'
+        client:
+          oneOf:
+          - $ref: '#/components/schemas/Auth0PostLoginClientInfo'
+    Auth0PostLoginClientInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        client_id:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

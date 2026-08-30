@@ -1,0 +1,311 @@
+openapi: 3.2.0
+info:
+  title: Metabolon Health API
+  version: '1.0'
+  description: 'Operations tagged Health across 4 of this provider''s published API definitions: metabolon-discovery-panels-api-openapi.yml, metabolon-heatmap-api-openapi.yml, metabolon-pathway-explorer-api-openapi.yml, metabolon-portal-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://discovery.prod.metabolon.com
+- url: https://heatmap.prod.metabolon.com
+- url: https://pathway.prod.metabolon.com
+- url: https://portal-api.prod.metabolon.com
+tags:
+- name: Health
+paths:
+  /api/v1/health:
+    get:
+      tags:
+      - Health
+      summary: Retrieves what is expected for the aws health check
+      operationId: Health_HealthCheck
+      responses:
+        '200':
+          description: A string response
+          content:
+            application/json:
+              schema:
+                type: string
+    servers:
+    - url: https://discovery.prod.metabolon.com
+  /api/v1/health/ping:
+    get:
+      tags:
+      - Health
+      summary: Retrieves the ping
+      operationId: Health_ShallowPing
+      responses:
+        '200':
+          description: A ping response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShallowPingResponse'
+        '500':
+          description: The request generated an error on the server
+    servers:
+    - url: https://discovery.prod.metabolon.com
+  /api/v1/health/deepping:
+    get:
+      tags:
+      - Health
+      summary: Retrieves the deep ping
+      operationId: Health_DeepPing
+      parameters:
+      - name: chainId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      responses:
+        '200':
+          description: A deep ping response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeepPingResponse'
+        '500':
+          description: The request generated an error on the server
+    servers:
+    - url: https://discovery.prod.metabolon.com
+  /api/v1/health/datadog/httpcheck:
+    get:
+      tags:
+      - Health
+      summary: 'Datadog http health check, probes statuses of all services which this service depends from
+
+        Return 200 HTTP status code for Ok, 424 for Warnings, and 500 for Errors.
+
+        See https://docs.datadoghq.com/integrations/http_check/'
+      operationId: Health_DatadogHttpCheck
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          description: ''
+    servers:
+    - url: https://discovery.prod.metabolon.com
+  /api/v1/health/datadog/servicecheck:
+    get:
+      tags:
+      - Health
+      summary: 'Datadog service check, probes statuses of all services which this service depends from
+
+        See https://docs.datadoghq.com/developers/service_checks/agent_service_checks_submission/'
+      operationId: Health_DatadogServiceCheck
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatadogResponse'
+        '500':
+          description: ''
+    servers:
+    - url: https://discovery.prod.metabolon.com
+  /api/v2/health:
+    get:
+      tags:
+      - Health
+      summary: Retrieves what is expected for the aws health check
+      operationId: Health_HealthCheck2
+      responses:
+        '200':
+          description: A string response
+          content:
+            application/json:
+              schema:
+                type: string
+    servers:
+    - url: https://discovery.prod.metabolon.com
+  /api/v2/health/ping:
+    get:
+      tags:
+      - Health
+      summary: Retrieves the ping
+      operationId: Health_ShallowPing2
+      responses:
+        '200':
+          description: A ping response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShallowPingResponse'
+        '500':
+          description: The request generated an error on the server
+    servers:
+    - url: https://discovery.prod.metabolon.com
+  /api/v2/health/deepping:
+    get:
+      tags:
+      - Health
+      summary: Retrieves the deep ping
+      operationId: Health_DeepPing2
+      parameters:
+      - name: chainId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      responses:
+        '200':
+          description: A deep ping response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeepPingResponse'
+        '500':
+          description: The request generated an error on the server
+    servers:
+    - url: https://discovery.prod.metabolon.com
+  /api/v2/health/datadog/httpcheck:
+    get:
+      tags:
+      - Health
+      summary: 'Datadog http health check, probes statuses of all services which this service depends from
+
+        Return 200 HTTP status code for Ok, 424 for Warnings, and 500 for Errors.
+
+        See https://docs.datadoghq.com/integrations/http_check/'
+      operationId: Health_DatadogHttpCheck2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          description: ''
+    servers:
+    - url: https://discovery.prod.metabolon.com
+  /api/v2/health/datadog/servicecheck:
+    get:
+      tags:
+      - Health
+      summary: 'Datadog service check, probes statuses of all services which this service depends from
+
+        See https://docs.datadoghq.com/developers/service_checks/agent_service_checks_submission/'
+      operationId: Health_DatadogServiceCheck2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatadogResponse'
+        '500':
+          description: ''
+    servers:
+    - url: https://discovery.prod.metabolon.com
+components:
+  schemas:
+    ShallowPingResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        dateTime:
+          type: string
+          format: date-time
+        buildVersion:
+          type:
+          - string
+          - 'null'
+        uptime:
+          type: string
+          format: duration
+        health:
+          $ref: '#/components/schemas/HealthEnum'
+    DatadogResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        status:
+          type: integer
+          format: int32
+        tags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        hostname:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+        httpStatusCode:
+          type: integer
+          format: int32
+    HealthEnum:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - Healthy
+      - Unhealthy
+      - CircularDependency
+      enum:
+      - Unknown
+      - Healthy
+      - Unhealthy
+      - CircularDependency
+    DeepPingResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        shallowPing:
+          oneOf:
+          - $ref: '#/components/schemas/ShallowPingResponse'
+        serviceStatus:
+          oneOf:
+          - $ref: '#/components/schemas/DeepPingStatus'
+        dependencies:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/DeepPingResponse'
+    DeepPingStatus:
+      type: object
+      additionalProperties: false
+      properties:
+        health:
+          $ref: '#/components/schemas/HealthEnum'
+        details:
+          type:
+          - string
+          - 'null'
+        postgresStatus:
+          oneOf:
+          - $ref: '#/components/schemas/PostgresDeepPingStatus'
+    PostgresDeepPingStatus:
+      type: object
+      additionalProperties: false
+      properties:
+        primary:
+          type: boolean
+        environment:
+          type:
+          - string
+          - 'null'
+x-refined-from:
+- metabolon-discovery-panels-api-openapi.yml
+- metabolon-heatmap-api-openapi.yml
+- metabolon-pathway-explorer-api-openapi.yml
+- metabolon-portal-api-openapi.yml
+x-generator: NSwag v14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))

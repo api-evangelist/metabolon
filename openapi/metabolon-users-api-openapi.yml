@@ -1,0 +1,2962 @@
+openapi: 3.2.0
+info:
+  title: PortalApi Users API
+  version: '1.0'
+servers:
+- url: https://portal-api.prod.metabolon.com
+tags:
+- name: Users
+paths:
+  /api/v1/users/current:
+    get:
+      tags:
+      - Users
+      summary: Retrieves the current user
+      operationId: Users_GetCurrentUser
+      responses:
+        '200':
+          description: A use item was returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /api/v1/users/current/learning-center-links:
+    get:
+      tags:
+      - Users
+      summary: Returns Learning Center launch links authorized for the current user from Portal DB permissions and backend branch config.
+      operationId: Users_GetCurrentUserLearningCenterLinks
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningCenterLinksResponse'
+  /api/v1/users/current/eula-acceptance:
+    post:
+      tags:
+      - Users
+      summary: Accepts the End User License Agreement for the current user
+      operationId: Users_AcceptEula
+      responses:
+        '200':
+          description: EULA acceptance was recorded successfully
+  /api/v2/users/current:
+    get:
+      tags:
+      - Users
+      summary: Retrieves the current user
+      operationId: Users_GetCurrentUser2
+      responses:
+        '200':
+          description: A use item was returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /api/v2/users/current/learning-center-links:
+    get:
+      tags:
+      - Users
+      summary: Returns Learning Center launch links authorized for the current user from Portal DB permissions and backend branch config.
+      operationId: Users_GetCurrentUserLearningCenterLinks2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningCenterLinksResponse'
+  /api/v2/users/current/eula-acceptance:
+    post:
+      tags:
+      - Users
+      summary: Accepts the End User License Agreement for the current user
+      operationId: Users_AcceptEula2
+      responses:
+        '200':
+          description: EULA acceptance was recorded successfully
+  /api/v1/admin/users:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all users which details contains this string in an email, firstname or lastname
+      operationId: Users_GetUsers
+      parameters:
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 1
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of user items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDTO'
+  /api/v1/admin/users/user/upsert:
+    post:
+      tags:
+      - Users
+      summary: 'Adds or updates a user without assigning a project.
+
+        When updating an existing user (e.g. when email is changed), set OriginalEmail to the user''s current email so the backend can find the record to update.
+
+        When adding a brand-new (non-employee) user, the user is first ensured to be a Salesforce-approved Lead:
+
+        a denied personal-email address with no Salesforce record is rejected (400, user not created); a transient
+
+        Salesforce error still creates the Portal user but returns a warning so an admin can retry via the toggle.'
+      operationId: Users_UpsertUser
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing the user to upsert
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersAddUser'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: User was successfully upserted (body may contain a warning when Salesforce approval could not be completed)
+  /api/v1/admin/users/user/{email}/projects/add/collection:
+    post:
+      tags:
+      - Users
+      summary: Adds projects to a user
+      operationId: Users_AddUserProjects
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: The user email
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing the user and project ids
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersAddUserProjects'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: Projects were successfully added
+  /api/v1/admin/users/user/{email}/roles/add/collection:
+    post:
+      tags:
+      - Users
+      summary: Adds roles to a user
+      operationId: Users_AddUserRoles
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: The user email
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing the user and role names
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersAddUserRoles'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: Roles were successfully added
+  /api/v1/admin/users/roles/{roleName}/users/add/collection:
+    post:
+      tags:
+      - Users
+      summary: Adds users to a role
+      operationId: Users_AddUsersRole
+      parameters:
+      - name: roleName
+        in: path
+        required: true
+        description: The role name
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing users to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersAddUsersRole'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: Users were successfully added
+  /api/v1/admin/users/user/{email}/role/{roleName}/add:
+    post:
+      tags:
+      - Users
+      summary: Adds a role to a user
+      operationId: Users_AddUserRole
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: The user email
+        schema:
+          type: string
+        x-position: 1
+      - name: roleName
+        in: path
+        required: true
+        description: The role name
+        schema:
+          type: string
+        x-position: 2
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing user details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersAddUser'
+        required: true
+        x-position: 3
+      responses:
+        '200':
+          description: Role was successfully added
+  /api/v1/admin/users/user/{email}/role/{roleName}/remove:
+    post:
+      tags:
+      - Users
+      summary: Removes a role from a user
+      operationId: Users_RemoveUserRole
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: The user email
+        schema:
+          type: string
+        x-position: 1
+      - name: roleName
+        in: path
+        required: true
+        description: The role name
+        schema:
+          type: string
+        x-position: 2
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing optional comment
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersRemoveUserRole'
+        required: true
+        x-position: 3
+      responses:
+        '200':
+          description: Role was successfully removed
+  /api/v1/admin/users/user/{email}/roles/remove/collection:
+    post:
+      tags:
+      - Users
+      summary: Removes roles from a user
+      operationId: Users_RemoveUserRoles
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: The user email
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing role names
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersRemoveUserRoles'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: Roles were successfully removed
+  /api/v1/admin/users/search/{text}:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all users which details contains this string in an email, firstname or lastname
+      operationId: Users_GetUsersSearch
+      parameters:
+      - name: text
+        in: path
+        required: true
+        description: The text to search for
+        schema:
+          type: string
+        x-position: 1
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 2
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of user items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDTO'
+  /api/v1/admin/users/projects:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all the user project entries
+      operationId: Users_GetProjects
+      parameters:
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 1
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of user project items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectDTO'
+  /api/v1/admin/users/projects/search/{text}:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all projects which details contains this string
+      operationId: Users_GetProjectSearch
+      parameters:
+      - name: text
+        in: path
+        required: true
+        description: The text to search for
+        schema:
+          type: string
+        x-position: 1
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 2
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of user items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectDTO'
+  /api/v1/admin/users/roles:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all roles excluding migration role
+      operationId: Users_GetRoles
+      parameters:
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 1
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of role items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleDTO'
+  /api/v1/admin/users/roles/all:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all roles without pagination
+      operationId: Users_GetRolesAll
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of role items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleDTO'
+  /api/v1/admin/users/roles/search/{text}:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all roles which details contains this string
+      operationId: Users_GetRolesSearch
+      parameters:
+      - name: text
+        in: path
+        required: true
+        description: The text to search for
+        schema:
+          type: string
+        x-position: 1
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 2
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of user items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleDTO'
+  /api/v1/admin/users/roles/permissions/catalog:
+    get:
+      tags:
+      - Users
+      summary: Returns the default permission catalog used to validate role permission changes.
+      operationId: Users_GetPermissionsCatalog
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionsCatalogResponse'
+  /api/v1/admin/users/roles/definitions/default:
+    get:
+      tags:
+      - Users
+      summary: Returns role names defined in the default role definitions.
+      operationId: Users_GetDefaultRoles
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultRolesResponse'
+  /api/v1/admin/users/roles/reset:
+    post:
+      tags:
+      - Users
+      summary: Restores all database roles to the default role definitions, removing roles not in the defaults and their user assignments.
+      operationId: Users_ResetAllRoles
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleResetResponse'
+  /api/v1/admin/users/roles/{roleName}/permissions:
+    get:
+      tags:
+      - Users
+      summary: Returns permissions currently assigned to a role in the database.
+      operationId: Users_GetRolePermissions
+      parameters:
+      - name: roleName
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolePermissionsResponse'
+  /api/v1/admin/users/roles/{roleName}/permissions/reset:
+    post:
+      tags:
+      - Users
+      summary: Restores a single role's permissions to the default role definitions.
+      operationId: Users_ResetRolePermissions
+      parameters:
+      - name: roleName
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolePermissionsResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/v1/admin/users/roles/{roleName}/permissions/add:
+    post:
+      tags:
+      - Users
+      summary: Adds a permission to a role from the default permission catalog.
+      operationId: Users_AddRolePermission
+      parameters:
+      - name: roleName
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddRolePermissionRequest'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolePermissionsResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/v1/admin/users/roles/{roleName}/permissions/remove:
+    post:
+      tags:
+      - Users
+      summary: Removes a permission from a role.
+      operationId: Users_RemoveRolePermission
+      parameters:
+      - name: roleName
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddRolePermissionRequest'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolePermissionsResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/v1/admin/users/{email}/projects:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all projects for a user by email
+      operationId: Users_GetUserProjects
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: The user email
+        schema:
+          type: string
+        x-position: 1
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 2
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of project items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectDTO'
+  /api/v1/admin/users/salesforce/{email}:
+    get:
+      tags:
+      - Users
+      summary: Returns resolved Salesforce login status for Access Management (Employee, Legacy, Contact, etc.).
+      operationId: Users_GetUserSalesforceLoginStatus
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginStatusResponse'
+  /api/v1/admin/users/talent-lms/{email}:
+    get:
+      tags:
+      - Users
+      summary: Returns Learning Center branch access and TalentLMS sync status for a Portal user.
+      operationId: Users_GetUserTalentLmsSyncStatus
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TalentLmsSyncStatusResponse'
+  /api/v1/admin/users/talent-lms/queue:
+    get:
+      tags:
+      - Users
+      summary: Returns how many Portal users are currently due for TalentLMS reconciliation.
+      operationId: Users_GetTalentLmsSyncQueue
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TalentLmsSyncQueueResponse'
+  /api/v1/admin/users/talent-lms/failures:
+    get:
+      tags:
+      - Users
+      summary: Returns Portal users whose latest TalentLMS sync is in a failed state.
+      operationId: Users_GetTalentLmsSyncFailures
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TalentLmsSyncFailuresResponse'
+  /api/v1/admin/users/talent-lms/sync:
+    post:
+      tags:
+      - Users
+      summary: Queues eligible Portal users and reconciles all due TalentLMS users.
+      operationId: Users_RunTalentLmsSync
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TalentLmsManualSyncResponse'
+  /api/v1/admin/users/talent-lms/{email}/reconcile:
+    post:
+      tags:
+      - Users
+      summary: Manually reconciles a Portal user's TalentLMS branch membership from Portal permissions.
+      operationId: Users_ReconcileUserTalentLms
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TalentLmsReconcileResponse'
+  /api/v1/admin/users/registration-eligibility/{email}:
+    get:
+      tags:
+      - Users
+      summary: Checks whether a new non-employee user may be added for the given email (same rules as upsert auto-approval).
+      operationId: Users_GetRegistrationEligibility
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: The email to evaluate.
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: Eligibility result is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistrationEligibilityResponse'
+  /api/v1/admin/users/salesforce/pending:
+    get:
+      tags:
+      - Users
+      summary: Lists users in the Portal waiting room for Salesforce approval.
+      operationId: Users_GetSalesforcePendingUsers
+      parameters:
+      - name: skip
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 1
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 2
+      - name: q
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesforcePendingUsersPageResponse'
+  /api/v1/admin/users/salesforce/pending/search/{text}:
+    get:
+      tags:
+      - Users
+      summary: Searches users in the Portal waiting room for Salesforce approval.
+      operationId: Users_SearchSalesforcePendingUsers
+      parameters:
+      - name: text
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: skip
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 2
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesforcePendingUsersPageResponse'
+  /api/v1/admin/users/salesforce/pending/count:
+    get:
+      tags:
+      - Users
+      summary: Returns how many users are currently in the Salesforce approval waiting room.
+      operationId: Users_GetSalesforcePendingUserCount
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesforcePendingUserQueueCountResponse'
+  /api/v1/admin/users/salesforce/pending/sync:
+    post:
+      tags:
+      - Users
+      summary: Discovers pending Salesforce leads and reconciles the waiting room (including approval emails).
+      operationId: Users_RunSalesforcePendingUserSync
+      parameters:
+      - name: full_refresh
+        x-originalName: fullRefresh
+        in: query
+        description: When true, scans all pending Portal leads in Salesforce instead of the incremental lookback window.
+        schema:
+          type: boolean
+          default: false
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesforcePendingUserSyncResponse'
+  /api/v1/admin/users/salesforce/{email}/approve:
+    post:
+      tags:
+      - Users
+      summary: 'Marks the user as Salesforce-approved using Leads only. A Contact is treated as already approved (no change);
+
+        an existing Lead has its Portal Access Status set to Approved; if no Salesforce record exists, a Portal_User Lead is created
+
+        and approved. Returns refreshed login status for the Access Management UI.'
+      operationId: Users_ApproveUser
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: The user email.
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: The user is approved; refreshed login status is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginStatusResponse'
+        '400':
+          description: Email is required, or the email is not allowed (permanent). Returns RFC7807 ProblemDetails.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '503':
+          description: Salesforce was unavailable; approval can be retried. Returns RFC7807 ProblemDetails.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/v1/admin/users/{email}/roles:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all roles for a user by email
+      operationId: Users_GetUserRoles
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: The user email
+        schema:
+          type: string
+        x-position: 1
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 2
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of role items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleDTO'
+  /api/v1/admin/users/projects/{projectId}/users:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all users for a project
+      operationId: Users_GetProjectUsersAll
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The project id
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 2
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of user items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDTO'
+  /api/v1/admin/users/roles/{roleName}/users:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all users for a role
+      operationId: Users_GetRoleUsers
+      parameters:
+      - name: roleName
+        in: path
+        required: true
+        description: The role name
+        schema:
+          type: string
+        x-position: 1
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 2
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of user items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDTO'
+  /api/v1/admin/users/project/{projectId}/add:
+    post:
+      tags:
+      - Users
+      summary: Adds or grants access to these user
+      operationId: Users_AddUserProject
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The parameters containing the project id
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing user to upsert
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersAddUserProject'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: User was successfully upserted
+  /api/v1/admin/users/project/{projectId}/add/collection:
+    post:
+      tags:
+      - Users
+      summary: Adds or grants access to these users
+      operationId: Users_AddUsersProject
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The parameters containing the project id
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing user to upsert
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersAddUsersProject'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: Users were successfully upserted
+  /api/v1/admin/users/project/{projectId}/remove:
+    post:
+      tags:
+      - Users
+      summary: Removes access to these user
+      operationId: Users_RemoveUserProject
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The parameters containing the project id
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing user to remove
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersRemoveUserProject'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: User was successfully upserted
+  /api/v1/admin/users/project/{projectId}/remove/collection:
+    post:
+      tags:
+      - Users
+      summary: Removes access to these users
+      operationId: Users_RemoveUsersProject
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The parameters containing the project id
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing users to remove
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersRemoveUsersProject'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: Users were successfully upserted
+  /api/v1/admin/users/projects/report:
+    get:
+      tags:
+      - Users
+      summary: Retrieves the report for the users and projects
+      operationId: Users_GetProjectUsers
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of user project items was returned
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/v2/admin/users:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all users which details contains this string in an email, firstname or lastname
+      operationId: Users_GetUsers2
+      parameters:
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 1
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of user items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDTO'
+  /api/v2/admin/users/user/upsert:
+    post:
+      tags:
+      - Users
+      summary: 'Adds or updates a user without assigning a project.
+
+        When updating an existing user (e.g. when email is changed), set OriginalEmail to the user''s current email so the backend can find the record to update.
+
+        When adding a brand-new (non-employee) user, the user is first ensured to be a Salesforce-approved Lead:
+
+        a denied personal-email address with no Salesforce record is rejected (400, user not created); a transient
+
+        Salesforce error still creates the Portal user but returns a warning so an admin can retry via the toggle.'
+      operationId: Users_UpsertUser2
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing the user to upsert
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersAddUser'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: User was successfully upserted (body may contain a warning when Salesforce approval could not be completed)
+  /api/v2/admin/users/user/{email}/projects/add/collection:
+    post:
+      tags:
+      - Users
+      summary: Adds projects to a user
+      operationId: Users_AddUserProjects2
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: The user email
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing the user and project ids
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersAddUserProjects'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: Projects were successfully added
+  /api/v2/admin/users/user/{email}/roles/add/collection:
+    post:
+      tags:
+      - Users
+      summary: Adds roles to a user
+      operationId: Users_AddUserRoles2
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: The user email
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing the user and role names
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersAddUserRoles'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: Roles were successfully added
+  /api/v2/admin/users/roles/{roleName}/users/add/collection:
+    post:
+      tags:
+      - Users
+      summary: Adds users to a role
+      operationId: Users_AddUsersRole2
+      parameters:
+      - name: roleName
+        in: path
+        required: true
+        description: The role name
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing users to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersAddUsersRole'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: Users were successfully added
+  /api/v2/admin/users/user/{email}/role/{roleName}/add:
+    post:
+      tags:
+      - Users
+      summary: Adds a role to a user
+      operationId: Users_AddUserRole2
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: The user email
+        schema:
+          type: string
+        x-position: 1
+      - name: roleName
+        in: path
+        required: true
+        description: The role name
+        schema:
+          type: string
+        x-position: 2
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing user details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersAddUser'
+        required: true
+        x-position: 3
+      responses:
+        '200':
+          description: Role was successfully added
+  /api/v2/admin/users/user/{email}/role/{roleName}/remove:
+    post:
+      tags:
+      - Users
+      summary: Removes a role from a user
+      operationId: Users_RemoveUserRole2
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: The user email
+        schema:
+          type: string
+        x-position: 1
+      - name: roleName
+        in: path
+        required: true
+        description: The role name
+        schema:
+          type: string
+        x-position: 2
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing optional comment
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersRemoveUserRole'
+        required: true
+        x-position: 3
+      responses:
+        '200':
+          description: Role was successfully removed
+  /api/v2/admin/users/user/{email}/roles/remove/collection:
+    post:
+      tags:
+      - Users
+      summary: Removes roles from a user
+      operationId: Users_RemoveUserRoles2
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: The user email
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing role names
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersRemoveUserRoles'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: Roles were successfully removed
+  /api/v2/admin/users/search/{text}:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all users which details contains this string in an email, firstname or lastname
+      operationId: Users_GetUsersSearch2
+      parameters:
+      - name: text
+        in: path
+        required: true
+        description: The text to search for
+        schema:
+          type: string
+        x-position: 1
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 2
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of user items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDTO'
+  /api/v2/admin/users/projects:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all the user project entries
+      operationId: Users_GetProjects2
+      parameters:
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 1
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of user project items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectDTO'
+  /api/v2/admin/users/projects/search/{text}:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all projects which details contains this string
+      operationId: Users_GetProjectSearch2
+      parameters:
+      - name: text
+        in: path
+        required: true
+        description: The text to search for
+        schema:
+          type: string
+        x-position: 1
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 2
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of user items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectDTO'
+  /api/v2/admin/users/roles:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all roles excluding migration role
+      operationId: Users_GetRoles2
+      parameters:
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 1
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 2
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of role items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleDTO'
+  /api/v2/admin/users/roles/all:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all roles without pagination
+      operationId: Users_GetRolesAll2
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of role items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleDTO'
+  /api/v2/admin/users/roles/search/{text}:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all roles which details contains this string
+      operationId: Users_GetRolesSearch2
+      parameters:
+      - name: text
+        in: path
+        required: true
+        description: The text to search for
+        schema:
+          type: string
+        x-position: 1
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 2
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of user items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleDTO'
+  /api/v2/admin/users/roles/permissions/catalog:
+    get:
+      tags:
+      - Users
+      summary: Returns the default permission catalog used to validate role permission changes.
+      operationId: Users_GetPermissionsCatalog2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionsCatalogResponse'
+  /api/v2/admin/users/roles/definitions/default:
+    get:
+      tags:
+      - Users
+      summary: Returns role names defined in the default role definitions.
+      operationId: Users_GetDefaultRoles2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultRolesResponse'
+  /api/v2/admin/users/roles/reset:
+    post:
+      tags:
+      - Users
+      summary: Restores all database roles to the default role definitions, removing roles not in the defaults and their user assignments.
+      operationId: Users_ResetAllRoles2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleResetResponse'
+  /api/v2/admin/users/roles/{roleName}/permissions:
+    get:
+      tags:
+      - Users
+      summary: Returns permissions currently assigned to a role in the database.
+      operationId: Users_GetRolePermissions2
+      parameters:
+      - name: roleName
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolePermissionsResponse'
+  /api/v2/admin/users/roles/{roleName}/permissions/reset:
+    post:
+      tags:
+      - Users
+      summary: Restores a single role's permissions to the default role definitions.
+      operationId: Users_ResetRolePermissions2
+      parameters:
+      - name: roleName
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolePermissionsResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/v2/admin/users/roles/{roleName}/permissions/add:
+    post:
+      tags:
+      - Users
+      summary: Adds a permission to a role from the default permission catalog.
+      operationId: Users_AddRolePermission2
+      parameters:
+      - name: roleName
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddRolePermissionRequest'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolePermissionsResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/v2/admin/users/roles/{roleName}/permissions/remove:
+    post:
+      tags:
+      - Users
+      summary: Removes a permission from a role.
+      operationId: Users_RemoveRolePermission2
+      parameters:
+      - name: roleName
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddRolePermissionRequest'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolePermissionsResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/v2/admin/users/{email}/projects:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all projects for a user by email
+      operationId: Users_GetUserProjects2
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: The user email
+        schema:
+          type: string
+        x-position: 1
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 2
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of project items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectDTO'
+  /api/v2/admin/users/salesforce/{email}:
+    get:
+      tags:
+      - Users
+      summary: Returns resolved Salesforce login status for Access Management (Employee, Legacy, Contact, etc.).
+      operationId: Users_GetUserSalesforceLoginStatus2
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginStatusResponse'
+  /api/v2/admin/users/talent-lms/{email}:
+    get:
+      tags:
+      - Users
+      summary: Returns Learning Center branch access and TalentLMS sync status for a Portal user.
+      operationId: Users_GetUserTalentLmsSyncStatus2
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TalentLmsSyncStatusResponse'
+  /api/v2/admin/users/talent-lms/queue:
+    get:
+      tags:
+      - Users
+      summary: Returns how many Portal users are currently due for TalentLMS reconciliation.
+      operationId: Users_GetTalentLmsSyncQueue2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TalentLmsSyncQueueResponse'
+  /api/v2/admin/users/talent-lms/failures:
+    get:
+      tags:
+      - Users
+      summary: Returns Portal users whose latest TalentLMS sync is in a failed state.
+      operationId: Users_GetTalentLmsSyncFailures2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TalentLmsSyncFailuresResponse'
+  /api/v2/admin/users/talent-lms/sync:
+    post:
+      tags:
+      - Users
+      summary: Queues eligible Portal users and reconciles all due TalentLMS users.
+      operationId: Users_RunTalentLmsSync2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TalentLmsManualSyncResponse'
+  /api/v2/admin/users/talent-lms/{email}/reconcile:
+    post:
+      tags:
+      - Users
+      summary: Manually reconciles a Portal user's TalentLMS branch membership from Portal permissions.
+      operationId: Users_ReconcileUserTalentLms2
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TalentLmsReconcileResponse'
+  /api/v2/admin/users/registration-eligibility/{email}:
+    get:
+      tags:
+      - Users
+      summary: Checks whether a new non-employee user may be added for the given email (same rules as upsert auto-approval).
+      operationId: Users_GetRegistrationEligibility2
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: The email to evaluate.
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: Eligibility result is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistrationEligibilityResponse'
+  /api/v2/admin/users/salesforce/pending:
+    get:
+      tags:
+      - Users
+      summary: Lists users in the Portal waiting room for Salesforce approval.
+      operationId: Users_GetSalesforcePendingUsers2
+      parameters:
+      - name: skip
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 1
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 2
+      - name: q
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesforcePendingUsersPageResponse'
+  /api/v2/admin/users/salesforce/pending/search/{text}:
+    get:
+      tags:
+      - Users
+      summary: Searches users in the Portal waiting room for Salesforce approval.
+      operationId: Users_SearchSalesforcePendingUsers2
+      parameters:
+      - name: text
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: skip
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 2
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesforcePendingUsersPageResponse'
+  /api/v2/admin/users/salesforce/pending/count:
+    get:
+      tags:
+      - Users
+      summary: Returns how many users are currently in the Salesforce approval waiting room.
+      operationId: Users_GetSalesforcePendingUserCount2
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesforcePendingUserQueueCountResponse'
+  /api/v2/admin/users/salesforce/pending/sync:
+    post:
+      tags:
+      - Users
+      summary: Discovers pending Salesforce leads and reconciles the waiting room (including approval emails).
+      operationId: Users_RunSalesforcePendingUserSync2
+      parameters:
+      - name: full_refresh
+        x-originalName: fullRefresh
+        in: query
+        description: When true, scans all pending Portal leads in Salesforce instead of the incremental lookback window.
+        schema:
+          type: boolean
+          default: false
+        x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesforcePendingUserSyncResponse'
+  /api/v2/admin/users/salesforce/{email}/approve:
+    post:
+      tags:
+      - Users
+      summary: 'Marks the user as Salesforce-approved using Leads only. A Contact is treated as already approved (no change);
+
+        an existing Lead has its Portal Access Status set to Approved; if no Salesforce record exists, a Portal_User Lead is created
+
+        and approved. Returns refreshed login status for the Access Management UI.'
+      operationId: Users_ApproveUser2
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: The user email.
+        schema:
+          type: string
+        x-position: 1
+      responses:
+        '200':
+          description: The user is approved; refreshed login status is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginStatusResponse'
+        '400':
+          description: Email is required, or the email is not allowed (permanent). Returns RFC7807 ProblemDetails.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '503':
+          description: Salesforce was unavailable; approval can be retried. Returns RFC7807 ProblemDetails.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/v2/admin/users/{email}/roles:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all roles for a user by email
+      operationId: Users_GetUserRoles2
+      parameters:
+      - name: email
+        in: path
+        required: true
+        description: The user email
+        schema:
+          type: string
+        x-position: 1
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 2
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of role items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleDTO'
+  /api/v2/admin/users/projects/{projectId}/users:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all users for a project
+      operationId: Users_GetProjectUsersAll2
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The project id
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 2
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of user items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDTO'
+  /api/v2/admin/users/roles/{roleName}/users:
+    get:
+      tags:
+      - Users
+      summary: Retrieves all users for a role
+      operationId: Users_GetRoleUsers2
+      parameters:
+      - name: roleName
+        in: path
+        required: true
+        description: The role name
+        schema:
+          type: string
+        x-position: 1
+      - name: skip
+        in: query
+        description: Number of items to skip (for pagination)
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 2
+      - name: page_size
+        x-originalName: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of user items was returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDTO'
+  /api/v2/admin/users/project/{projectId}/add:
+    post:
+      tags:
+      - Users
+      summary: Adds or grants access to these user
+      operationId: Users_AddUserProject2
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The parameters containing the project id
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing user to upsert
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersAddUserProject'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: User was successfully upserted
+  /api/v2/admin/users/project/{projectId}/add/collection:
+    post:
+      tags:
+      - Users
+      summary: Adds or grants access to these users
+      operationId: Users_AddUsersProject2
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The parameters containing the project id
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing user to upsert
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersAddUsersProject'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: Users were successfully upserted
+  /api/v2/admin/users/project/{projectId}/remove:
+    post:
+      tags:
+      - Users
+      summary: Removes access to these user
+      operationId: Users_RemoveUserProject2
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The parameters containing the project id
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing user to remove
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersRemoveUserProject'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: User was successfully upserted
+  /api/v2/admin/users/project/{projectId}/remove/collection:
+    post:
+      tags:
+      - Users
+      summary: Removes access to these users
+      operationId: Users_RemoveUsersProject2
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: The parameters containing the project id
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      requestBody:
+        x-name: publishParameters
+        description: The parameters containing users to remove
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishParametersRemoveUsersProject'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: Users were successfully upserted
+  /api/v2/admin/users/projects/report:
+    get:
+      tags:
+      - Users
+      summary: Retrieves the report for the users and projects
+      operationId: Users_GetProjectUsers2
+      responses:
+        '200':
+          description: A [possibly empty] enumeration of user project items was returned
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+components:
+  schemas:
+    PublishParametersOfEmailDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        instance:
+          oneOf:
+          - $ref: '#/components/schemas/EmailDTO'
+        comment:
+          type:
+          - string
+          - 'null'
+    Role:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        permissions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    PublishParametersOfIEnumerableOfEmailDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        instance:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EmailDTO'
+        comment:
+          type:
+          - string
+          - 'null'
+    TalentLmsSyncQueueResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+        pendingCount:
+          type: integer
+          format: int32
+    PublishParametersRemoveUserRoles:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfUserRoleNamesDTO'
+      - type: object
+        additionalProperties: false
+    TalentLmsReconcileResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        syncStatus:
+          type:
+          - string
+          - 'null'
+        warnings:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    AddRolePermissionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        permission:
+          type:
+          - string
+          - 'null'
+    UserRoleNamesDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        user:
+          oneOf:
+          - $ref: '#/components/schemas/UserDTO'
+        roleNames:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    TalentLmsSyncStatusResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        syncStatus:
+          type:
+          - string
+          - 'null'
+        talentLmsUserId:
+          type:
+          - string
+          - 'null'
+        lastSyncAttemptUtc:
+          type:
+          - string
+          - 'null'
+        lastSyncSuccessUtc:
+          type:
+          - string
+          - 'null'
+        lastSyncError:
+          type:
+          - string
+          - 'null'
+        authorizedBranchIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        branches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TalentLmsBranchSummary'
+    SalesforcePendingUserQueueCountResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        pendingCount:
+          type: integer
+          format: int32
+    PublishParametersOfUserDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        instance:
+          oneOf:
+          - $ref: '#/components/schemas/UserDTO'
+        comment:
+          type:
+          - string
+          - 'null'
+    PublishParametersRemoveUsersProject:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfIEnumerableOfEmailDTO'
+      - type: object
+        additionalProperties: false
+    SalesforcePendingUsersPageResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SalesforcePendingUserResponse'
+        totalCount:
+          type: integer
+          format: int32
+    PublishParametersAddUserProjects:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfUserProjectIdsDTO'
+      - type: object
+        additionalProperties: false
+    RoleResetResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        rolesCreated:
+          type: integer
+          format: int32
+        rolesUpdated:
+          type: integer
+          format: int32
+        rolesRemoved:
+          type: integer
+          format: int32
+        removedRoleNames:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    RoleDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+    EmailDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+    LoginStatusResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type:
+          - string
+          - 'null'
+    PublishParametersOfIEnumerableOfUserDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        instance:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UserDTO'
+        comment:
+          type:
+          - string
+          - 'null'
+    PublishParametersAddUser:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfUserDTO'
+      - type: object
+        additionalProperties: false
+        properties:
+          originalEmail:
+            type:
+            - string
+            - 'null'
+            description: When updating an existing user (e.g. when email is changed), set this to the user's current email so the backend can find the record to update.
+    PublishParametersAddUserRoles:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfUserRoleNamesDTO'
+      - type: object
+        additionalProperties: false
+    PublishParametersAddUsersProject:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfIEnumerableOfUserDTO'
+      - type: object
+        additionalProperties: false
+    PublishParametersOfUserProjectIdsDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        instance:
+          oneOf:
+          - $ref: '#/components/schemas/UserProjectIdsDTO'
+        comment:
+          type:
+          - string
+          - 'null'
+    SalesforcePendingUserSyncResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        discoveredCount:
+          type: integer
+          format: int32
+        reconciledCount:
+          type: integer
+          format: int32
+        approvedAndNotifiedCount:
+          type: integer
+          format: int32
+        removedCount:
+          type: integer
+          format: int32
+        pendingCount:
+          type: integer
+          format: int32
+    PublishParametersAddUserProject:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfUserDTO'
+      - type: object
+        additionalProperties: false
+    TalentLmsBranchSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        branchId:
+          type:
+          - string
+          - 'null'
+        label:
+          type:
+          - string
+          - 'null'
+    LearningCenterLinkDto:
+      type: object
+      additionalProperties: false
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+        branchId:
+          type:
+          - string
+          - 'null'
+    User:
+      type: object
+      additionalProperties: false
+      properties:
+        userId:
+          type: string
+          format: guid
+        email:
+          type:
+          - string
+          - 'null'
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        projects:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UserProject'
+        roles:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Role'
+        signupDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        convertedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        locked:
+          type: boolean
+        eulaAccepted:
+          type: boolean
+    RegistrationEligibilityResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        allowed:
+          type: boolean
+        message:
+          type:
+          - string
+          - 'null'
+    UserDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+    TalentLmsSyncFailuresResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        failures:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TalentLmsSyncFailureSummaryResponse'
+    LearningCenterLinksResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        learningCenterLinks:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/LearningCenterLinkDto'
+    RolePermissionsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        permissions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    UserProject:
+      type: object
+      additionalProperties: false
+      properties:
+        projectId:
+          type: string
+          format: guid
+        projectCode:
+          type:
+          - string
+          - 'null'
+    PublishParametersOfUserRoleNamesDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        instance:
+          oneOf:
+          - $ref: '#/components/schemas/UserRoleNamesDTO'
+        comment:
+          type:
+          - string
+          - 'null'
+    DefaultRolesResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        roleNames:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    PublishParametersRemoveUserProject:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfEmailDTO'
+      - type: object
+        additionalProperties: false
+    PermissionsCatalogResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        permissions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    PublishParametersAddUsersRole:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfIEnumerableOfUserDTO'
+      - type: object
+        additionalProperties: false
+    SalesforcePendingUserResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        salesforcePendingUserId:
+          type: string
+          format: guid
+        email:
+          type:
+          - string
+          - 'null'
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        salesforceLeadId:
+          type:
+          - string
+          - 'null'
+        firstSeenUtc:
+          type: string
+          format: date-time
+        lastSeenUtc:
+          type: string
+          format: date-time
+    TalentLmsManualSyncResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        pendingCountBefore:
+          type: integer
+          format: int32
+        reconciledCount:
+          type: integer
+          format: int32
+        pendingCountAfter:
+          type: integer
+          format: int32
+        newlyQueuedCount:
+          type: integer
+          format: int32
+        alreadyDueCount:
+          type: integer
+          format: int32
+        skippedHealthyCount:
+          type: integer
+          format: int32
+        skippedIneligibleCount:
+          type: integer
+          format: int32
+        failures:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TalentLmsSyncFailureSummaryResponse'
+    UserProjectIdsDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        user:
+          oneOf:
+          - $ref: '#/components/schemas/UserDTO'
+        projectIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+    PublishParametersRemoveUserRole:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfEmailDTO'
+      - type: object
+        additionalProperties: false
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ProjectDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        projectId:
+          type: string
+          format: guid
+        projectCode:
+          type:
+          - string
+          - 'null'
+        projectTitle:
+          type:
+          - string
+          - 'null'
+    TalentLmsSyncFailureSummaryResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

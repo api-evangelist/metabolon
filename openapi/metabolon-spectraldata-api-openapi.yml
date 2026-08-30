@@ -1,0 +1,143 @@
+openapi: 3.2.0
+info:
+  title: PortalApi Spectral Data API
+  version: '1.0'
+servers:
+- url: https://portal-api.prod.metabolon.com
+tags:
+- name: SpectralData
+paths:
+  /api/v1/spectraldata/{projectId}:
+    get:
+      tags:
+      - SpectralData
+      summary: Retrieves spectral data download metadata for a project
+      operationId: SpectralData_Get
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: Project id
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: Successfully returned the spectral data download metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpectralDataDownloadRecord'
+  /api/v1/spectraldata/{projectId}/download:
+    get:
+      tags:
+      - SpectralData
+      summary: Create S3 presigned download URL for spectral data. Use other route for metadata, including possible decryption key.
+      operationId: SpectralData_GetDownloadLink
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: Project id
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: Successfully returned the spectral data download link
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/v2/spectraldata/{projectId}:
+    get:
+      tags:
+      - SpectralData
+      summary: Retrieves spectral data download metadata for a project
+      operationId: SpectralData_Get2
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: Project id
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: Successfully returned the spectral data download metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpectralDataDownloadRecord'
+  /api/v2/spectraldata/{projectId}/download:
+    get:
+      tags:
+      - SpectralData
+      summary: Create S3 presigned download URL for spectral data. Use other route for metadata, including possible decryption key.
+      operationId: SpectralData_GetDownloadLink2
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        description: Project id
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      responses:
+        '200':
+          description: Successfully returned the spectral data download link
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  schemas:
+    SpectralDataDownloadRecord:
+      allOf:
+      - $ref: '#/components/schemas/Record'
+      - type: object
+        additionalProperties: false
+        properties:
+          projectId:
+            type: string
+            format: guid
+          locationId:
+            type:
+            - string
+            - 'null'
+          fileSize:
+            type: integer
+            format: int32
+          uploadDate:
+            type: string
+            format: date-time
+          availableDate:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          zipDecryptKey:
+            type:
+            - string
+            - 'null'
+    Record:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        createdDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        modifiedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))
