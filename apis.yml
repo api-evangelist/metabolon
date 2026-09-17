@@ -163,22 +163,6 @@ apis:
     url: https://www.metabolon.com/support/portal/
   - type: Login
     url: https://portal.metabolon.com/login
-- aid: metabolon:metabolon-pipelinestatus-api
-  name: Metabolon Pipeline Status API
-  description: The PipelineStatus API from Metabolon — 8 operation(s) for pipelinestatus.
-  humanURL: https://www.metabolon.com/support/portal/
-  baseURL: https://portal-api.prod.metabolon.com
-  tags:
-  - Pipeline Status
-  tags_raw:
-  - PipelineStatus
-  properties:
-  - type: OpenAPI
-    url: openapi/metabolon-pipelinestatus-api-openapi.yml
-  - type: Documentation
-    url: https://www.metabolon.com/support/portal/
-  - type: Login
-    url: https://portal.metabolon.com/login
 - aid: metabolon:metabolon-projects-api
   name: Metabolon Projects API
   description: The Projects API from Metabolon — 18 operation(s) for projects.
@@ -319,6 +303,20 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/metabolon-users-api-openapi.yml
+  - type: Documentation
+    url: https://www.metabolon.com/support/portal/
+  - type: Login
+    url: https://portal.metabolon.com/login
+- aid: metabolon:metabolon-pipeline-status-api
+  name: Metabolon Pipeline Status API
+  description: The Pipeline Status API from Metabolon — 8 operation(s) for pipeline status.
+  humanURL: https://www.metabolon.com/support/portal/
+  baseURL: https://portal-api.prod.metabolon.com
+  tags:
+  - Pipeline Status
+  properties:
+  - type: OpenAPI
+    url: openapi/metabolon-pipeline-status-api-openapi.yml
   - type: Documentation
     url: https://www.metabolon.com/support/portal/
   - type: Login
