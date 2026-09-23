@@ -26,7 +26,7 @@ paths:
     get:
       tags:
       - Projects
-      summary: Retrieves the project for a specified project assuing the active user has this project
+      summary: Retrieves the project for a specified project assuing the active user has this…
       operationId: Projects_Retrieve_DetailsById
       parameters:
       - name: projectId
@@ -48,7 +48,7 @@ paths:
     get:
       tags:
       - Projects
-      summary: Retrieves the project with a specified project code assuing the active user has this project
+      summary: Retrieves the project with a specified project code assuing the active user has…
       operationId: Projects_Retrieve_DetailsByCode
       parameters:
       - name: projectCode
@@ -91,7 +91,7 @@ paths:
     post:
       tags:
       - Projects
-      summary: Recognize revenue for a project.
+      summary: Recognize revenue for a project
       operationId: Projects_RecognizeRevenue
       requestBody:
         x-name: recognizeRevenue
@@ -131,6 +131,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/RecognizeRevenue'
+      summary: Projects retrieve latest recognize revenue by project id
+      x-summary-source: derived
   /api/v2/projects:
     get:
       tags:
@@ -150,7 +152,7 @@ paths:
     get:
       tags:
       - Projects
-      summary: Retrieves the project for a specified project assuing the active user has this project
+      summary: Retrieves the project for a specified project assuing the active user has this…
       operationId: Projects_Retrieve_DetailsById2
       parameters:
       - name: projectId
@@ -172,7 +174,7 @@ paths:
     get:
       tags:
       - Projects
-      summary: Retrieves the project with a specified project code assuing the active user has this project
+      summary: Retrieves the project with a specified project code assuing the active user has…
       operationId: Projects_Retrieve_DetailsByCode2
       parameters:
       - name: projectCode
@@ -215,7 +217,7 @@ paths:
     post:
       tags:
       - Projects
-      summary: Recognize revenue for a project.
+      summary: Recognize revenue for a project
       operationId: Projects_RecognizeRevenue2
       requestBody:
         x-name: recognizeRevenue
@@ -255,6 +257,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/RecognizeRevenue'
+      summary: Projects retrieve latest recognize revenue by project id2
+      x-summary-source: derived
   /api/v1/admin/projects:
     get:
       tags:
@@ -274,13 +278,7 @@ paths:
     post:
       tags:
       - Projects
-      summary: 'Creates a merged deliverable project shell (Pipeline.Merged) for statistical merge jobs.
-
-        Caller must supply projectCode. Optional body fields: productType, synopsis,
-
-        conclusion, and principal investigator name/email/phone. Publishes
-
-        PortalProjectEvent without sending ProjectAvailable.'
+      summary: Creates a merged deliverable project shell (Pipeline.Merged) for statistical…
       operationId: Projects_MergeProjects
       requestBody:
         x-name: request
@@ -301,9 +299,7 @@ paths:
     post:
       tags:
       - Projects
-      summary: 'Deletes a project and all portal-scoped data for it, then notifies downstream services via PortalProjectEvent.
-
-        Use query parameter force=true for maintenance: always run delete (may no-op), always publish the delete event, and return 200 even when no project row exists.'
+      summary: Deletes a project and all portal-scoped data for it, then notifies downstream…
       operationId: Projects_DeleteProject
       parameters:
       - name: projectId
@@ -347,13 +343,7 @@ paths:
     post:
       tags:
       - Projects
-      summary: 'Creates a merged deliverable project shell (Pipeline.Merged) for statistical merge jobs.
-
-        Caller must supply projectCode. Optional body fields: productType, synopsis,
-
-        conclusion, and principal investigator name/email/phone. Publishes
-
-        PortalProjectEvent without sending ProjectAvailable.'
+      summary: Creates a merged deliverable project shell (Pipeline.Merged) for statistical…
       operationId: Projects_MergeProjects2
       requestBody:
         x-name: request
@@ -374,9 +364,7 @@ paths:
     post:
       tags:
       - Projects
-      summary: 'Deletes a project and all portal-scoped data for it, then notifies downstream services via PortalProjectEvent.
-
-        Use query parameter force=true for maintenance: always run delete (may no-op), always publish the delete event, and return 200 even when no project row exists.'
+      summary: Deletes a project and all portal-scoped data for it, then notifies downstream…
       operationId: Projects_DeleteProject2
       parameters:
       - name: projectId
@@ -403,48 +391,21 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
 components:
   schemas:
-    Person:
+    MergeProjectsResponse:
       type: object
       additionalProperties: false
       properties:
-        lastName:
-          type:
-          - string
-          - 'null'
-        firstName:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        suffix:
-          type:
-          - string
-          - 'null'
-        email:
-          type:
-          - string
-          - 'null'
-        phone:
-          type:
-          - string
-          - 'null'
-    RecognizeRevenueComment:
-      type: object
-      additionalProperties: false
-      properties:
-        comment:
-          type:
-          - string
-          - 'null'
-        userId:
+        projectId:
           type: string
           format: guid
-        date:
-          type: string
-          format: date-time
+        projectCode:
+          type:
+          - string
+          - 'null'
+        limsProjectId:
+          type:
+          - string
+          - 'null'
     ProjectDescription:
       type: object
       additionalProperties: false
@@ -518,44 +479,6 @@ components:
           - string
           - 'null'
           format: date-time
-    Pipeline:
-      type: string
-      description: ''
-      x-enumNames:
-      - V7
-      - Core
-      - Kits
-      - Merged
-      enum:
-      - V7
-      - Core
-      - Kits
-      - Merged
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
     MergeProjectsRequest:
       type: object
       additionalProperties: false
@@ -608,26 +531,6 @@ components:
           - string
           - 'null'
           format: guid
-    Group:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-        groups:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Group'
-        members:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Person'
     RecognizeRevenue:
       type: object
       additionalProperties: false
@@ -662,19 +565,104 @@ components:
       - Approved
       - Rejected
       - Review
-    MergeProjectsResponse:
+    Person:
       type: object
       additionalProperties: false
       properties:
-        projectId:
+        lastName:
+          type:
+          - string
+          - 'null'
+        firstName:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        suffix:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+        phone:
+          type:
+          - string
+          - 'null'
+    Pipeline:
+      type: string
+      description: ''
+      x-enumNames:
+      - V7
+      - Core
+      - Kits
+      - Merged
+      enum:
+      - V7
+      - Core
+      - Kits
+      - Merged
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    RecognizeRevenueComment:
+      type: object
+      additionalProperties: false
+      properties:
+        comment:
+          type:
+          - string
+          - 'null'
+        userId:
           type: string
           format: guid
-        projectCode:
+        date:
+          type: string
+          format: date-time
+    Group:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
           type:
           - string
           - 'null'
-        limsProjectId:
+        groups:
           type:
-          - string
+          - array
           - 'null'
+          items:
+            $ref: '#/components/schemas/Group'
+        members:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Person'
 x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

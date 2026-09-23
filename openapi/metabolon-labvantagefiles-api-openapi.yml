@@ -11,7 +11,7 @@ paths:
     get:
       tags:
       - LabVantageFiles
-      summary: Returns LV vs Portal comparison keyed by Portal project (ProjectCode resolves lims).
+      summary: Returns LV vs Portal comparison keyed by Portal project (ProjectCode resolves…
       operationId: LabVantageFiles_GetLabVantageFileSummary
       parameters:
       - name: projectId
@@ -45,7 +45,7 @@ paths:
     post:
       tags:
       - LabVantageFiles
-      summary: Imports Lab Vantage attachments from LVIS into staged portal files and updates lineage tables.
+      summary: Imports Lab Vantage attachments from LVIS into staged portal files and updates…
       operationId: LabVantageFiles_ImportLabVantageFiles
       requestBody:
         x-name: request
@@ -86,7 +86,7 @@ paths:
     post:
       tags:
       - LabVantageFiles
-      summary: Marks notification notices acknowledged at the current UTC timestamp.
+      summary: Marks notification notices acknowledged at the current UTC timestamp
       operationId: LabVantageFiles_AcknowledgeLabVantageNotices
       requestBody:
         x-name: request
@@ -115,7 +115,7 @@ paths:
     get:
       tags:
       - LabVantageFiles
-      summary: Returns LV vs Portal comparison keyed by Portal project (ProjectCode resolves lims).
+      summary: Returns LV vs Portal comparison keyed by Portal project (ProjectCode resolves…
       operationId: LabVantageFiles_GetLabVantageFileSummary2
       parameters:
       - name: projectId
@@ -149,7 +149,7 @@ paths:
     post:
       tags:
       - LabVantageFiles
-      summary: Imports Lab Vantage attachments from LVIS into staged portal files and updates lineage tables.
+      summary: Imports Lab Vantage attachments from LVIS into staged portal files and updates…
       operationId: LabVantageFiles_ImportLabVantageFiles2
       requestBody:
         x-name: request
@@ -190,7 +190,7 @@ paths:
     post:
       tags:
       - LabVantageFiles
-      summary: Marks notification notices acknowledged at the current UTC timestamp.
+      summary: Marks notification notices acknowledged at the current UTC timestamp
       operationId: LabVantageFiles_AcknowledgeLabVantageNotices2
       requestBody:
         x-name: request
@@ -217,6 +217,28 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
 components:
   schemas:
+    LabVantageFileSummaryResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        limsProjectId:
+          type:
+          - string
+          - 'null'
+        lastAcknowledgedUtc:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        noticeCount:
+          type: integer
+          format: int32
+        attachments:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/LabVantageFileSummaryAttachmentItem'
     LabVantageFileSummaryAttachmentItem:
       type: object
       additionalProperties: false
@@ -248,14 +270,28 @@ components:
           - string
           - 'null'
           format: guid
-    LabVantageImportResponse:
+    LabVantageImportRequest:
       type: object
       additionalProperties: false
       properties:
-        results:
-          type: array
+        projectId:
+          type: string
+          format: guid
+        lvFileIds:
+          type:
+          - array
+          - 'null'
           items:
-            $ref: '#/components/schemas/LabVantageImportResultItem'
+            type: string
+        acknowledgeNotice:
+          type: boolean
+    LabVantageNoticeAcknowledgeRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        projectId:
+          type: string
+          format: guid
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -281,28 +317,14 @@ components:
           type:
           - string
           - 'null'
-    LabVantageNoticeAcknowledgeRequest:
+    LabVantageImportResponse:
       type: object
       additionalProperties: false
       properties:
-        projectId:
-          type: string
-          format: guid
-    LabVantageImportRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        projectId:
-          type: string
-          format: guid
-        lvFileIds:
-          type:
-          - array
-          - 'null'
+        results:
+          type: array
           items:
-            type: string
-        acknowledgeNotice:
-          type: boolean
+            $ref: '#/components/schemas/LabVantageImportResultItem'
     LabVantageImportResultItem:
       type: object
       additionalProperties: false
@@ -320,26 +342,4 @@ components:
           type:
           - string
           - 'null'
-    LabVantageFileSummaryResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        limsProjectId:
-          type:
-          - string
-          - 'null'
-        lastAcknowledgedUtc:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        noticeCount:
-          type: integer
-          format: int32
-        attachments:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/LabVantageFileSummaryAttachmentItem'
 x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

@@ -5,13 +5,13 @@ info:
 servers:
 - url: https://portal-api.prod.metabolon.com
 tags:
-- name: PipelineStatus
+- name: Pipeline Status
 paths:
   /api/v1/admin/pipeline-status/records:
     get:
       tags:
-      - PipelineStatus
-      summary: Filterable, pageable list of pipeline status records (explorer / debugging).
+      - Pipeline Status
+      summary: Filterable, pageable list of pipeline status records (explorer / debugging)
       operationId: PipelineStatus_GetRecords
       parameters:
       - name: scope
@@ -126,8 +126,8 @@ paths:
   /api/v1/admin/pipeline-status/activity:
     get:
       tags:
-      - PipelineStatus
-      summary: Recent pipeline status rows for lightweight feeds (e.g. admin top bar).
+      - Pipeline Status
+      summary: Recent pipeline status rows for lightweight feeds (e.g. admin top bar)
       operationId: PipelineStatus_GetActivity
       parameters:
       - name: status
@@ -172,8 +172,8 @@ paths:
   /api/v1/admin/pipeline-status/projects/{projectId}:
     get:
       tags:
-      - PipelineStatus
-      summary: Latest pipeline stage status per (pipeline, stage) for the project (from PipelineStatusRecords).
+      - Pipeline Status
+      summary: Latest pipeline stage status per (pipeline, stage) for the project (from…
       operationId: PipelineStatus_GetProjectPipelineStatus
       parameters:
       - name: projectId
@@ -195,8 +195,8 @@ paths:
   /api/v1/admin/pipeline-status/projects/{projectId}/facts:
     get:
       tags:
-      - PipelineStatus
-      summary: Append-only pipeline status facts and iteration manifests for the project.
+      - Pipeline Status
+      summary: Append-only pipeline status facts and iteration manifests for the project
       operationId: PipelineStatus_GetProjectPipelineStatusFacts
       parameters:
       - name: projectId
@@ -216,8 +216,8 @@ paths:
   /api/v2/admin/pipeline-status/records:
     get:
       tags:
-      - PipelineStatus
-      summary: Filterable, pageable list of pipeline status records (explorer / debugging).
+      - Pipeline Status
+      summary: Filterable, pageable list of pipeline status records (explorer / debugging)
       operationId: PipelineStatus_GetRecords2
       parameters:
       - name: scope
@@ -332,8 +332,8 @@ paths:
   /api/v2/admin/pipeline-status/activity:
     get:
       tags:
-      - PipelineStatus
-      summary: Recent pipeline status rows for lightweight feeds (e.g. admin top bar).
+      - Pipeline Status
+      summary: Recent pipeline status rows for lightweight feeds (e.g. admin top bar)
       operationId: PipelineStatus_GetActivity2
       parameters:
       - name: status
@@ -378,8 +378,8 @@ paths:
   /api/v2/admin/pipeline-status/projects/{projectId}:
     get:
       tags:
-      - PipelineStatus
-      summary: Latest pipeline stage status per (pipeline, stage) for the project (from PipelineStatusRecords).
+      - Pipeline Status
+      summary: Latest pipeline stage status per (pipeline, stage) for the project (from…
       operationId: PipelineStatus_GetProjectPipelineStatus2
       parameters:
       - name: projectId
@@ -401,8 +401,8 @@ paths:
   /api/v2/admin/pipeline-status/projects/{projectId}/facts:
     get:
       tags:
-      - PipelineStatus
-      summary: Append-only pipeline status facts and iteration manifests for the project.
+      - Pipeline Status
+      summary: Append-only pipeline status facts and iteration manifests for the project
       operationId: PipelineStatus_GetProjectPipelineStatusFacts2
       parameters:
       - name: projectId
@@ -421,6 +421,61 @@ paths:
                 $ref: '#/components/schemas/PipelineStatusProjectSnapshotDto'
 components:
   schemas:
+    PipelineStatusProjectSnapshotDto:
+      type: object
+      additionalProperties: false
+      properties:
+        facts:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineStatusFactDto'
+        iterationManifests:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineStatusIterationManifestDto'
+    PipelineStatusFactRecordsPageDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PipelineStatusFactDto'
+        totalCount:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+    PipelineStageStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Started
+      - Completed
+      - Failed
+      enum:
+      - Started
+      - Completed
+      - Failed
+    Pipeline:
+      type: string
+      description: ''
+      x-enumNames:
+      - V7
+      - Core
+      - Kits
+      - Merged
+      enum:
+      - V7
+      - Core
+      - Kits
+      - Merged
     PipelineStatusFactDto:
       type: object
       additionalProperties: false
@@ -477,37 +532,15 @@ components:
           type:
           - string
           - 'null'
-    PipelineStatusProjectSnapshotDto:
-      type: object
-      additionalProperties: false
-      properties:
-        facts:
-          type: array
-          items:
-            $ref: '#/components/schemas/PipelineStatusFactDto'
-        iterationManifests:
-          type: array
-          items:
-            $ref: '#/components/schemas/PipelineStatusIterationManifestDto'
-    PipelineStatusFactRecordsPageDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PipelineStatusFactDto'
-        totalCount:
-          type: integer
-          format: int32
-        skip:
-          type: integer
-          format: int32
-        take:
-          type: integer
-          format: int32
+    PipelineStatusScope:
+      type: string
+      description: ''
+      x-enumNames:
+      - Project
+      - SampleSet
+      enum:
+      - Project
+      - SampleSet
     PipelineStatusSummaryDto:
       type: object
       additionalProperties: false
@@ -560,37 +593,4 @@ components:
           type: string
         sourceService:
           type: string
-    Pipeline:
-      type: string
-      description: ''
-      x-enumNames:
-      - V7
-      - Core
-      - Kits
-      - Merged
-      enum:
-      - V7
-      - Core
-      - Kits
-      - Merged
-    PipelineStatusScope:
-      type: string
-      description: ''
-      x-enumNames:
-      - Project
-      - SampleSet
-      enum:
-      - Project
-      - SampleSet
-    PipelineStageStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Started
-      - Completed
-      - Failed
-      enum:
-      - Started
-      - Completed
-      - Failed
 x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

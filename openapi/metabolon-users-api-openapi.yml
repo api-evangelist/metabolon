@@ -24,7 +24,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Returns Learning Center launch links authorized for the current user from Portal DB permissions and backend branch config.
+      summary: Returns Learning Center launch links authorized for the current user from…
       operationId: Users_GetCurrentUserLearningCenterLinks
       responses:
         '200':
@@ -59,7 +59,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Returns Learning Center launch links authorized for the current user from Portal DB permissions and backend branch config.
+      summary: Returns Learning Center launch links authorized for the current user from…
       operationId: Users_GetCurrentUserLearningCenterLinks2
       responses:
         '200':
@@ -81,7 +81,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Retrieves all users which details contains this string in an email, firstname or lastname
+      summary: Retrieves all users which details contains this string in an email, firstname…
       operationId: Users_GetUsers
       parameters:
       - name: skip
@@ -114,15 +114,7 @@ paths:
     post:
       tags:
       - Users
-      summary: 'Adds or updates a user without assigning a project.
-
-        When updating an existing user (e.g. when email is changed), set OriginalEmail to the user''s current email so the backend can find the record to update.
-
-        When adding a brand-new (non-employee) user, the user is first ensured to be a Salesforce-approved Lead:
-
-        a denied personal-email address with no Salesforce record is rejected (400, user not created); a transient
-
-        Salesforce error still creates the Portal user but returns a warning so an admin can retry via the toggle.'
+      summary: Adds or updates a user without assigning a project.
       operationId: Users_UpsertUser
       requestBody:
         x-name: publishParameters
@@ -310,7 +302,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Retrieves all users which details contains this string in an email, firstname or lastname
+      summary: Retrieves all users which details contains this string in an email, firstname…
       operationId: Users_GetUsersSearch
       parameters:
       - name: text
@@ -511,7 +503,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Returns the default permission catalog used to validate role permission changes.
+      summary: Returns the default permission catalog used to validate role permission changes
       operationId: Users_GetPermissionsCatalog
       responses:
         '200':
@@ -524,7 +516,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Returns role names defined in the default role definitions.
+      summary: Returns role names defined in the default role definitions
       operationId: Users_GetDefaultRoles
       responses:
         '200':
@@ -537,7 +529,7 @@ paths:
     post:
       tags:
       - Users
-      summary: Restores all database roles to the default role definitions, removing roles not in the defaults and their user assignments.
+      summary: Restores all database roles to the default role definitions, removing roles not…
       operationId: Users_ResetAllRoles
       responses:
         '200':
@@ -550,7 +542,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Returns permissions currently assigned to a role in the database.
+      summary: Returns permissions currently assigned to a role in the database
       operationId: Users_GetRolePermissions
       parameters:
       - name: roleName
@@ -570,7 +562,7 @@ paths:
     post:
       tags:
       - Users
-      summary: Restores a single role's permissions to the default role definitions.
+      summary: Restores a single role's permissions to the default role definitions
       operationId: Users_ResetRolePermissions
       parameters:
       - name: roleName
@@ -596,7 +588,7 @@ paths:
     post:
       tags:
       - Users
-      summary: Adds a permission to a role from the default permission catalog.
+      summary: Adds a permission to a role from the default permission catalog
       operationId: Users_AddRolePermission
       parameters:
       - name: roleName
@@ -636,7 +628,7 @@ paths:
     post:
       tags:
       - Users
-      summary: Removes a permission from a role.
+      summary: Removes a permission from a role
       operationId: Users_RemoveRolePermission
       parameters:
       - name: roleName
@@ -716,7 +708,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Returns resolved Salesforce login status for Access Management (Employee, Legacy, Contact, etc.).
+      summary: Returns resolved Salesforce login status for Access Management (Employee…
       operationId: Users_GetUserSalesforceLoginStatus
       parameters:
       - name: email
@@ -736,7 +728,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Returns Learning Center branch access and TalentLMS sync status for a Portal user.
+      summary: Returns Learning Center branch access and TalentLMS sync status for a Portal…
       operationId: Users_GetUserTalentLmsSyncStatus
       parameters:
       - name: email
@@ -756,7 +748,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Returns how many Portal users are currently due for TalentLMS reconciliation.
+      summary: Returns how many Portal users are currently due for TalentLMS reconciliation
       operationId: Users_GetTalentLmsSyncQueue
       responses:
         '200':
@@ -769,7 +761,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Returns Portal users whose latest TalentLMS sync is in a failed state.
+      summary: Returns Portal users whose latest TalentLMS sync is in a failed state
       operationId: Users_GetTalentLmsSyncFailures
       responses:
         '200':
@@ -782,7 +774,7 @@ paths:
     post:
       tags:
       - Users
-      summary: Queues eligible Portal users and reconciles all due TalentLMS users.
+      summary: Queues eligible Portal users and reconciles all due TalentLMS users
       operationId: Users_RunTalentLmsSync
       responses:
         '200':
@@ -795,7 +787,7 @@ paths:
     post:
       tags:
       - Users
-      summary: Manually reconciles a Portal user's TalentLMS branch membership from Portal permissions.
+      summary: Manually reconciles a Portal user's TalentLMS branch membership from Portal…
       operationId: Users_ReconcileUserTalentLms
       parameters:
       - name: email
@@ -815,7 +807,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Checks whether a new non-employee user may be added for the given email (same rules as upsert auto-approval).
+      summary: Checks whether a new non-employee user may be added for the given email (same…
       operationId: Users_GetRegistrationEligibility
       parameters:
       - name: email
@@ -836,7 +828,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Lists users in the Portal waiting room for Salesforce approval.
+      summary: Lists users in the Portal waiting room for Salesforce approval
       operationId: Users_GetSalesforcePendingUsers
       parameters:
       - name: skip
@@ -873,7 +865,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Searches users in the Portal waiting room for Salesforce approval.
+      summary: Searches users in the Portal waiting room for Salesforce approval
       operationId: Users_SearchSalesforcePendingUsers
       parameters:
       - name: text
@@ -909,7 +901,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Returns how many users are currently in the Salesforce approval waiting room.
+      summary: Returns how many users are currently in the Salesforce approval waiting room
       operationId: Users_GetSalesforcePendingUserCount
       responses:
         '200':
@@ -922,7 +914,7 @@ paths:
     post:
       tags:
       - Users
-      summary: Discovers pending Salesforce leads and reconciles the waiting room (including approval emails).
+      summary: Discovers pending Salesforce leads and reconciles the waiting room (including…
       operationId: Users_RunSalesforcePendingUserSync
       parameters:
       - name: full_refresh
@@ -944,11 +936,7 @@ paths:
     post:
       tags:
       - Users
-      summary: 'Marks the user as Salesforce-approved using Leads only. A Contact is treated as already approved (no change);
-
-        an existing Lead has its Portal Access Status set to Approved; if no Salesforce record exists, a Portal_User Lead is created
-
-        and approved. Returns refreshed login status for the Access Management UI.'
+      summary: Marks the user as Salesforce-approved using Leads only.
       operationId: Users_ApproveUser
       parameters:
       - name: email
@@ -1224,7 +1212,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Retrieves all users which details contains this string in an email, firstname or lastname
+      summary: Retrieves all users which details contains this string in an email, firstname…
       operationId: Users_GetUsers2
       parameters:
       - name: skip
@@ -1257,15 +1245,7 @@ paths:
     post:
       tags:
       - Users
-      summary: 'Adds or updates a user without assigning a project.
-
-        When updating an existing user (e.g. when email is changed), set OriginalEmail to the user''s current email so the backend can find the record to update.
-
-        When adding a brand-new (non-employee) user, the user is first ensured to be a Salesforce-approved Lead:
-
-        a denied personal-email address with no Salesforce record is rejected (400, user not created); a transient
-
-        Salesforce error still creates the Portal user but returns a warning so an admin can retry via the toggle.'
+      summary: Adds or updates a user without assigning a project.
       operationId: Users_UpsertUser2
       requestBody:
         x-name: publishParameters
@@ -1453,7 +1433,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Retrieves all users which details contains this string in an email, firstname or lastname
+      summary: Retrieves all users which details contains this string in an email, firstname…
       operationId: Users_GetUsersSearch2
       parameters:
       - name: text
@@ -1654,7 +1634,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Returns the default permission catalog used to validate role permission changes.
+      summary: Returns the default permission catalog used to validate role permission changes
       operationId: Users_GetPermissionsCatalog2
       responses:
         '200':
@@ -1667,7 +1647,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Returns role names defined in the default role definitions.
+      summary: Returns role names defined in the default role definitions
       operationId: Users_GetDefaultRoles2
       responses:
         '200':
@@ -1680,7 +1660,7 @@ paths:
     post:
       tags:
       - Users
-      summary: Restores all database roles to the default role definitions, removing roles not in the defaults and their user assignments.
+      summary: Restores all database roles to the default role definitions, removing roles not…
       operationId: Users_ResetAllRoles2
       responses:
         '200':
@@ -1693,7 +1673,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Returns permissions currently assigned to a role in the database.
+      summary: Returns permissions currently assigned to a role in the database
       operationId: Users_GetRolePermissions2
       parameters:
       - name: roleName
@@ -1713,7 +1693,7 @@ paths:
     post:
       tags:
       - Users
-      summary: Restores a single role's permissions to the default role definitions.
+      summary: Restores a single role's permissions to the default role definitions
       operationId: Users_ResetRolePermissions2
       parameters:
       - name: roleName
@@ -1739,7 +1719,7 @@ paths:
     post:
       tags:
       - Users
-      summary: Adds a permission to a role from the default permission catalog.
+      summary: Adds a permission to a role from the default permission catalog
       operationId: Users_AddRolePermission2
       parameters:
       - name: roleName
@@ -1779,7 +1759,7 @@ paths:
     post:
       tags:
       - Users
-      summary: Removes a permission from a role.
+      summary: Removes a permission from a role
       operationId: Users_RemoveRolePermission2
       parameters:
       - name: roleName
@@ -1859,7 +1839,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Returns resolved Salesforce login status for Access Management (Employee, Legacy, Contact, etc.).
+      summary: Returns resolved Salesforce login status for Access Management (Employee…
       operationId: Users_GetUserSalesforceLoginStatus2
       parameters:
       - name: email
@@ -1879,7 +1859,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Returns Learning Center branch access and TalentLMS sync status for a Portal user.
+      summary: Returns Learning Center branch access and TalentLMS sync status for a Portal…
       operationId: Users_GetUserTalentLmsSyncStatus2
       parameters:
       - name: email
@@ -1899,7 +1879,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Returns how many Portal users are currently due for TalentLMS reconciliation.
+      summary: Returns how many Portal users are currently due for TalentLMS reconciliation
       operationId: Users_GetTalentLmsSyncQueue2
       responses:
         '200':
@@ -1912,7 +1892,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Returns Portal users whose latest TalentLMS sync is in a failed state.
+      summary: Returns Portal users whose latest TalentLMS sync is in a failed state
       operationId: Users_GetTalentLmsSyncFailures2
       responses:
         '200':
@@ -1925,7 +1905,7 @@ paths:
     post:
       tags:
       - Users
-      summary: Queues eligible Portal users and reconciles all due TalentLMS users.
+      summary: Queues eligible Portal users and reconciles all due TalentLMS users
       operationId: Users_RunTalentLmsSync2
       responses:
         '200':
@@ -1938,7 +1918,7 @@ paths:
     post:
       tags:
       - Users
-      summary: Manually reconciles a Portal user's TalentLMS branch membership from Portal permissions.
+      summary: Manually reconciles a Portal user's TalentLMS branch membership from Portal…
       operationId: Users_ReconcileUserTalentLms2
       parameters:
       - name: email
@@ -1958,7 +1938,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Checks whether a new non-employee user may be added for the given email (same rules as upsert auto-approval).
+      summary: Checks whether a new non-employee user may be added for the given email (same…
       operationId: Users_GetRegistrationEligibility2
       parameters:
       - name: email
@@ -1979,7 +1959,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Lists users in the Portal waiting room for Salesforce approval.
+      summary: Lists users in the Portal waiting room for Salesforce approval
       operationId: Users_GetSalesforcePendingUsers2
       parameters:
       - name: skip
@@ -2016,7 +1996,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Searches users in the Portal waiting room for Salesforce approval.
+      summary: Searches users in the Portal waiting room for Salesforce approval
       operationId: Users_SearchSalesforcePendingUsers2
       parameters:
       - name: text
@@ -2052,7 +2032,7 @@ paths:
     get:
       tags:
       - Users
-      summary: Returns how many users are currently in the Salesforce approval waiting room.
+      summary: Returns how many users are currently in the Salesforce approval waiting room
       operationId: Users_GetSalesforcePendingUserCount2
       responses:
         '200':
@@ -2065,7 +2045,7 @@ paths:
     post:
       tags:
       - Users
-      summary: Discovers pending Salesforce leads and reconciles the waiting room (including approval emails).
+      summary: Discovers pending Salesforce leads and reconciles the waiting room (including…
       operationId: Users_RunSalesforcePendingUserSync2
       parameters:
       - name: full_refresh
@@ -2087,11 +2067,7 @@ paths:
     post:
       tags:
       - Users
-      summary: 'Marks the user as Salesforce-approved using Leads only. A Contact is treated as already approved (no change);
-
-        an existing Lead has its Portal Access Status set to Approved; if no Salesforce record exists, a Portal_User Lead is created
-
-        and approved. Returns refreshed login status for the Access Management UI.'
+      summary: Marks the user as Salesforce-approved using Leads only.
       operationId: Users_ApproveUser2
       parameters:
       - name: email
@@ -2365,17 +2341,50 @@ paths:
                 format: binary
 components:
   schemas:
-    PublishParametersOfEmailDTO:
+    UserRoleNamesDTO:
       type: object
       additionalProperties: false
       properties:
-        instance:
+        user:
           oneOf:
-          - $ref: '#/components/schemas/EmailDTO'
-        comment:
+          - $ref: '#/components/schemas/UserDTO'
+        roleNames:
           type:
-          - string
+          - array
           - 'null'
+          items:
+            type: string
+    PublishParametersAddUserRoles:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfUserRoleNamesDTO'
+      - type: object
+        additionalProperties: false
+    PublishParametersAddUser:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfUserDTO'
+      - type: object
+        additionalProperties: false
+        properties:
+          originalEmail:
+            type:
+            - string
+            - 'null'
+            description: When updating an existing user (e.g. when email is changed), set this to the user's current email so the backend can find the record to update.
+    DefaultRolesResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        roleNames:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    PublishParametersAddUserProjects:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfUserProjectIdsDTO'
+      - type: object
+        additionalProperties: false
     Role:
       type: object
       additionalProperties: false
@@ -2390,69 +2399,76 @@ components:
           - 'null'
           items:
             type: string
-    PublishParametersOfIEnumerableOfEmailDTO:
+    LoginStatusResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type:
+          - string
+          - 'null'
+    SalesforcePendingUsersPageResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SalesforcePendingUserResponse'
+        totalCount:
+          type: integer
+          format: int32
+    PublishParametersOfEmailDTO:
       type: object
       additionalProperties: false
       properties:
         instance:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/EmailDTO'
+          oneOf:
+          - $ref: '#/components/schemas/EmailDTO'
         comment:
           type:
           - string
           - 'null'
-    TalentLmsSyncQueueResponse:
+    UserDTO:
       type: object
       additionalProperties: false
       properties:
-        enabled:
-          type: boolean
-        pendingCount:
-          type: integer
-          format: int32
-    PublishParametersRemoveUserRoles:
-      allOf:
-      - $ref: '#/components/schemas/PublishParametersOfUserRoleNamesDTO'
-      - type: object
-        additionalProperties: false
-    TalentLmsReconcileResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        syncStatus:
+        email:
           type:
           - string
           - 'null'
-        warnings:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    AddRolePermissionRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        permission:
+        firstName:
           type:
           - string
           - 'null'
-    UserRoleNamesDTO:
+        lastName:
+          type:
+          - string
+          - 'null'
+    PublishParametersOfUserDTO:
       type: object
       additionalProperties: false
       properties:
-        user:
+        instance:
           oneOf:
           - $ref: '#/components/schemas/UserDTO'
-        roleNames:
+        comment:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            type: string
+    UserProject:
+      type: object
+      additionalProperties: false
+      properties:
+        projectId:
+          type: string
+          format: guid
+        projectCode:
+          type:
+          - string
+          - 'null'
     TalentLmsSyncStatusResponse:
       type: object
       additionalProperties: false
@@ -2489,94 +2505,16 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/TalentLmsBranchSummary'
-    SalesforcePendingUserQueueCountResponse:
+    RolePermissionsResponse:
       type: object
       additionalProperties: false
       properties:
-        pendingCount:
-          type: integer
-          format: int32
-    PublishParametersOfUserDTO:
-      type: object
-      additionalProperties: false
-      properties:
-        instance:
-          oneOf:
-          - $ref: '#/components/schemas/UserDTO'
-        comment:
-          type:
-          - string
-          - 'null'
-    PublishParametersRemoveUsersProject:
-      allOf:
-      - $ref: '#/components/schemas/PublishParametersOfIEnumerableOfEmailDTO'
-      - type: object
-        additionalProperties: false
-    SalesforcePendingUsersPageResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SalesforcePendingUserResponse'
-        totalCount:
-          type: integer
-          format: int32
-    PublishParametersAddUserProjects:
-      allOf:
-      - $ref: '#/components/schemas/PublishParametersOfUserProjectIdsDTO'
-      - type: object
-        additionalProperties: false
-    RoleResetResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        rolesCreated:
-          type: integer
-          format: int32
-        rolesUpdated:
-          type: integer
-          format: int32
-        rolesRemoved:
-          type: integer
-          format: int32
-        removedRoleNames:
+        permissions:
           type:
           - array
           - 'null'
           items:
             type: string
-    RoleDTO:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-    EmailDTO:
-      type: object
-      additionalProperties: false
-      properties:
-        email:
-          type:
-          - string
-          - 'null'
-    LoginStatusResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        status:
-          type:
-          - string
-          - 'null'
     PublishParametersOfIEnumerableOfUserDTO:
       type: object
       additionalProperties: false
@@ -2591,35 +2529,36 @@ components:
           type:
           - string
           - 'null'
-    PublishParametersAddUser:
+    PublishParametersRemoveUsersProject:
       allOf:
-      - $ref: '#/components/schemas/PublishParametersOfUserDTO'
+      - $ref: '#/components/schemas/PublishParametersOfIEnumerableOfEmailDTO'
       - type: object
         additionalProperties: false
-        properties:
-          originalEmail:
-            type:
-            - string
-            - 'null'
-            description: When updating an existing user (e.g. when email is changed), set this to the user's current email so the backend can find the record to update.
-    PublishParametersAddUserRoles:
-      allOf:
-      - $ref: '#/components/schemas/PublishParametersOfUserRoleNamesDTO'
-      - type: object
-        additionalProperties: false
-    PublishParametersAddUsersProject:
-      allOf:
-      - $ref: '#/components/schemas/PublishParametersOfIEnumerableOfUserDTO'
-      - type: object
-        additionalProperties: false
-    PublishParametersOfUserProjectIdsDTO:
+    LearningCenterLinkDto:
       type: object
       additionalProperties: false
       properties:
-        instance:
-          oneOf:
-          - $ref: '#/components/schemas/UserProjectIdsDTO'
-        comment:
+        label:
+          type:
+          - string
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+        branchId:
+          type:
+          - string
+          - 'null'
+    RoleDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        description:
           type:
           - string
           - 'null'
@@ -2642,36 +2581,292 @@ components:
         pendingCount:
           type: integer
           format: int32
+    RoleResetResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        rolesCreated:
+          type: integer
+          format: int32
+        rolesUpdated:
+          type: integer
+          format: int32
+        rolesRemoved:
+          type: integer
+          format: int32
+        removedRoleNames:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    UserProjectIdsDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        user:
+          oneOf:
+          - $ref: '#/components/schemas/UserDTO'
+        projectIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+    ProjectDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        projectId:
+          type: string
+          format: guid
+        projectCode:
+          type:
+          - string
+          - 'null'
+        projectTitle:
+          type:
+          - string
+          - 'null'
+    PermissionsCatalogResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        permissions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    RegistrationEligibilityResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        allowed:
+          type: boolean
+        message:
+          type:
+          - string
+          - 'null'
+    SalesforcePendingUserResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        salesforcePendingUserId:
+          type: string
+          format: guid
+        email:
+          type:
+          - string
+          - 'null'
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        salesforceLeadId:
+          type:
+          - string
+          - 'null'
+        firstSeenUtc:
+          type: string
+          format: date-time
+        lastSeenUtc:
+          type: string
+          format: date-time
+    TalentLmsSyncFailureSummaryResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+    PublishParametersRemoveUserRole:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfEmailDTO'
+      - type: object
+        additionalProperties: false
+    LearningCenterLinksResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        learningCenterLinks:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/LearningCenterLinkDto'
+    PublishParametersOfUserProjectIdsDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        instance:
+          oneOf:
+          - $ref: '#/components/schemas/UserProjectIdsDTO'
+        comment:
+          type:
+          - string
+          - 'null'
+    SalesforcePendingUserQueueCountResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        pendingCount:
+          type: integer
+          format: int32
     PublishParametersAddUserProject:
       allOf:
       - $ref: '#/components/schemas/PublishParametersOfUserDTO'
       - type: object
         additionalProperties: false
-    TalentLmsBranchSummary:
+    PublishParametersRemoveUserProject:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfEmailDTO'
+      - type: object
+        additionalProperties: false
+    TalentLmsManualSyncResponse:
       type: object
       additionalProperties: false
       properties:
-        branchId:
+        pendingCountBefore:
+          type: integer
+          format: int32
+        reconciledCount:
+          type: integer
+          format: int32
+        pendingCountAfter:
+          type: integer
+          format: int32
+        newlyQueuedCount:
+          type: integer
+          format: int32
+        alreadyDueCount:
+          type: integer
+          format: int32
+        skippedHealthyCount:
+          type: integer
+          format: int32
+        skippedIneligibleCount:
+          type: integer
+          format: int32
+        failures:
           type:
-          - string
+          - array
           - 'null'
-        label:
-          type:
-          - string
-          - 'null'
-    LearningCenterLinkDto:
+          items:
+            $ref: '#/components/schemas/TalentLmsSyncFailureSummaryResponse'
+    PublishParametersOfIEnumerableOfEmailDTO:
       type: object
       additionalProperties: false
       properties:
-        label:
+        instance:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EmailDTO'
+        comment:
           type:
           - string
           - 'null'
-        url:
+    PublishParametersAddUsersProject:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfIEnumerableOfUserDTO'
+      - type: object
+        additionalProperties: false
+    PublishParametersOfUserRoleNamesDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        instance:
+          oneOf:
+          - $ref: '#/components/schemas/UserRoleNamesDTO'
+        comment:
           type:
           - string
           - 'null'
-        branchId:
+    TalentLmsReconcileResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        syncStatus:
+          type:
+          - string
+          - 'null'
+        warnings:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    TalentLmsSyncFailuresResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        failures:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TalentLmsSyncFailureSummaryResponse'
+    AddRolePermissionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        permission:
+          type:
+          - string
+          - 'null'
+    TalentLmsSyncQueueResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+        pendingCount:
+          type: integer
+          format: int32
+    PublishParametersAddUsersRole:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfIEnumerableOfUserDTO'
+      - type: object
+        additionalProperties: false
+    PublishParametersRemoveUserRoles:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfUserRoleNamesDTO'
+      - type: object
+        additionalProperties: false
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
           type:
           - string
           - 'null'
@@ -2720,242 +2915,23 @@ components:
           type: boolean
         eulaAccepted:
           type: boolean
-    RegistrationEligibilityResponse:
+    TalentLmsBranchSummary:
       type: object
       additionalProperties: false
       properties:
-        allowed:
-          type: boolean
-        message:
+        branchId:
           type:
           - string
           - 'null'
-    UserDTO:
-      type: object
-      additionalProperties: false
-      properties:
-        email:
+        label:
           type:
           - string
           - 'null'
-        firstName:
-          type:
-          - string
-          - 'null'
-        lastName:
-          type:
-          - string
-          - 'null'
-    TalentLmsSyncFailuresResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        failures:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TalentLmsSyncFailureSummaryResponse'
-    LearningCenterLinksResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        learningCenterLinks:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/LearningCenterLinkDto'
-    RolePermissionsResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        permissions:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    UserProject:
-      type: object
-      additionalProperties: false
-      properties:
-        projectId:
-          type: string
-          format: guid
-        projectCode:
-          type:
-          - string
-          - 'null'
-    PublishParametersOfUserRoleNamesDTO:
-      type: object
-      additionalProperties: false
-      properties:
-        instance:
-          oneOf:
-          - $ref: '#/components/schemas/UserRoleNamesDTO'
-        comment:
-          type:
-          - string
-          - 'null'
-    DefaultRolesResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        roleNames:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    PublishParametersRemoveUserProject:
-      allOf:
-      - $ref: '#/components/schemas/PublishParametersOfEmailDTO'
-      - type: object
-        additionalProperties: false
-    PermissionsCatalogResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        permissions:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    PublishParametersAddUsersRole:
-      allOf:
-      - $ref: '#/components/schemas/PublishParametersOfIEnumerableOfUserDTO'
-      - type: object
-        additionalProperties: false
-    SalesforcePendingUserResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        salesforcePendingUserId:
-          type: string
-          format: guid
-        email:
-          type:
-          - string
-          - 'null'
-        firstName:
-          type:
-          - string
-          - 'null'
-        lastName:
-          type:
-          - string
-          - 'null'
-        salesforceLeadId:
-          type:
-          - string
-          - 'null'
-        firstSeenUtc:
-          type: string
-          format: date-time
-        lastSeenUtc:
-          type: string
-          format: date-time
-    TalentLmsManualSyncResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        pendingCountBefore:
-          type: integer
-          format: int32
-        reconciledCount:
-          type: integer
-          format: int32
-        pendingCountAfter:
-          type: integer
-          format: int32
-        newlyQueuedCount:
-          type: integer
-          format: int32
-        alreadyDueCount:
-          type: integer
-          format: int32
-        skippedHealthyCount:
-          type: integer
-          format: int32
-        skippedIneligibleCount:
-          type: integer
-          format: int32
-        failures:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TalentLmsSyncFailureSummaryResponse'
-    UserProjectIdsDTO:
-      type: object
-      additionalProperties: false
-      properties:
-        user:
-          oneOf:
-          - $ref: '#/components/schemas/UserDTO'
-        projectIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-    PublishParametersRemoveUserRole:
-      allOf:
-      - $ref: '#/components/schemas/PublishParametersOfEmailDTO'
-      - type: object
-        additionalProperties: false
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    ProjectDTO:
-      type: object
-      additionalProperties: false
-      properties:
-        projectId:
-          type: string
-          format: guid
-        projectCode:
-          type:
-          - string
-          - 'null'
-        projectTitle:
-          type:
-          - string
-          - 'null'
-    TalentLmsSyncFailureSummaryResponse:
+    EmailDTO:
       type: object
       additionalProperties: false
       properties:
         email:
-          type:
-          - string
-          - 'null'
-        message:
           type:
           - string
           - 'null'

@@ -11,7 +11,7 @@ paths:
     get:
       tags:
       - SharedFile
-      summary: Downloads the current shared file for a specific type with proper mime-type and filename from database
+      summary: Downloads the current shared file for a specific type with proper mime-type and…
       operationId: SharedFile_DownloadCurrentFile
       parameters:
       - name: type
@@ -33,7 +33,7 @@ paths:
     get:
       tags:
       - SharedFile
-      summary: Downloads the current shared file for a specific type with proper mime-type and filename from database
+      summary: Downloads the current shared file for a specific type with proper mime-type and…
       operationId: SharedFile_DownloadCurrentFile2
       parameters:
       - name: type

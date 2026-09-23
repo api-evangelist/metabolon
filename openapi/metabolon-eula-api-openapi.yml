@@ -5,13 +5,13 @@ info:
 servers:
 - url: https://portal-api.prod.metabolon.com
 tags:
-- name: Eula
+- name: EULA
 paths:
   /api/v1/eula/download:
     get:
       tags:
-      - Eula
-      summary: Downloads the current EULA file with proper mime-type and filename.
+      - EULA
+      summary: Downloads the current EULA file with proper mime-type and filename
       operationId: Eula_DownloadCurrentEula
       responses:
         '200':
@@ -24,8 +24,8 @@ paths:
   /api/v2/eula/download:
     get:
       tags:
-      - Eula
-      summary: Downloads the current EULA file with proper mime-type and filename.
+      - EULA
+      summary: Downloads the current EULA file with proper mime-type and filename
       operationId: Eula_DownloadCurrentEula2
       responses:
         '200':
@@ -38,7 +38,7 @@ paths:
   /api/v1/admin/users/eula/upload:
     post:
       tags:
-      - Eula
+      - EULA
       summary: Uploads a new EULA file for a specific version
       operationId: Eula_UploadEula
       requestBody:
@@ -80,7 +80,7 @@ paths:
   /api/v1/admin/users/eula/download/{eulaVersion}:
     get:
       tags:
-      - Eula
+      - EULA
       summary: Downloads an EULA file for a specific version
       operationId: Eula_DownloadEula
       parameters:
@@ -102,7 +102,7 @@ paths:
   /api/v1/admin/users/eula/get-current-version:
     get:
       tags:
-      - Eula
+      - EULA
       summary: Gets the current EULA version
       operationId: Eula_GetCurrentVersion
       responses:
@@ -114,7 +114,7 @@ paths:
   /api/v1/admin/users/eula/set-current-version/{eulaVersion}:
     post:
       tags:
-      - Eula
+      - EULA
       summary: Sets the current EULA version
       operationId: Eula_SetCurrentVersion
       parameters:
@@ -134,8 +134,8 @@ paths:
   /api/v1/admin/users/eula/remove-version/{eulaVersion}:
     delete:
       tags:
-      - Eula
-      summary: Removes a EULA version. Cannot remove the active EULA - it must be deactivated first.
+      - EULA
+      summary: Removes a EULA version.
       operationId: Eula_RemoveVersion
       parameters:
       - name: eulaVersion
@@ -154,7 +154,7 @@ paths:
   /api/v2/admin/users/eula/upload:
     post:
       tags:
-      - Eula
+      - EULA
       summary: Uploads a new EULA file for a specific version
       operationId: Eula_UploadEula2
       requestBody:
@@ -196,7 +196,7 @@ paths:
   /api/v2/admin/users/eula/download/{eulaVersion}:
     get:
       tags:
-      - Eula
+      - EULA
       summary: Downloads an EULA file for a specific version
       operationId: Eula_DownloadEula2
       parameters:
@@ -218,7 +218,7 @@ paths:
   /api/v2/admin/users/eula/get-current-version:
     get:
       tags:
-      - Eula
+      - EULA
       summary: Gets the current EULA version
       operationId: Eula_GetCurrentVersion2
       responses:
@@ -230,7 +230,7 @@ paths:
   /api/v2/admin/users/eula/set-current-version/{eulaVersion}:
     post:
       tags:
-      - Eula
+      - EULA
       summary: Sets the current EULA version
       operationId: Eula_SetCurrentVersion2
       parameters:
@@ -250,8 +250,8 @@ paths:
   /api/v2/admin/users/eula/remove-version/{eulaVersion}:
     delete:
       tags:
-      - Eula
-      summary: Removes a EULA version. Cannot remove the active EULA - it must be deactivated first.
+      - EULA
+      summary: Removes a EULA version.
       operationId: Eula_RemoveVersion2
       parameters:
       - name: eulaVersion

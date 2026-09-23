@@ -36,21 +36,10 @@ paths:
           description: ''
         '404':
           description: ''
+      summary: Reports get report
+      x-summary-source: derived
 components:
   schemas:
-    ReportType:
-      type: string
-      description: ''
-      x-enumNames:
-      - UNKNOWN
-      - PQC
-      - PRJQC
-      - SSTQC
-      enum:
-      - UNKNOWN
-      - PQC
-      - PRJQC
-      - SSTQC
     PlatformQcReport:
       type: object
       additionalProperties: false
@@ -102,4 +91,17 @@ components:
           - 'null'
         reportType:
           $ref: '#/components/schemas/ReportType'
+    ReportType:
+      type: string
+      description: ''
+      x-enumNames:
+      - UNKNOWN
+      - PQC
+      - PRJQC
+      - SSTQC
+      enum:
+      - UNKNOWN
+      - PQC
+      - PRJQC
+      - SSTQC
 x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

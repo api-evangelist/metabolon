@@ -931,6 +931,17 @@ paths:
                 format: binary
 components:
   schemas:
+    PublishParametersOfProjectFile:
+      type: object
+      additionalProperties: false
+      properties:
+        instance:
+          oneOf:
+          - $ref: '#/components/schemas/ProjectFile'
+        comment:
+          type:
+          - string
+          - 'null'
     PublishParametersProjectFile:
       allOf:
       - $ref: '#/components/schemas/PublishParametersOfProjectFile'
@@ -971,6 +982,11 @@ components:
             - string
             - 'null'
             format: date-time
+    PublishParametersProjectFiles:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfIEnumerableOfProjectFile'
+      - type: object
+        additionalProperties: false
     FileRecord:
       allOf:
       - $ref: '#/components/schemas/Record'
@@ -984,47 +1000,6 @@ components:
             type:
             - string
             - 'null'
-    PublishParametersGuid:
-      allOf:
-      - $ref: '#/components/schemas/PublishParametersOfGuid'
-      - type: object
-        additionalProperties: false
-    PublishParametersOfIEnumerableOfProjectFile:
-      type: object
-      additionalProperties: false
-      properties:
-        instance:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ProjectFile'
-        comment:
-          type:
-          - string
-          - 'null'
-    PublishParametersOfGuid:
-      type: object
-      additionalProperties: false
-      properties:
-        instance:
-          type: string
-          format: guid
-        comment:
-          type:
-          - string
-          - 'null'
-    PublishParametersOfProjectFile:
-      type: object
-      additionalProperties: false
-      properties:
-        instance:
-          oneOf:
-          - $ref: '#/components/schemas/ProjectFile'
-        comment:
-          type:
-          - string
-          - 'null'
     Record:
       type: object
       x-abstract: true
@@ -1040,11 +1015,6 @@ components:
           - string
           - 'null'
           format: date-time
-    PublishParametersProjectFiles:
-      allOf:
-      - $ref: '#/components/schemas/PublishParametersOfIEnumerableOfProjectFile'
-      - type: object
-        additionalProperties: false
     ProjectFile:
       type: object
       additionalProperties: false
@@ -1097,4 +1067,34 @@ components:
           - string
           - 'null'
           format: date-time
+    PublishParametersOfGuid:
+      type: object
+      additionalProperties: false
+      properties:
+        instance:
+          type: string
+          format: guid
+        comment:
+          type:
+          - string
+          - 'null'
+    PublishParametersOfIEnumerableOfProjectFile:
+      type: object
+      additionalProperties: false
+      properties:
+        instance:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProjectFile'
+        comment:
+          type:
+          - string
+          - 'null'
+    PublishParametersGuid:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfGuid'
+      - type: object
+        additionalProperties: false
 x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

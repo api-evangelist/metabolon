@@ -11,7 +11,7 @@ paths:
     get:
       tags:
       - Search
-      summary: Performs a simple text search across multiple entity types with optional type filtering
+      summary: Performs a simple text search across multiple entity types with optional type…
       description: 'This endpoint searches across multiple entity types using registered search processors. Results are automatically filtered based on the user''s permissions:
 
         Projects require canEditProjects permission

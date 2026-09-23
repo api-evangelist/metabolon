@@ -11,9 +11,7 @@ paths:
     post:
       tags:
       - SampleSets
-      summary: 'Deletes a project and all portal-scoped data for it, then notifies downstream services via PortalProjectEvent.
-
-        Use query parameter force=true for maintenance: always run delete (may no-op), always publish the delete event, and return 200 even when no project row exists.'
+      summary: Deletes a project and all portal-scoped data for it, then notifies downstream…
       operationId: SampleSets_DeleteProject
       parameters:
       - name: projectId
@@ -49,9 +47,7 @@ paths:
     post:
       tags:
       - SampleSets
-      summary: 'Deletes a project and all portal-scoped data for it, then notifies downstream services via PortalProjectEvent.
-
-        Use query parameter force=true for maintenance: always run delete (may no-op), always publish the delete event, and return 200 even when no project row exists.'
+      summary: Deletes a project and all portal-scoped data for it, then notifies downstream…
       operationId: SampleSets_DeleteProject2
       parameters:
       - name: projectId

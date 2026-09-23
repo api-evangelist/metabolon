@@ -33,7 +33,7 @@ paths:
     get:
       tags:
       - SpectralData
-      summary: Create S3 presigned download URL for spectral data. Use other route for metadata, including possible decryption key.
+      summary: Create S3 presigned download URL for spectral data.
       operationId: SpectralData_GetDownloadLink
       parameters:
       - name: projectId
@@ -77,7 +77,7 @@ paths:
     get:
       tags:
       - SpectralData
-      summary: Create S3 presigned download URL for spectral data. Use other route for metadata, including possible decryption key.
+      summary: Create S3 presigned download URL for spectral data.
       operationId: SpectralData_GetDownloadLink2
       parameters:
       - name: projectId
@@ -97,6 +97,21 @@ paths:
                 type: string
 components:
   schemas:
+    Record:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        createdDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        modifiedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
     SpectralDataDownloadRecord:
       allOf:
       - $ref: '#/components/schemas/Record'
@@ -125,19 +140,4 @@ components:
             type:
             - string
             - 'null'
-    Record:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        createdDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        modifiedDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
 x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))
