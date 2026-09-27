@@ -261,16 +261,24 @@ components:
           - 'null'
         app_metadata: {}
         user_metadata: {}
-    Auth0PostLoginRequest:
+    Auth0PreRegistrationRequest:
       type: object
       additionalProperties: false
       properties:
         user:
           oneOf:
           - $ref: '#/components/schemas/Auth0WebhookUser'
-        client:
+        connection:
           oneOf:
-          - $ref: '#/components/schemas/Auth0PostLoginClientInfo'
+          - $ref: '#/components/schemas/Auth0ConnectionInfo'
+        request:
+          oneOf:
+          - $ref: '#/components/schemas/Auth0RequestInfo'
+        draftToken:
+          type:
+          - string
+          - 'null'
+          description: Study builder draft token forwarded by the Pre User Registration Action.
     IAuthorizedContext:
       type: object
       x-abstract: true
@@ -306,24 +314,6 @@ components:
           type:
           - string
           - 'null'
-    Auth0PreRegistrationRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        user:
-          oneOf:
-          - $ref: '#/components/schemas/Auth0WebhookUser'
-        connection:
-          oneOf:
-          - $ref: '#/components/schemas/Auth0ConnectionInfo'
-        request:
-          oneOf:
-          - $ref: '#/components/schemas/Auth0RequestInfo'
-        draftToken:
-          type:
-          - string
-          - 'null'
-          description: Study builder draft token forwarded by the Pre User Registration Action.
     Auth0ConnectionInfo:
       type: object
       additionalProperties: false
@@ -340,6 +330,16 @@ components:
           type:
           - string
           - 'null'
+    Auth0PostLoginRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        user:
+          oneOf:
+          - $ref: '#/components/schemas/Auth0WebhookUser'
+        client:
+          oneOf:
+          - $ref: '#/components/schemas/Auth0PostLoginClientInfo'
     Auth0RequestInfo:
       type: object
       additionalProperties: false

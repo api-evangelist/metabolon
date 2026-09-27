@@ -931,62 +931,6 @@ paths:
                 format: binary
 components:
   schemas:
-    PublishParametersOfProjectFile:
-      type: object
-      additionalProperties: false
-      properties:
-        instance:
-          oneOf:
-          - $ref: '#/components/schemas/ProjectFile'
-        comment:
-          type:
-          - string
-          - 'null'
-    PublishParametersProjectFile:
-      allOf:
-      - $ref: '#/components/schemas/PublishParametersOfProjectFile'
-      - type: object
-        additionalProperties: false
-    ProjectFileRecord:
-      allOf:
-      - $ref: '#/components/schemas/FileRecord'
-      - type: object
-        additionalProperties: false
-        properties:
-          fileId:
-            type: string
-            format: guid
-          projectId:
-            type: string
-            format: guid
-          staged:
-            type: boolean
-          name:
-            type:
-            - string
-            - 'null'
-          description:
-            type:
-            - string
-            - 'null'
-          createdBy:
-            type:
-            - string
-            - 'null'
-          managed:
-            type: boolean
-          customerVisible:
-            type: boolean
-          customerDate:
-            type:
-            - string
-            - 'null'
-            format: date-time
-    PublishParametersProjectFiles:
-      allOf:
-      - $ref: '#/components/schemas/PublishParametersOfIEnumerableOfProjectFile'
-      - type: object
-        additionalProperties: false
     FileRecord:
       allOf:
       - $ref: '#/components/schemas/Record'
@@ -1000,21 +944,33 @@ components:
             type:
             - string
             - 'null'
-    Record:
+    PublishParametersGuid:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfGuid'
+      - type: object
+        additionalProperties: false
+    PublishParametersOfGuid:
       type: object
-      x-abstract: true
       additionalProperties: false
       properties:
-        createdDate:
+        instance:
+          type: string
+          format: guid
+        comment:
           type:
           - string
           - 'null'
-          format: date-time
-        modifiedDate:
+    PublishParametersOfProjectFile:
+      type: object
+      additionalProperties: false
+      properties:
+        instance:
+          oneOf:
+          - $ref: '#/components/schemas/ProjectFile'
+        comment:
           type:
           - string
           - 'null'
-          format: date-time
     ProjectFile:
       type: object
       additionalProperties: false
@@ -1067,17 +1023,51 @@ components:
           - string
           - 'null'
           format: date-time
-    PublishParametersOfGuid:
-      type: object
-      additionalProperties: false
-      properties:
-        instance:
-          type: string
-          format: guid
-        comment:
-          type:
-          - string
-          - 'null'
+    PublishParametersProjectFiles:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfIEnumerableOfProjectFile'
+      - type: object
+        additionalProperties: false
+    PublishParametersProjectFile:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfProjectFile'
+      - type: object
+        additionalProperties: false
+    ProjectFileRecord:
+      allOf:
+      - $ref: '#/components/schemas/FileRecord'
+      - type: object
+        additionalProperties: false
+        properties:
+          fileId:
+            type: string
+            format: guid
+          projectId:
+            type: string
+            format: guid
+          staged:
+            type: boolean
+          name:
+            type:
+            - string
+            - 'null'
+          description:
+            type:
+            - string
+            - 'null'
+          createdBy:
+            type:
+            - string
+            - 'null'
+          managed:
+            type: boolean
+          customerVisible:
+            type: boolean
+          customerDate:
+            type:
+            - string
+            - 'null'
+            format: date-time
     PublishParametersOfIEnumerableOfProjectFile:
       type: object
       additionalProperties: false
@@ -1092,9 +1082,19 @@ components:
           type:
           - string
           - 'null'
-    PublishParametersGuid:
-      allOf:
-      - $ref: '#/components/schemas/PublishParametersOfGuid'
-      - type: object
-        additionalProperties: false
+    Record:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        createdDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        modifiedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
 x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

@@ -247,65 +247,6 @@ paths:
           description: ''
 components:
   schemas:
-    QuoteSummaryEmailResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        accepted:
-          type: boolean
-        duplicate:
-          type: boolean
-    QuoteSummaryContactDto:
-      type: object
-      additionalProperties: false
-      properties:
-        fullName:
-          type:
-          - string
-          - 'null'
-        email:
-          type:
-          - string
-          - 'null'
-        phone:
-          type:
-          - string
-          - 'null'
-    StudyBuilderEstimateRequestDto:
-      type: object
-      additionalProperties: false
-      properties:
-        businessType:
-          type:
-          - string
-          - 'null'
-          description: Optional override. When omitted, authenticated users resolve Business Line from Salesforce; guests refer to sales.
-        statsServices:
-          type:
-          - string
-          - 'null'
-        interpretationLevel:
-          type:
-          - string
-          - 'null'
-        sampleCount:
-          type: integer
-          format: int32
-        selections:
-          description: Quote Builder fit-phase selections (full wizard state).
-        quoteDraft:
-          description: Quote Builder quote-phase draft (line items, sample logistics, etc.).
-    StudyBuilderEstimateDraftRequestDto:
-      type: object
-      additionalProperties: false
-      properties:
-        sampleCount:
-          type: integer
-          format: int32
-          maximum: 2147483647.0
-          minimum: 1.0
-        selections: {}
-        quoteDraft: {}
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -352,6 +293,34 @@ components:
           - 'null'
           description: ISO-8601 timestamp from the client (optional).
           format: date-time
+    StudyBuilderEstimateDraftRequestDto:
+      type: object
+      additionalProperties: false
+      properties:
+        sampleCount:
+          type: integer
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        selections: {}
+        quoteDraft: {}
+    StudyBuilderEstimateDraftGetResponseDto:
+      type: object
+      additionalProperties: false
+      properties:
+        sampleCount:
+          type: integer
+          format: int32
+        selections: {}
+        quoteDraft: {}
+    QuoteSummaryEmailResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        accepted:
+          type: boolean
+        duplicate:
+          type: boolean
     StudyBuilderEstimateResponseDto:
       type: object
       additionalProperties: false
@@ -395,15 +364,6 @@ components:
           - string
           - 'null'
           format: date-time
-    StudyBuilderEstimateDraftGetResponseDto:
-      type: object
-      additionalProperties: false
-      properties:
-        sampleCount:
-          type: integer
-          format: int32
-        selections: {}
-        quoteDraft: {}
     StudyBuilderEstimateDraftResponseDto:
       type: object
       additionalProperties: false
@@ -412,4 +372,44 @@ components:
           type:
           - string
           - 'null'
+    QuoteSummaryContactDto:
+      type: object
+      additionalProperties: false
+      properties:
+        fullName:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+        phone:
+          type:
+          - string
+          - 'null'
+    StudyBuilderEstimateRequestDto:
+      type: object
+      additionalProperties: false
+      properties:
+        businessType:
+          type:
+          - string
+          - 'null'
+          description: Optional override. When omitted, authenticated users resolve Business Line from Salesforce; guests refer to sales.
+        statsServices:
+          type:
+          - string
+          - 'null'
+        interpretationLevel:
+          type:
+          - string
+          - 'null'
+        sampleCount:
+          type: integer
+          format: int32
+        selections:
+          description: Quote Builder fit-phase selections (full wizard state).
+        quoteDraft:
+          description: Quote Builder quote-phase draft (line items, sample logistics, etc.).
 x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

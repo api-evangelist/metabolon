@@ -171,19 +171,22 @@ paths:
           description: ''
 components:
   schemas:
-    HealthEnum:
-      type: string
-      description: ''
-      x-enumNames:
-      - Unknown
-      - Healthy
-      - Unhealthy
-      - CircularDependency
-      enum:
-      - Unknown
-      - Healthy
-      - Unhealthy
-      - CircularDependency
+    DeepPingResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        shallowPing:
+          oneOf:
+          - $ref: '#/components/schemas/ShallowPingResponse'
+        serviceStatus:
+          oneOf:
+          - $ref: '#/components/schemas/DeepPingStatus'
+        dependencies:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/DeepPingResponse'
     ShallowPingResponse:
       type: object
       additionalProperties: false
@@ -251,20 +254,17 @@ components:
         httpStatusCode:
           type: integer
           format: int32
-    DeepPingResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        shallowPing:
-          oneOf:
-          - $ref: '#/components/schemas/ShallowPingResponse'
-        serviceStatus:
-          oneOf:
-          - $ref: '#/components/schemas/DeepPingStatus'
-        dependencies:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/DeepPingResponse'
+    HealthEnum:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - Healthy
+      - Unhealthy
+      - CircularDependency
+      enum:
+      - Unknown
+      - Healthy
+      - Unhealthy
+      - CircularDependency
 x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))
