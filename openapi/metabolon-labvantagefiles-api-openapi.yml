@@ -217,6 +217,13 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
 components:
   schemas:
+    LabVantageNoticeAcknowledgeRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        projectId:
+          type: string
+          format: guid
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -264,6 +271,29 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/LabVantageFileSummaryAttachmentItem'
+    LabVantageImportResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabVantageImportResultItem'
+    LabVantageImportRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        projectId:
+          type: string
+          format: guid
+        lvFileIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        acknowledgeNotice:
+          type: boolean
     LabVantageImportResultItem:
       type: object
       additionalProperties: false
@@ -312,34 +342,4 @@ components:
           - string
           - 'null'
           format: guid
-    LabVantageNoticeAcknowledgeRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        projectId:
-          type: string
-          format: guid
-    LabVantageImportResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/LabVantageImportResultItem'
-    LabVantageImportRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        projectId:
-          type: string
-          format: guid
-        lvFileIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        acknowledgeNotice:
-          type: boolean
 x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

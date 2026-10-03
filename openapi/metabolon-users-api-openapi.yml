@@ -2341,185 +2341,39 @@ paths:
                 format: binary
 components:
   schemas:
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    SalesforcePendingUserResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        salesforcePendingUserId:
-          type: string
-          format: guid
-        email:
-          type:
-          - string
-          - 'null'
-        firstName:
-          type:
-          - string
-          - 'null'
-        lastName:
-          type:
-          - string
-          - 'null'
-        salesforceLeadId:
-          type:
-          - string
-          - 'null'
-        firstSeenUtc:
-          type: string
-          format: date-time
-        lastSeenUtc:
-          type: string
-          format: date-time
-    PublishParametersRemoveUserRole:
-      allOf:
-      - $ref: '#/components/schemas/PublishParametersOfEmailDTO'
-      - type: object
-        additionalProperties: false
     PublishParametersAddUsersProject:
       allOf:
       - $ref: '#/components/schemas/PublishParametersOfIEnumerableOfUserDTO'
       - type: object
         additionalProperties: false
-    PublishParametersAddUsersRole:
-      allOf:
-      - $ref: '#/components/schemas/PublishParametersOfIEnumerableOfUserDTO'
-      - type: object
-        additionalProperties: false
-    AddRolePermissionRequest:
+    SalesforcePendingUserSyncResponse:
       type: object
       additionalProperties: false
       properties:
-        permission:
-          type:
-          - string
-          - 'null'
-    PublishParametersOfUserProjectIdsDTO:
-      type: object
-      additionalProperties: false
-      properties:
-        instance:
-          oneOf:
-          - $ref: '#/components/schemas/UserProjectIdsDTO'
-        comment:
-          type:
-          - string
-          - 'null'
-    UserProject:
-      type: object
-      additionalProperties: false
-      properties:
-        projectId:
-          type: string
-          format: guid
-        projectCode:
-          type:
-          - string
-          - 'null'
-    PublishParametersOfUserDTO:
-      type: object
-      additionalProperties: false
-      properties:
-        instance:
-          oneOf:
-          - $ref: '#/components/schemas/UserDTO'
-        comment:
-          type:
-          - string
-          - 'null'
-    PermissionsCatalogResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        permissions:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    TalentLmsBranchSummary:
-      type: object
-      additionalProperties: false
-      properties:
-        branchId:
-          type:
-          - string
-          - 'null'
-        label:
-          type:
-          - string
-          - 'null'
-    TalentLmsManualSyncResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        pendingCountBefore:
+        discoveredCount:
           type: integer
           format: int32
         reconciledCount:
           type: integer
           format: int32
-        pendingCountAfter:
+        approvedAndNotifiedCount:
           type: integer
           format: int32
-        newlyQueuedCount:
+        removedCount:
           type: integer
           format: int32
-        alreadyDueCount:
+        pendingCount:
           type: integer
           format: int32
-        skippedHealthyCount:
-          type: integer
-          format: int32
-        skippedIneligibleCount:
-          type: integer
-          format: int32
-        failures:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TalentLmsSyncFailureSummaryResponse'
-    PublishParametersRemoveUserRoles:
-      allOf:
-      - $ref: '#/components/schemas/PublishParametersOfUserRoleNamesDTO'
-      - type: object
-        additionalProperties: false
-    PublishParametersOfIEnumerableOfUserDTO:
+    TalentLmsSyncFailureSummaryResponse:
       type: object
       additionalProperties: false
       properties:
-        instance:
+        email:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/UserDTO'
-        comment:
+        message:
           type:
           - string
           - 'null'
@@ -2539,127 +2393,27 @@ components:
           type:
           - string
           - 'null'
-    LearningCenterLinksResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        learningCenterLinks:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/LearningCenterLinkDto'
-    PublishParametersOfIEnumerableOfEmailDTO:
-      type: object
-      additionalProperties: false
-      properties:
-        instance:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/EmailDTO'
-        comment:
-          type:
-          - string
-          - 'null'
-    SalesforcePendingUsersPageResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SalesforcePendingUserResponse'
-        totalCount:
-          type: integer
-          format: int32
-    PublishParametersAddUser:
-      allOf:
-      - $ref: '#/components/schemas/PublishParametersOfUserDTO'
-      - type: object
-        additionalProperties: false
-        properties:
-          originalEmail:
-            type:
-            - string
-            - 'null'
-            description: When updating an existing user (e.g. when email is changed), set this to the user's current email so the backend can find the record to update.
     PublishParametersRemoveUserProject:
       allOf:
       - $ref: '#/components/schemas/PublishParametersOfEmailDTO'
       - type: object
         additionalProperties: false
-    PublishParametersOfEmailDTO:
+    RegistrationEligibilityResponse:
       type: object
       additionalProperties: false
       properties:
-        instance:
-          oneOf:
-          - $ref: '#/components/schemas/EmailDTO'
-        comment:
-          type:
-          - string
-          - 'null'
-    RolePermissionsResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        permissions:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    PublishParametersAddUserRoles:
-      allOf:
-      - $ref: '#/components/schemas/PublishParametersOfUserRoleNamesDTO'
-      - type: object
-        additionalProperties: false
-    PublishParametersRemoveUsersProject:
-      allOf:
-      - $ref: '#/components/schemas/PublishParametersOfIEnumerableOfEmailDTO'
-      - type: object
-        additionalProperties: false
-    TalentLmsSyncQueueResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        enabled:
+        allowed:
           type: boolean
-        pendingCount:
-          type: integer
-          format: int32
-    Role:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
+        message:
           type:
           - string
           - 'null'
-        permissions:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    PublishParametersAddUserProject:
+    PublishParametersAddUserProjects:
       allOf:
-      - $ref: '#/components/schemas/PublishParametersOfUserDTO'
+      - $ref: '#/components/schemas/PublishParametersOfUserProjectIdsDTO'
       - type: object
         additionalProperties: false
-    EmailDTO:
-      type: object
-      additionalProperties: false
-      properties:
-        email:
-          type:
-          - string
-          - 'null'
-    TalentLmsSyncStatusResponse:
+    TalentLmsReconcileResponse:
       type: object
       additionalProperties: false
       properties:
@@ -2667,60 +2421,12 @@ components:
           type:
           - string
           - 'null'
-        talentLmsUserId:
-          type:
-          - string
-          - 'null'
-        lastSyncAttemptUtc:
-          type:
-          - string
-          - 'null'
-        lastSyncSuccessUtc:
-          type:
-          - string
-          - 'null'
-        lastSyncError:
-          type:
-          - string
-          - 'null'
-        authorizedBranchIds:
+        warnings:
           type:
           - array
           - 'null'
           items:
             type: string
-        branches:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TalentLmsBranchSummary'
-    TalentLmsSyncFailuresResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        failures:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TalentLmsSyncFailureSummaryResponse'
-    UserDTO:
-      type: object
-      additionalProperties: false
-      properties:
-        email:
-          type:
-          - string
-          - 'null'
-        firstName:
-          type:
-          - string
-          - 'null'
-        lastName:
-          type:
-          - string
-          - 'null'
     User:
       type: object
       additionalProperties: false
@@ -2766,76 +2472,15 @@ components:
           type: boolean
         eulaAccepted:
           type: boolean
-    TalentLmsReconcileResponse:
+    RoleDTO:
       type: object
       additionalProperties: false
       properties:
-        syncStatus:
+        name:
           type:
           - string
           - 'null'
-        warnings:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    SalesforcePendingUserQueueCountResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        pendingCount:
-          type: integer
-          format: int32
-    TalentLmsSyncFailureSummaryResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        email:
-          type:
-          - string
-          - 'null'
-        message:
-          type:
-          - string
-          - 'null'
-    PublishParametersOfUserRoleNamesDTO:
-      type: object
-      additionalProperties: false
-      properties:
-        instance:
-          oneOf:
-          - $ref: '#/components/schemas/UserRoleNamesDTO'
-        comment:
-          type:
-          - string
-          - 'null'
-    SalesforcePendingUserSyncResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        discoveredCount:
-          type: integer
-          format: int32
-        reconciledCount:
-          type: integer
-          format: int32
-        approvedAndNotifiedCount:
-          type: integer
-          format: int32
-        removedCount:
-          type: integer
-          format: int32
-        pendingCount:
-          type: integer
-          format: int32
-    RegistrationEligibilityResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        allowed:
-          type: boolean
-        message:
+        description:
           type:
           - string
           - 'null'
@@ -2854,6 +2499,94 @@ components:
           type:
           - string
           - 'null'
+    EmailDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+    PublishParametersOfUserRoleNamesDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        instance:
+          oneOf:
+          - $ref: '#/components/schemas/UserRoleNamesDTO'
+        comment:
+          type:
+          - string
+          - 'null'
+    PermissionsCatalogResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        permissions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PublishParametersAddUserProject:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfUserDTO'
+      - type: object
+        additionalProperties: false
+    PublishParametersOfIEnumerableOfEmailDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        instance:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EmailDTO'
+        comment:
+          type:
+          - string
+          - 'null'
+    LearningCenterLinksResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        learningCenterLinks:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/LearningCenterLinkDto'
+    PublishParametersRemoveUserRole:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfEmailDTO'
+      - type: object
+        additionalProperties: false
     LoginStatusResponse:
       type: object
       additionalProperties: false
@@ -2862,6 +2595,232 @@ components:
           type:
           - string
           - 'null'
+    SalesforcePendingUsersPageResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SalesforcePendingUserResponse'
+        totalCount:
+          type: integer
+          format: int32
+    PublishParametersOfEmailDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        instance:
+          oneOf:
+          - $ref: '#/components/schemas/EmailDTO'
+        comment:
+          type:
+          - string
+          - 'null'
+    TalentLmsManualSyncResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        pendingCountBefore:
+          type: integer
+          format: int32
+        reconciledCount:
+          type: integer
+          format: int32
+        pendingCountAfter:
+          type: integer
+          format: int32
+        newlyQueuedCount:
+          type: integer
+          format: int32
+        alreadyDueCount:
+          type: integer
+          format: int32
+        skippedHealthyCount:
+          type: integer
+          format: int32
+        skippedIneligibleCount:
+          type: integer
+          format: int32
+        failures:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TalentLmsSyncFailureSummaryResponse'
+    PublishParametersRemoveUserRoles:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfUserRoleNamesDTO'
+      - type: object
+        additionalProperties: false
+    DefaultRolesResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        roleNames:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    SalesforcePendingUserQueueCountResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        pendingCount:
+          type: integer
+          format: int32
+    PublishParametersAddUserRoles:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfUserRoleNamesDTO'
+      - type: object
+        additionalProperties: false
+    UserDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+    PublishParametersOfUserDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        instance:
+          oneOf:
+          - $ref: '#/components/schemas/UserDTO'
+        comment:
+          type:
+          - string
+          - 'null'
+    TalentLmsBranchSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        branchId:
+          type:
+          - string
+          - 'null'
+        label:
+          type:
+          - string
+          - 'null'
+    TalentLmsSyncQueueResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+        pendingCount:
+          type: integer
+          format: int32
+    AddRolePermissionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        permission:
+          type:
+          - string
+          - 'null'
+    TalentLmsSyncStatusResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        syncStatus:
+          type:
+          - string
+          - 'null'
+        talentLmsUserId:
+          type:
+          - string
+          - 'null'
+        lastSyncAttemptUtc:
+          type:
+          - string
+          - 'null'
+        lastSyncSuccessUtc:
+          type:
+          - string
+          - 'null'
+        lastSyncError:
+          type:
+          - string
+          - 'null'
+        authorizedBranchIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        branches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TalentLmsBranchSummary'
+    RolePermissionsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        permissions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    UserRoleNamesDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        user:
+          oneOf:
+          - $ref: '#/components/schemas/UserDTO'
+        roleNames:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    SalesforcePendingUserResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        salesforcePendingUserId:
+          type: string
+          format: guid
+        email:
+          type:
+          - string
+          - 'null'
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        salesforceLeadId:
+          type:
+          - string
+          - 'null'
+        firstSeenUtc:
+          type: string
+          format: date-time
+        lastSeenUtc:
+          type: string
+          format: date-time
     UserProjectIdsDTO:
       type: object
       additionalProperties: false
@@ -2876,7 +2835,42 @@ components:
           items:
             type: string
             format: guid
-    RoleDTO:
+    UserProject:
+      type: object
+      additionalProperties: false
+      properties:
+        projectId:
+          type: string
+          format: guid
+        projectCode:
+          type:
+          - string
+          - 'null'
+    PublishParametersOfIEnumerableOfUserDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        instance:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UserDTO'
+        comment:
+          type:
+          - string
+          - 'null'
+    TalentLmsSyncFailuresResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        failures:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TalentLmsSyncFailureSummaryResponse'
+    Role:
       type: object
       additionalProperties: false
       properties:
@@ -2884,38 +2878,22 @@ components:
           type:
           - string
           - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-    DefaultRolesResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        roleNames:
+        permissions:
           type:
           - array
           - 'null'
           items:
             type: string
-    PublishParametersAddUserProjects:
+    PublishParametersRemoveUsersProject:
       allOf:
-      - $ref: '#/components/schemas/PublishParametersOfUserProjectIdsDTO'
+      - $ref: '#/components/schemas/PublishParametersOfIEnumerableOfEmailDTO'
       - type: object
         additionalProperties: false
-    UserRoleNamesDTO:
-      type: object
-      additionalProperties: false
-      properties:
-        user:
-          oneOf:
-          - $ref: '#/components/schemas/UserDTO'
-        roleNames:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
+    PublishParametersAddUsersRole:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfIEnumerableOfUserDTO'
+      - type: object
+        additionalProperties: false
     RoleResetResponse:
       type: object
       additionalProperties: false
@@ -2935,4 +2913,26 @@ components:
           - 'null'
           items:
             type: string
+    PublishParametersOfUserProjectIdsDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        instance:
+          oneOf:
+          - $ref: '#/components/schemas/UserProjectIdsDTO'
+        comment:
+          type:
+          - string
+          - 'null'
+    PublishParametersAddUser:
+      allOf:
+      - $ref: '#/components/schemas/PublishParametersOfUserDTO'
+      - type: object
+        additionalProperties: false
+        properties:
+          originalEmail:
+            type:
+            - string
+            - 'null'
+            description: When updating an existing user (e.g. when email is changed), set this to the user's current email so the backend can find the record to update.
 x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

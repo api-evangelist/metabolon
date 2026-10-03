@@ -171,38 +171,16 @@ paths:
           description: ''
 components:
   schemas:
-    DeepPingResponse:
+    PostgresDeepPingStatus:
       type: object
       additionalProperties: false
       properties:
-        shallowPing:
-          oneOf:
-          - $ref: '#/components/schemas/ShallowPingResponse'
-        serviceStatus:
-          oneOf:
-          - $ref: '#/components/schemas/DeepPingStatus'
-        dependencies:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/DeepPingResponse'
-    ShallowPingResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        dateTime:
-          type: string
-          format: date-time
-        buildVersion:
+        primary:
+          type: boolean
+        environment:
           type:
           - string
           - 'null'
-        uptime:
-          type: string
-          format: duration
-        health:
-          $ref: '#/components/schemas/HealthEnum'
     DeepPingStatus:
       type: object
       additionalProperties: false
@@ -216,16 +194,6 @@ components:
         postgresStatus:
           oneOf:
           - $ref: '#/components/schemas/PostgresDeepPingStatus'
-    PostgresDeepPingStatus:
-      type: object
-      additionalProperties: false
-      properties:
-        primary:
-          type: boolean
-        environment:
-          type:
-          - string
-          - 'null'
     DatadogResponse:
       type: object
       additionalProperties: false
@@ -254,6 +222,22 @@ components:
         httpStatusCode:
           type: integer
           format: int32
+    DeepPingResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        shallowPing:
+          oneOf:
+          - $ref: '#/components/schemas/ShallowPingResponse'
+        serviceStatus:
+          oneOf:
+          - $ref: '#/components/schemas/DeepPingStatus'
+        dependencies:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/DeepPingResponse'
     HealthEnum:
       type: string
       description: ''
@@ -267,4 +251,20 @@ components:
       - Healthy
       - Unhealthy
       - CircularDependency
+    ShallowPingResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        dateTime:
+          type: string
+          format: date-time
+        buildVersion:
+          type:
+          - string
+          - 'null'
+        uptime:
+          type: string
+          format: duration
+        health:
+          $ref: '#/components/schemas/HealthEnum'
 x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

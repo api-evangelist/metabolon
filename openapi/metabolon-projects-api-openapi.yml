@@ -391,6 +391,107 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
 components:
   schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    MergeProjectsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        projectId:
+          type: string
+          format: guid
+        projectCode:
+          type:
+          - string
+          - 'null'
+        limsProjectId:
+          type:
+          - string
+          - 'null'
+    RecognizeRevenueStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - Approved
+      - Rejected
+      - Review
+      enum:
+      - Pending
+      - Approved
+      - Rejected
+      - Review
+    RecognizeRevenueComment:
+      type: object
+      additionalProperties: false
+      properties:
+        comment:
+          type:
+          - string
+          - 'null'
+        userId:
+          type: string
+          format: guid
+        date:
+          type: string
+          format: date-time
+    RecognizeRevenue:
+      type: object
+      additionalProperties: false
+      properties:
+        recognizeRevenueId:
+          type: string
+          format: guid
+        recognizeRevenueDate:
+          type: string
+          format: date-time
+        userId:
+          type: string
+          format: guid
+        projectId:
+          type: string
+          format: guid
+        comment:
+          oneOf:
+          - $ref: '#/components/schemas/RecognizeRevenueComment'
+        status:
+          $ref: '#/components/schemas/RecognizeRevenueStatus'
+    Pipeline:
+      type: string
+      description: ''
+      x-enumNames:
+      - V7
+      - Core
+      - Kits
+      - Merged
+      enum:
+      - V7
+      - Core
+      - Kits
+      - Merged
     ProjectDescription:
       type: object
       additionalProperties: false
@@ -464,107 +565,6 @@ components:
           - string
           - 'null'
           format: date-time
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    RecognizeRevenue:
-      type: object
-      additionalProperties: false
-      properties:
-        recognizeRevenueId:
-          type: string
-          format: guid
-        recognizeRevenueDate:
-          type: string
-          format: date-time
-        userId:
-          type: string
-          format: guid
-        projectId:
-          type: string
-          format: guid
-        comment:
-          oneOf:
-          - $ref: '#/components/schemas/RecognizeRevenueComment'
-        status:
-          $ref: '#/components/schemas/RecognizeRevenueStatus'
-    RecognizeRevenueStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Pending
-      - Approved
-      - Rejected
-      - Review
-      enum:
-      - Pending
-      - Approved
-      - Rejected
-      - Review
-    RecognizeRevenueComment:
-      type: object
-      additionalProperties: false
-      properties:
-        comment:
-          type:
-          - string
-          - 'null'
-        userId:
-          type: string
-          format: guid
-        date:
-          type: string
-          format: date-time
-    Pipeline:
-      type: string
-      description: ''
-      x-enumNames:
-      - V7
-      - Core
-      - Kits
-      - Merged
-      enum:
-      - V7
-      - Core
-      - Kits
-      - Merged
-    MergeProjectsResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        projectId:
-          type: string
-          format: guid
-        projectCode:
-          type:
-          - string
-          - 'null'
-        limsProjectId:
-          type:
-          - string
-          - 'null'
     Person:
       type: object
       additionalProperties: false

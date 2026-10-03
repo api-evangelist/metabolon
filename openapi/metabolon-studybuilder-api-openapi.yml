@@ -247,6 +247,35 @@ paths:
           description: ''
 components:
   schemas:
+    QuoteSummaryEmailResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        accepted:
+          type: boolean
+        duplicate:
+          type: boolean
+    QuoteSummaryEmailRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        toEmail:
+          type:
+          - string
+          - 'null'
+        contact:
+          oneOf:
+          - $ref: '#/components/schemas/QuoteSummaryContactDto'
+        plainTextBody:
+          type:
+          - string
+          - 'null'
+        submittedAt:
+          type:
+          - string
+          - 'null'
+          description: ISO-8601 timestamp from the client (optional).
+          format: date-time
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -272,55 +301,6 @@ components:
           type:
           - string
           - 'null'
-    QuoteSummaryEmailRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        toEmail:
-          type:
-          - string
-          - 'null'
-        contact:
-          oneOf:
-          - $ref: '#/components/schemas/QuoteSummaryContactDto'
-        plainTextBody:
-          type:
-          - string
-          - 'null'
-        submittedAt:
-          type:
-          - string
-          - 'null'
-          description: ISO-8601 timestamp from the client (optional).
-          format: date-time
-    StudyBuilderEstimateDraftRequestDto:
-      type: object
-      additionalProperties: false
-      properties:
-        sampleCount:
-          type: integer
-          format: int32
-          maximum: 2147483647.0
-          minimum: 1.0
-        selections: {}
-        quoteDraft: {}
-    StudyBuilderEstimateDraftGetResponseDto:
-      type: object
-      additionalProperties: false
-      properties:
-        sampleCount:
-          type: integer
-          format: int32
-        selections: {}
-        quoteDraft: {}
-    QuoteSummaryEmailResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        accepted:
-          type: boolean
-        duplicate:
-          type: boolean
     StudyBuilderEstimateResponseDto:
       type: object
       additionalProperties: false
@@ -364,6 +344,17 @@ components:
           - string
           - 'null'
           format: date-time
+    StudyBuilderEstimateDraftRequestDto:
+      type: object
+      additionalProperties: false
+      properties:
+        sampleCount:
+          type: integer
+          format: int32
+          maximum: 2147483647.0
+          minimum: 1.0
+        selections: {}
+        quoteDraft: {}
     StudyBuilderEstimateDraftResponseDto:
       type: object
       additionalProperties: false
@@ -372,6 +363,15 @@ components:
           type:
           - string
           - 'null'
+    StudyBuilderEstimateDraftGetResponseDto:
+      type: object
+      additionalProperties: false
+      properties:
+        sampleCount:
+          type: integer
+          format: int32
+        selections: {}
+        quoteDraft: {}
     QuoteSummaryContactDto:
       type: object
       additionalProperties: false
