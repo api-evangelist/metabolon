@@ -197,22 +197,24 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    Auth0ConnectionInfo:
+    Auth0PreRegistrationRequest:
       type: object
       additionalProperties: false
       properties:
-        id:
+        user:
+          oneOf:
+          - $ref: '#/components/schemas/Auth0WebhookUser'
+        connection:
+          oneOf:
+          - $ref: '#/components/schemas/Auth0ConnectionInfo'
+        request:
+          oneOf:
+          - $ref: '#/components/schemas/Auth0RequestInfo'
+        draftToken:
           type:
           - string
           - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        strategy:
-          type:
-          - string
-          - 'null'
+          description: Study builder draft token forwarded by the Pre User Registration Action.
     IAuthorizedContext:
       type: object
       x-abstract: true
@@ -236,6 +238,16 @@ components:
           - 'null'
           items:
             type: string
+    Auth0PostLoginRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        user:
+          oneOf:
+          - $ref: '#/components/schemas/Auth0WebhookUser'
+        client:
+          oneOf:
+          - $ref: '#/components/schemas/Auth0PostLoginClientInfo'
     Auth0WebhookUser:
       type: object
       additionalProperties: {}
@@ -300,16 +312,34 @@ components:
           - 'null'
         app_metadata: {}
         user_metadata: {}
-    Auth0PostLoginRequest:
+    Auth0ConnectionInfo:
       type: object
       additionalProperties: false
       properties:
-        user:
-          oneOf:
-          - $ref: '#/components/schemas/Auth0WebhookUser'
-        client:
-          oneOf:
-          - $ref: '#/components/schemas/Auth0PostLoginClientInfo'
+        id:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        strategy:
+          type:
+          - string
+          - 'null'
+    Auth0PostLoginClientInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        client_id:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
     Auth0RequestInfo:
       type: object
       additionalProperties: false
@@ -335,34 +365,4 @@ components:
           - 'null'
           description: Authorize URL query params (available in Post Login, not Pre User Registration).
           additionalProperties: {}
-    Auth0PreRegistrationRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        user:
-          oneOf:
-          - $ref: '#/components/schemas/Auth0WebhookUser'
-        connection:
-          oneOf:
-          - $ref: '#/components/schemas/Auth0ConnectionInfo'
-        request:
-          oneOf:
-          - $ref: '#/components/schemas/Auth0RequestInfo'
-        draftToken:
-          type:
-          - string
-          - 'null'
-          description: Study builder draft token forwarded by the Pre User Registration Action.
-    Auth0PostLoginClientInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        client_id:
-          type:
-          - string
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
 x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

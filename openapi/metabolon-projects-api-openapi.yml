@@ -391,6 +391,35 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
 components:
   schemas:
+    MergeProjectsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        projectId:
+          type: string
+          format: guid
+        projectCode:
+          type:
+          - string
+          - 'null'
+        limsProjectId:
+          type:
+          - string
+          - 'null'
+    RecognizeRevenueComment:
+      type: object
+      additionalProperties: false
+      properties:
+        comment:
+          type:
+          - string
+          - 'null'
+        userId:
+          type: string
+          format: guid
+        date:
+          type: string
+          format: date-time
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -416,69 +445,26 @@ components:
           type:
           - string
           - 'null'
-    MergeProjectsResponse:
+    Group:
       type: object
       additionalProperties: false
       properties:
-        projectId:
-          type: string
-          format: guid
-        projectCode:
+        name:
           type:
           - string
           - 'null'
-        limsProjectId:
+        groups:
           type:
-          - string
+          - array
           - 'null'
-    RecognizeRevenueStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Pending
-      - Approved
-      - Rejected
-      - Review
-      enum:
-      - Pending
-      - Approved
-      - Rejected
-      - Review
-    RecognizeRevenueComment:
-      type: object
-      additionalProperties: false
-      properties:
-        comment:
+          items:
+            $ref: '#/components/schemas/Group'
+        members:
           type:
-          - string
+          - array
           - 'null'
-        userId:
-          type: string
-          format: guid
-        date:
-          type: string
-          format: date-time
-    RecognizeRevenue:
-      type: object
-      additionalProperties: false
-      properties:
-        recognizeRevenueId:
-          type: string
-          format: guid
-        recognizeRevenueDate:
-          type: string
-          format: date-time
-        userId:
-          type: string
-          format: guid
-        projectId:
-          type: string
-          format: guid
-        comment:
-          oneOf:
-          - $ref: '#/components/schemas/RecognizeRevenueComment'
-        status:
-          $ref: '#/components/schemas/RecognizeRevenueStatus'
+          items:
+            $ref: '#/components/schemas/Person'
     Pipeline:
       type: string
       description: ''
@@ -492,6 +478,19 @@ components:
       - Core
       - Kits
       - Merged
+    RecognizeRevenueStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - Approved
+      - Rejected
+      - Review
+      enum:
+      - Pending
+      - Approved
+      - Rejected
+      - Review
     ProjectDescription:
       type: object
       additionalProperties: false
@@ -593,26 +592,27 @@ components:
           type:
           - string
           - 'null'
-    Group:
+    RecognizeRevenue:
       type: object
       additionalProperties: false
       properties:
-        name:
-          type:
-          - string
-          - 'null'
-        groups:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Group'
-        members:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Person'
+        recognizeRevenueId:
+          type: string
+          format: guid
+        recognizeRevenueDate:
+          type: string
+          format: date-time
+        userId:
+          type: string
+          format: guid
+        projectId:
+          type: string
+          format: guid
+        comment:
+          oneOf:
+          - $ref: '#/components/schemas/RecognizeRevenueComment'
+        status:
+          $ref: '#/components/schemas/RecognizeRevenueStatus'
     MergeProjectsRequest:
       type: object
       additionalProperties: false

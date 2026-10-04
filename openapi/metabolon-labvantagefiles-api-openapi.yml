@@ -217,12 +217,36 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
 components:
   schemas:
-    LabVantageNoticeAcknowledgeRequest:
+    LabVantageFileSummaryAttachmentItem:
       type: object
       additionalProperties: false
       properties:
-        projectId:
+        lvFileId:
+          type:
+          - string
+          - 'null'
+        fileName:
+          type:
+          - string
+          - 'null'
+        createdAt:
           type: string
+          format: date-time
+        lastModifiedAt:
+          type: string
+          format: date-time
+        contentHash:
+          type:
+          - string
+          - 'null'
+        classification:
+          type:
+          - string
+          - 'null'
+        correlatedPortalFileId:
+          type:
+          - string
+          - 'null'
           format: guid
     ProblemDetails:
       type: object
@@ -246,6 +270,23 @@ components:
           - string
           - 'null'
         instance:
+          type:
+          - string
+          - 'null'
+    LabVantageImportResultItem:
+      type: object
+      additionalProperties: false
+      properties:
+        lvFileId:
+          type: string
+        success:
+          type: boolean
+        portalFileId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        error:
           type:
           - string
           - 'null'
@@ -294,52 +335,11 @@ components:
             type: string
         acknowledgeNotice:
           type: boolean
-    LabVantageImportResultItem:
+    LabVantageNoticeAcknowledgeRequest:
       type: object
       additionalProperties: false
       properties:
-        lvFileId:
+        projectId:
           type: string
-        success:
-          type: boolean
-        portalFileId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        error:
-          type:
-          - string
-          - 'null'
-    LabVantageFileSummaryAttachmentItem:
-      type: object
-      additionalProperties: false
-      properties:
-        lvFileId:
-          type:
-          - string
-          - 'null'
-        fileName:
-          type:
-          - string
-          - 'null'
-        createdAt:
-          type: string
-          format: date-time
-        lastModifiedAt:
-          type: string
-          format: date-time
-        contentHash:
-          type:
-          - string
-          - 'null'
-        classification:
-          type:
-          - string
-          - 'null'
-        correlatedPortalFileId:
-          type:
-          - string
-          - 'null'
           format: guid
 x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

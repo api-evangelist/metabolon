@@ -421,57 +421,18 @@ paths:
                 $ref: '#/components/schemas/PipelineStatusProjectSnapshotDto'
 components:
   schemas:
-    PipelineStatusFactRecordsPageDto:
+    PipelineStatusSummaryDto:
       type: object
       additionalProperties: false
       properties:
-        items:
+        pipeline:
+          $ref: '#/components/schemas/Pipeline'
+        stage:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/PipelineStatusFactDto'
-        totalCount:
-          type: integer
-          format: int32
-        skip:
-          type: integer
-          format: int32
-        take:
-          type: integer
-          format: int32
-    PipelineStageStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Started
-      - Completed
-      - Failed
-      enum:
-      - Started
-      - Completed
-      - Failed
-    PipelineStatusScope:
-      type: string
-      description: ''
-      x-enumNames:
-      - Project
-      - SampleSet
-      enum:
-      - Project
-      - SampleSet
-    PipelineStatusProjectSnapshotDto:
-      type: object
-      additionalProperties: false
-      properties:
-        facts:
-          type: array
-          items:
-            $ref: '#/components/schemas/PipelineStatusFactDto'
-        iterationManifests:
-          type: array
-          items:
-            $ref: '#/components/schemas/PipelineStatusIterationManifestDto'
+        status:
+          $ref: '#/components/schemas/PipelineStageStatus'
     Pipeline:
       type: string
       description: ''
@@ -485,6 +446,15 @@ components:
       - Core
       - Kits
       - Merged
+    PipelineStatusScope:
+      type: string
+      description: ''
+      x-enumNames:
+      - Project
+      - SampleSet
+      enum:
+      - Project
+      - SampleSet
     PipelineStatusFactDto:
       type: object
       additionalProperties: false
@@ -541,6 +511,48 @@ components:
           type:
           - string
           - 'null'
+    PipelineStatusProjectSnapshotDto:
+      type: object
+      additionalProperties: false
+      properties:
+        facts:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineStatusFactDto'
+        iterationManifests:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineStatusIterationManifestDto'
+    PipelineStageStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Started
+      - Completed
+      - Failed
+      enum:
+      - Started
+      - Completed
+      - Failed
+    PipelineStatusFactRecordsPageDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PipelineStatusFactDto'
+        totalCount:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
     PipelineStatusIterationManifestDto:
       type: object
       additionalProperties: false
@@ -581,16 +593,4 @@ components:
           type: string
         sourceService:
           type: string
-    PipelineStatusSummaryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        pipeline:
-          $ref: '#/components/schemas/Pipeline'
-        stage:
-          type:
-          - string
-          - 'null'
-        status:
-          $ref: '#/components/schemas/PipelineStageStatus'
 x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

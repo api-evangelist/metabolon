@@ -181,47 +181,6 @@ components:
           type:
           - string
           - 'null'
-    DeepPingStatus:
-      type: object
-      additionalProperties: false
-      properties:
-        health:
-          $ref: '#/components/schemas/HealthEnum'
-        details:
-          type:
-          - string
-          - 'null'
-        postgresStatus:
-          oneOf:
-          - $ref: '#/components/schemas/PostgresDeepPingStatus'
-    DatadogResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-        status:
-          type: integer
-          format: int32
-        tags:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        hostname:
-          type:
-          - string
-          - 'null'
-        message:
-          type:
-          - string
-          - 'null'
-        httpStatusCode:
-          type: integer
-          format: int32
     DeepPingResponse:
       type: object
       additionalProperties: false
@@ -251,6 +210,47 @@ components:
       - Healthy
       - Unhealthy
       - CircularDependency
+    DatadogResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        status:
+          type: integer
+          format: int32
+        tags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        hostname:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+        httpStatusCode:
+          type: integer
+          format: int32
+    DeepPingStatus:
+      type: object
+      additionalProperties: false
+      properties:
+        health:
+          $ref: '#/components/schemas/HealthEnum'
+        details:
+          type:
+          - string
+          - 'null'
+        postgresStatus:
+          oneOf:
+          - $ref: '#/components/schemas/PostgresDeepPingStatus'
     ShallowPingResponse:
       type: object
       additionalProperties: false
