@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/metabolon/integrations
+- https://n8n.io/integrations/metabolon/
+- https://composio.dev/toolkits/metabolon
+- https://monid.ai/tools/metabolon
+checked:
+- https://composio.dev/toolkits/metabolon
+- https://monid.ai/tools/metabolon
+- https://n8n.io/integrations/metabolon/
+- https://zapier.com/apps/metabolon/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
