@@ -2,8 +2,8 @@
   "repo": "metabolon",
   "feeds": [
     {
-      "source": "https://www.metabolon.com/contact-us/",
-      "feed_url": "https://www.metabolon.com/feed/",
+      "source": "https://www.metabolon.com/blog/",
+      "feed_url": "https://www.metabolon.com/blog/feed/",
       "title": "",
       "saved": 0,
       "method": "discovered"
@@ -17,5 +17,5 @@
     }
   ],
   "post_count": 10,
-  "fetched": "2026-10-03T12:30:02Z"
+  "fetched": "2026-10-10T13:15:00Z"
 }
