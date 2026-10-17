@@ -247,22 +247,6 @@ paths:
           description: ''
 components:
   schemas:
-    QuoteSummaryContactDto:
-      type: object
-      additionalProperties: false
-      properties:
-        fullName:
-          type:
-          - string
-          - 'null'
-        email:
-          type:
-          - string
-          - 'null'
-        phone:
-          type:
-          - string
-          - 'null'
     StudyBuilderEstimateDraftRequestDto:
       type: object
       additionalProperties: false
@@ -274,39 +258,14 @@ components:
           minimum: 1.0
         selections: {}
         quoteDraft: {}
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    StudyBuilderEstimateDraftResponseDto:
+    QuoteSummaryEmailResponse:
       type: object
       additionalProperties: false
       properties:
-        draftToken:
-          type:
-          - string
-          - 'null'
+        accepted:
+          type: boolean
+        duplicate:
+          type: boolean
     StudyBuilderEstimateResponseDto:
       type: object
       additionalProperties: false
@@ -359,35 +318,6 @@ components:
           format: int32
         selections: {}
         quoteDraft: {}
-    QuoteSummaryEmailResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        accepted:
-          type: boolean
-        duplicate:
-          type: boolean
-    QuoteSummaryEmailRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        toEmail:
-          type:
-          - string
-          - 'null'
-        contact:
-          oneOf:
-          - $ref: '#/components/schemas/QuoteSummaryContactDto'
-        plainTextBody:
-          type:
-          - string
-          - 'null'
-        submittedAt:
-          type:
-          - string
-          - 'null'
-          description: ISO-8601 timestamp from the client (optional).
-          format: date-time
     StudyBuilderEstimateRequestDto:
       type: object
       additionalProperties: false
@@ -412,4 +342,74 @@ components:
           description: Quote Builder fit-phase selections (full wizard state).
         quoteDraft:
           description: Quote Builder quote-phase draft (line items, sample logistics, etc.).
+    QuoteSummaryContactDto:
+      type: object
+      additionalProperties: false
+      properties:
+        fullName:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+        phone:
+          type:
+          - string
+          - 'null'
+    QuoteSummaryEmailRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        toEmail:
+          type:
+          - string
+          - 'null'
+        contact:
+          oneOf:
+          - $ref: '#/components/schemas/QuoteSummaryContactDto'
+        plainTextBody:
+          type:
+          - string
+          - 'null'
+        submittedAt:
+          type:
+          - string
+          - 'null'
+          description: ISO-8601 timestamp from the client (optional).
+          format: date-time
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    StudyBuilderEstimateDraftResponseDto:
+      type: object
+      additionalProperties: false
+      properties:
+        draftToken:
+          type:
+          - string
+          - 'null'
 x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

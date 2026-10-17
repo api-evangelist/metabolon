@@ -171,16 +171,6 @@ paths:
           description: ''
 components:
   schemas:
-    PostgresDeepPingStatus:
-      type: object
-      additionalProperties: false
-      properties:
-        primary:
-          type: boolean
-        environment:
-          type:
-          - string
-          - 'null'
     DeepPingResponse:
       type: object
       additionalProperties: false
@@ -210,6 +200,22 @@ components:
       - Healthy
       - Unhealthy
       - CircularDependency
+    ShallowPingResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        dateTime:
+          type: string
+          format: date-time
+        buildVersion:
+          type:
+          - string
+          - 'null'
+        uptime:
+          type: string
+          format: duration
+        health:
+          $ref: '#/components/schemas/HealthEnum'
     DatadogResponse:
       type: object
       additionalProperties: false
@@ -238,6 +244,16 @@ components:
         httpStatusCode:
           type: integer
           format: int32
+    PostgresDeepPingStatus:
+      type: object
+      additionalProperties: false
+      properties:
+        primary:
+          type: boolean
+        environment:
+          type:
+          - string
+          - 'null'
     DeepPingStatus:
       type: object
       additionalProperties: false
@@ -251,20 +267,4 @@ components:
         postgresStatus:
           oneOf:
           - $ref: '#/components/schemas/PostgresDeepPingStatus'
-    ShallowPingResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        dateTime:
-          type: string
-          format: date-time
-        buildVersion:
-          type:
-          - string
-          - 'null'
-        uptime:
-          type: string
-          format: duration
-        health:
-          $ref: '#/components/schemas/HealthEnum'
 x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

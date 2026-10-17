@@ -391,106 +391,6 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
 components:
   schemas:
-    MergeProjectsResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        projectId:
-          type: string
-          format: guid
-        projectCode:
-          type:
-          - string
-          - 'null'
-        limsProjectId:
-          type:
-          - string
-          - 'null'
-    RecognizeRevenueComment:
-      type: object
-      additionalProperties: false
-      properties:
-        comment:
-          type:
-          - string
-          - 'null'
-        userId:
-          type: string
-          format: guid
-        date:
-          type: string
-          format: date-time
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    Group:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-        groups:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Group'
-        members:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Person'
-    Pipeline:
-      type: string
-      description: ''
-      x-enumNames:
-      - V7
-      - Core
-      - Kits
-      - Merged
-      enum:
-      - V7
-      - Core
-      - Kits
-      - Merged
-    RecognizeRevenueStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Pending
-      - Approved
-      - Rejected
-      - Review
-      enum:
-      - Pending
-      - Approved
-      - Rejected
-      - Review
     ProjectDescription:
       type: object
       additionalProperties: false
@@ -592,6 +492,34 @@ components:
           type:
           - string
           - 'null'
+    MergeProjectsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        projectId:
+          type: string
+          format: guid
+        projectCode:
+          type:
+          - string
+          - 'null'
+        limsProjectId:
+          type:
+          - string
+          - 'null'
+    RecognizeRevenueStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - Approved
+      - Rejected
+      - Review
+      enum:
+      - Pending
+      - Approved
+      - Rejected
+      - Review
     RecognizeRevenue:
       type: object
       additionalProperties: false
@@ -613,6 +541,78 @@ components:
           - $ref: '#/components/schemas/RecognizeRevenueComment'
         status:
           $ref: '#/components/schemas/RecognizeRevenueStatus'
+    RecognizeRevenueComment:
+      type: object
+      additionalProperties: false
+      properties:
+        comment:
+          type:
+          - string
+          - 'null'
+        userId:
+          type: string
+          format: guid
+        date:
+          type: string
+          format: date-time
+    Pipeline:
+      type: string
+      description: ''
+      x-enumNames:
+      - V7
+      - Core
+      - Kits
+      - Merged
+      enum:
+      - V7
+      - Core
+      - Kits
+      - Merged
+    Group:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        groups:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Group'
+        members:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Person'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     MergeProjectsRequest:
       type: object
       additionalProperties: false

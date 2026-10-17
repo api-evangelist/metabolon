@@ -197,24 +197,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    Auth0PreRegistrationRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        user:
-          oneOf:
-          - $ref: '#/components/schemas/Auth0WebhookUser'
-        connection:
-          oneOf:
-          - $ref: '#/components/schemas/Auth0ConnectionInfo'
-        request:
-          oneOf:
-          - $ref: '#/components/schemas/Auth0RequestInfo'
-        draftToken:
-          type:
-          - string
-          - 'null'
-          description: Study builder draft token forwarded by the Pre User Registration Action.
     IAuthorizedContext:
       type: object
       x-abstract: true
@@ -238,6 +220,22 @@ components:
           - 'null'
           items:
             type: string
+    Auth0ConnectionInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        strategy:
+          type:
+          - string
+          - 'null'
     Auth0PostLoginRequest:
       type: object
       additionalProperties: false
@@ -312,22 +310,6 @@ components:
           - 'null'
         app_metadata: {}
         user_metadata: {}
-    Auth0ConnectionInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        strategy:
-          type:
-          - string
-          - 'null'
     Auth0PostLoginClientInfo:
       type: object
       additionalProperties: false
@@ -365,4 +347,22 @@ components:
           - 'null'
           description: Authorize URL query params (available in Post Login, not Pre User Registration).
           additionalProperties: {}
+    Auth0PreRegistrationRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        user:
+          oneOf:
+          - $ref: '#/components/schemas/Auth0WebhookUser'
+        connection:
+          oneOf:
+          - $ref: '#/components/schemas/Auth0ConnectionInfo'
+        request:
+          oneOf:
+          - $ref: '#/components/schemas/Auth0RequestInfo'
+        draftToken:
+          type:
+          - string
+          - 'null'
+          description: Study builder draft token forwarded by the Pre User Registration Action.
 x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

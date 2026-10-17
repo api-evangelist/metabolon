@@ -433,28 +433,6 @@ components:
           - 'null'
         status:
           $ref: '#/components/schemas/PipelineStageStatus'
-    Pipeline:
-      type: string
-      description: ''
-      x-enumNames:
-      - V7
-      - Core
-      - Kits
-      - Merged
-      enum:
-      - V7
-      - Core
-      - Kits
-      - Merged
-    PipelineStatusScope:
-      type: string
-      description: ''
-      x-enumNames:
-      - Project
-      - SampleSet
-      enum:
-      - Project
-      - SampleSet
     PipelineStatusFactDto:
       type: object
       additionalProperties: false
@@ -523,6 +501,19 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PipelineStatusIterationManifestDto'
+    Pipeline:
+      type: string
+      description: ''
+      x-enumNames:
+      - V7
+      - Core
+      - Kits
+      - Merged
+      enum:
+      - V7
+      - Core
+      - Kits
+      - Merged
     PipelineStageStatus:
       type: string
       description: ''
@@ -534,25 +525,6 @@ components:
       - Started
       - Completed
       - Failed
-    PipelineStatusFactRecordsPageDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PipelineStatusFactDto'
-        totalCount:
-          type: integer
-          format: int32
-        skip:
-          type: integer
-          format: int32
-        take:
-          type: integer
-          format: int32
     PipelineStatusIterationManifestDto:
       type: object
       additionalProperties: false
@@ -593,4 +565,32 @@ components:
           type: string
         sourceService:
           type: string
+    PipelineStatusFactRecordsPageDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PipelineStatusFactDto'
+        totalCount:
+          type: integer
+          format: int32
+        skip:
+          type: integer
+          format: int32
+        take:
+          type: integer
+          format: int32
+    PipelineStatusScope:
+      type: string
+      description: ''
+      x-enumNames:
+      - Project
+      - SampleSet
+      enum:
+      - Project
+      - SampleSet
 x-generator: NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))

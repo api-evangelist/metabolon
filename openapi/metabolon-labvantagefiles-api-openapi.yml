@@ -248,31 +248,14 @@ components:
           - string
           - 'null'
           format: guid
-    ProblemDetails:
+    LabVantageImportResponse:
       type: object
-      additionalProperties: {}
+      additionalProperties: false
       properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabVantageImportResultItem'
     LabVantageImportResultItem:
       type: object
       additionalProperties: false
@@ -312,14 +295,6 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/LabVantageFileSummaryAttachmentItem'
-    LabVantageImportResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/LabVantageImportResultItem'
     LabVantageImportRequest:
       type: object
       additionalProperties: false
@@ -335,6 +310,31 @@ components:
             type: string
         acknowledgeNotice:
           type: boolean
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     LabVantageNoticeAcknowledgeRequest:
       type: object
       additionalProperties: false
