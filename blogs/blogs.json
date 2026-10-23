@@ -9,6 +9,13 @@
       "method": "discovered"
     },
     {
+      "source": "https://www.metabolon.com/blog/feed/",
+      "feed_url": "https://www.metabolon.com/blog/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
       "source": "https://www.metabolon.com/feed/",
       "feed_url": "https://www.metabolon.com/feed/",
       "title": "",
@@ -17,5 +24,5 @@
     }
   ],
   "post_count": 10,
-  "fetched": "2026-10-10T13:15:00Z"
+  "fetched": "2026-10-17T14:53:57Z"
 }
